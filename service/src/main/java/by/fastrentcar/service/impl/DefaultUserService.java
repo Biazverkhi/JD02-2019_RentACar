@@ -2,9 +2,7 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
 import by.fastrentcar.model.AuthUserUserDTO;
-import by.fastrentcar.dao.UserDAO;
 import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
-import by.fastrentcar.dao.impl.DefaultUserDAO;
 import by.fastrentcar.model.AuthUser;
 import by.fastrentcar.model.User;
 import by.fastrentcar.service.UserService;
