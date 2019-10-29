@@ -1,8 +1,8 @@
 package by.fastrentcar.service;
 
-import by.fastrentcar.model.AuthUserUserDTO;
-import by.fastrentcar.model.AuthUser;
-import by.fastrentcar.model.User;
+import by.fastrentcar.model.user.AuthUserUserDTO;
+import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.User;
 
 import java.util.List;
 

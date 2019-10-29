@@ -1,13 +1,8 @@
-package by.fastrentcar.model;
+package by.fastrentcar.model.user;
 
-import by.fastrentcar.model.Role;
 
-public class AuthUserUserDTO {
+public class User {
     private Long id;
-    private String login;
-    private String password;
-    private Role role;
-    private Long user_id;
     private String firstName;
     private String lastName;
     private String phone;
@@ -16,12 +11,8 @@ public class AuthUserUserDTO {
     private String passport_data;
     private String passport_authority;
 
-    public AuthUserUserDTO(Long id, String login, String password, Role role, Long userId, String firstName, String lastName, String phone, String email, String passport_number, String passport_data, String passport_authority) {
+    public User(Long id, String firstName, String lastName, String phone, String email, String passport_number, String passport_data, String passport_authority) {
         this.id = id;
-        this.login = login;
-        this.password = password;
-        this.role = role;
-        this.user_id = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -31,44 +22,12 @@ public class AuthUserUserDTO {
         this.passport_authority = passport_authority;
     }
 
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 
-    public void setid(Long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Long getUserId() {
-        return user_id;
-    }
-
-    public void setUserId(Long userId) {
-        this.user_id = userId;
     }
 
     public String getFirstName() {
@@ -127,6 +86,5 @@ public class AuthUserUserDTO {
         this.passport_authority = passport_authority;
     }
 
-
-
 }
+

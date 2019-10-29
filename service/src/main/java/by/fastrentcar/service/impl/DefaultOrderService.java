@@ -2,7 +2,7 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.dao.impl.DefaultOrderDAO;
-import by.fastrentcar.model.Order;
+import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
 import java.util.List;
 

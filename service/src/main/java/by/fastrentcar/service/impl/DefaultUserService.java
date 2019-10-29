@@ -1,10 +1,10 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.model.AuthUserUserDTO;
+import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
-import by.fastrentcar.model.AuthUser;
-import by.fastrentcar.model.User;
+import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
 
 import java.util.List;

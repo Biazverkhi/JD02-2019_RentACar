@@ -1,7 +1,7 @@
 package by.fastrentcar.web.servlet;
 
-import by.fastrentcar.model.AuthUser;
-import by.fastrentcar.model.Role;
+import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
 import by.fastrentcar.service.impl.DefaultSecurityService;
 import by.fastrentcar.web.WebUtils;

@@ -2,7 +2,7 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.impl.DefaultAutoDAO;
-import by.fastrentcar.model.Auto;
+import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
 import java.util.List;
 

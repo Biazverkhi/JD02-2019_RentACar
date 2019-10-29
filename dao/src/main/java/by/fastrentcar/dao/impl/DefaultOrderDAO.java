@@ -2,13 +2,11 @@ package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.DataSource;
 import by.fastrentcar.dao.OrderDAO;
-import by.fastrentcar.model.Order;
+import by.fastrentcar.model.order.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 

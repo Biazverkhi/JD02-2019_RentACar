@@ -1,4 +1,4 @@
-package by.fastrentcar.model;
+package by.fastrentcar.model.user;
 
 public enum Role {
     USER,

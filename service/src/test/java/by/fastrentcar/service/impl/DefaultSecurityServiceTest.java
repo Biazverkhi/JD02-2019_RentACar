@@ -1,7 +1,7 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.model.AuthUser;
+import by.fastrentcar.model.user.AuthUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

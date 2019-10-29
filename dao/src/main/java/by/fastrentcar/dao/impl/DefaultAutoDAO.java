@@ -2,7 +2,7 @@ package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.DataSource;
-import by.fastrentcar.model.Auto;
+import by.fastrentcar.model.auto.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

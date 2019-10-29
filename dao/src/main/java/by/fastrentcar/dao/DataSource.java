@@ -20,7 +20,7 @@ public class DataSource {
         return DataSource.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    public DataSource() {
+    private DataSource() {
 //подключаем драйвер
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

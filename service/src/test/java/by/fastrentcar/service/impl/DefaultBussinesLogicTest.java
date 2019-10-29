@@ -1,6 +1,6 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.model.OrderDTO;
+import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.service.BussinesLogic;
 import org.junit.jupiter.api.Test;
 

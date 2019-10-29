@@ -1,4 +1,4 @@
-package by.fastrentcar.model;
+package by.fastrentcar.model.auto;
 
 public class Auto {
     private Long id;

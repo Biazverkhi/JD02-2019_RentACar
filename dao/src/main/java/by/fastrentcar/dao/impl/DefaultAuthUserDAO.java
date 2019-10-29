@@ -1,11 +1,11 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.model.AuthUserUserDTO;
+import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.dao.DataSource;
-import by.fastrentcar.model.AuthUser;
-import by.fastrentcar.model.Role;
-import by.fastrentcar.model.User;
+import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.Role;
+import by.fastrentcar.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -241,7 +241,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 psUser.setString(6, user.getPassport_data());
                 psUser.setString(7, user.getPassport_authority());
                 psUser.executeUpdate();
-                try (ResultSet keys = psUser.getGeneratedKeys();
+                try (ResultSet keys = psUser.getGeneratedKeys()
                 ) {
                     keys.next();
                     long userId = keys.getLong(1);
@@ -252,7 +252,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                         psAuthUser.setString(3, authUser.getRole().name());
                         psAuthUser.setLong(4, userId);
                         psAuthUser.executeUpdate();
-                        try (ResultSet keysAuthUser = psAuthUser.getGeneratedKeys();
+                        try (ResultSet keysAuthUser = psAuthUser.getGeneratedKeys()
                         ) {
                             keysAuthUser.next();
                             long authUtherId = keysAuthUser.getLong(1);
@@ -293,7 +293,8 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
             connection = DataSource.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            try (PreparedStatement ps = connection.prepareStatement(sqlUs)) {
+            try (PreparedStatement ps = connection.prepareStatement(sqlUs);
+            PreparedStatement psAu = connection.prepareStatement(sqlAu)) {
                 ps.setString(1, user.getFirstName());
                 ps.setString(2, user.getLastName());
                 ps.setString(3, user.getPhone());
@@ -302,18 +303,16 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 ps.setString(6, user.getPassport_data());
                 ps.setString(7, user.getPassport_authority());
                 ps.setLong(8, user.getId());
-                int count = ps.executeUpdate();
+
+                psAu.setString(1, authUser.getLogin());
+                psAu.setString(2, authUser.getPassword());
+                psAu.setString(3, authUser.getRole().name());
+                psAu.setLong(4, authUser.getId());
+
+               final int count=ps.executeUpdate()+psAu.executeUpdate();
+                connection.commit();
+                return count > 0;
                 //    log.info("user updated:{} with id:{}", user, user.getId());
-                try (PreparedStatement psAu = connection.prepareStatement(sqlAu)) {
-                    psAu.setString(1, authUser.getLogin());
-                    psAu.setString(2, authUser.getPassword());
-                    psAu.setString(3, authUser.getRole().name());
-                    psAu.setLong(4, authUser.getId());
-                    count += psAu.executeUpdate();
-                    connection.commit();
-//                    log.info("user updated:{} with id:{}", user, user.getId());
-                    return count > 0;
-                }
             }
         } catch (SQLException e) {
 //             log.error("fail to update user:{}", user, e);

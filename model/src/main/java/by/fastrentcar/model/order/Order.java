@@ -1,4 +1,4 @@
-package by.fastrentcar.model;
+package by.fastrentcar.model.order;
 
 import java.time.LocalDateTime;
 

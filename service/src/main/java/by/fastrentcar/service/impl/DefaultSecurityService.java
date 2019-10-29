@@ -2,7 +2,7 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
 import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
-import by.fastrentcar.model.AuthUser;
+import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.service.SecurityService;
 
 public class DefaultSecurityService implements SecurityService {

@@ -1,7 +1,4 @@
-package by.fastrentcar.model;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+package by.fastrentcar.model.user;
 
 public class AuthUser {
     private Long Id;

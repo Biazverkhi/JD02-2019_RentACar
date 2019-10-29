@@ -1,6 +1,6 @@
 package by.fastrentcar.web.servlet;
 
-import by.fastrentcar.model.Auto;
+import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
 import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;

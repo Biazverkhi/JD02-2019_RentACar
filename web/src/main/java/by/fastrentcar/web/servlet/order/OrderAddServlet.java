@@ -1,6 +1,6 @@
 package by.fastrentcar.web.servlet.order;
 
-import by.fastrentcar.model.Order;
+import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;

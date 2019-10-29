@@ -1,6 +1,6 @@
 package by.fastrentcar.service;
 
-import by.fastrentcar.model.Order;
+import by.fastrentcar.model.order.Order;
 
 import java.util.List;
 

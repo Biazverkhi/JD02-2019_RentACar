@@ -1,19 +1,18 @@
 package by.fastrentcar.web.servlet.order;
 
-import by.fastrentcar.model.AuthUser;
-import by.fastrentcar.model.Order;
+import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.BussinesLogic;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.service.impl.DefaultBussinesLogic;
 import by.fastrentcar.service.impl.DefaultOrderService;
-import by.fastrentcar.model.OrderDTO;
+import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

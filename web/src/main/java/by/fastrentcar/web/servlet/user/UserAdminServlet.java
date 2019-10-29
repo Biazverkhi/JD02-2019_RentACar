@@ -1,6 +1,6 @@
 package by.fastrentcar.web.servlet.user;
 
-import by.fastrentcar.model.AuthUserUserDTO;
+import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.service.UserService;
 import by.fastrentcar.service.impl.DefaultUserService;
 import by.fastrentcar.web.WebUtils;

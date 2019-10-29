@@ -1,6 +1,6 @@
 package by.fastrentcar.dao;
 
-import by.fastrentcar.model.Auto;
+import by.fastrentcar.model.auto.Auto;
 import java.util.List;
 
 public interface AutoDAO {
