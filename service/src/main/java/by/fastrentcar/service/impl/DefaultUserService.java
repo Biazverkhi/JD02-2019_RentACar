@@ -12,7 +12,7 @@ import by.fastrentcar.service.UserService;
 import java.util.List;
 
 public class DefaultUserService implements UserService {
-    private DefaultUserService() {
+    public DefaultUserService() {
     }
 
     private static class SingletonHolder {
@@ -23,21 +23,16 @@ public class DefaultUserService implements UserService {
         return DefaultUserService.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private UserDAO defaultUserDAO = DefaultUserDAO.getInstance();
-
     private AuthUserDAO defaultAuthUserDAO = DefaultAuthUserDAO.getInstance();
 
     @Override
     public Long addCustomer(AuthUser authUser, User user) {
-        Long userID = defaultUserDAO.addUserT(user);
-        authUser.setUserId(userID);
-        return defaultAuthUserDAO.addAuthUserT(authUser);
+        return defaultAuthUserDAO.addAuthUserUserT(authUser, user);
     }
 
     @Override
     public void updateCustomer(AuthUser authUser, User user) {
-        defaultAuthUserDAO.updateAuthUserT(authUser);
-        defaultUserDAO.updateUserT(user);
+       defaultAuthUserDAO.updateAuthUserUserT(authUser, user);
     }
 
     @Override

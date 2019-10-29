@@ -6,7 +6,7 @@ import by.fastrentcar.model.AuthUser;
 import by.fastrentcar.service.SecurityService;
 
 public class DefaultSecurityService implements SecurityService {
-    private DefaultSecurityService() {
+    public DefaultSecurityService() {
     }
 
     private static class SingletonHolder {

@@ -2,6 +2,7 @@ package by.fastrentcar.dao;
 
 import by.fastrentcar.model.AuthUser;
 import by.fastrentcar.model.AuthUserUserDTO;
+import by.fastrentcar.model.User;
 
 import java.util.List;
 
@@ -12,11 +13,11 @@ public interface AuthUserDAO {
 
     List<AuthUserUserDTO> getListAuthUserUserDTO();
 
-    Long addAuthUserT(AuthUser authuser);
+    Long addAuthUserUserT(AuthUser authuser, User user);
 
     AuthUserUserDTO getAuthUserUserDTO(String login);
 
-    boolean updateAuthUserT(AuthUser authUser);
+    boolean updateAuthUserUserT(AuthUser authUser, User user);
 
     boolean deleteAuthUserT(Long id);
 }

@@ -36,6 +36,6 @@ public class UserRegistrationServlet extends HttpServlet {
         User user = new User(null, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(null, login, password, Role.USER, null);
         defaultUserService.addCustomer(authUser, user);
-        WebUtils.redirect("", req, resp);
+        WebUtils.redirect("index", req, resp);
     }
 }

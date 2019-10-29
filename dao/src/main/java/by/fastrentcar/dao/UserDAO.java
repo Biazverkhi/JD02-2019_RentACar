@@ -4,8 +4,9 @@ import by.fastrentcar.model.User;
 
 
 public interface UserDAO {
+    @Deprecated
     Long addUserT(User user);
-
+@Deprecated
     boolean updateUserT(User user);
 
     //User getUserByIdT(long id);

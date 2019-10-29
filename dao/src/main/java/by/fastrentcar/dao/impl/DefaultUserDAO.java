@@ -22,15 +22,16 @@ public class DefaultUserDAO implements UserDAO {
     public static UserDAO getInstance() {
         return DefaultUserDAO.SingletonHolder.HOLDER_INSTANCE;
     }
+    @Deprecated
 
-    //добавить пользователя
+//добавляется через транзакцию для обеих сущностей    //добавить пользователя
     public Long addUserT(User user) {
-        final String sql = "insert into user(firstname, lastname, phone, email, passport_number,passport_data,passport_authority) values(?,?,?,?,?,?,?)";
+        final String sqlUs = "insert into user(firstname, lastname, phone, email, passport_number,passport_data,passport_authority) values(?,?,?,?,?,?,?)";
         Connection connection = null;
         try {
             connection = DataSource.getInstance().getConnection();
             connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement ps = connection.prepareStatement(sqlUs, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, user.getFirstName());
                 ps.setString(2, user.getLastName());
                 ps.setString(3, user.getPhone());
@@ -68,15 +69,16 @@ public class DefaultUserDAO implements UserDAO {
             }
         }
     }
-
+    @Deprecated
+// обновляется через AuthUser одной транзакцией
     //обновление юзера
     public boolean updateUserT(User user) {
-        final String sql = "update user set firstname=?, lastname=?, phone=?, email=?, passport_number=?,passport_data=?,passport_authority=? where id=?";
+        final String sqlUs = "update user set firstname=?, lastname=?, phone=?, email=?, passport_number=?,passport_data=?,passport_authority=? where id=?";
         Connection connection = null;
         try {
             connection = DataSource.getInstance().getConnection();
             connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            try (PreparedStatement ps = connection.prepareStatement(sqlUs)) {
                 ps.setString(1, user.getFirstName());
                 ps.setString(2, user.getLastName());
                 ps.setString(3, user.getPhone());

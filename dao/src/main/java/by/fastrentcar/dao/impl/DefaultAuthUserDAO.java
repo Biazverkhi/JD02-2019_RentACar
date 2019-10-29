@@ -5,6 +5,7 @@ import by.fastrentcar.model.AuthUserUserDTO;
 import by.fastrentcar.dao.DataSource;
 import by.fastrentcar.model.AuthUser;
 import by.fastrentcar.model.Role;
+import by.fastrentcar.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultAuthUserDAO implements AuthUserDAO {
-       private static final Logger log = LoggerFactory.getLogger(DefaultAuthUserDAO.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultAuthUserDAO.class);
 
     private DefaultAuthUserDAO() {
     }
@@ -51,12 +52,12 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 }
             }
         } catch (SQLException e) {
-               log.error("user search error, login:{}", login, e);
+            log.error("user search error, login:{}", login, e);
             try {
                 connection.rollback();
-                    log.info("rollback is completed");
+                log.info("rollback is completed");
             } catch (SQLException ex) {
-                   log.error("rollback didn't work", ex);
+                log.error("rollback didn't work", ex);
                 throw new RuntimeException(e);
             }
             throw new RuntimeException(e);
@@ -65,7 +66,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                       log.error("fail close connection", e);
+                    log.error("fail close connection", e);
                 }
             }
         }
@@ -95,12 +96,12 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 }
             }
         } catch (SQLException e) {
-              log.error("user search error, id:{}", id, e);
+            log.error("user search error, id:{}", id, e);
             try {
                 connection.rollback();
-                    log.info("rollback is completed");
+                log.info("rollback is completed");
             } catch (SQLException ex) {
-                  log.error("rollback didn't work", ex);
+                log.error("rollback didn't work", ex);
                 throw new RuntimeException(e);
             }
             throw new RuntimeException(e);
@@ -109,7 +110,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                       log.error("fail close connection", e);
+                    log.error("fail close connection", e);
                 }
             }
         }
@@ -149,12 +150,12 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 }
             }
         } catch (SQLException e) {
-             log.error("users search error", e);
+            log.error("users search error", e);
             try {
                 connection.rollback();
                 log.info("rollback is completed");
             } catch (SQLException ex) {
-                 log.error("rollback didn't work", ex);
+                log.error("rollback didn't work", ex);
                 throw new RuntimeException(e);
             }
             throw new RuntimeException(e);
@@ -163,7 +164,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                       log.error("fail close connection", e);
+                    log.error("fail close connection", e);
                 }
             }
         }
@@ -223,34 +224,52 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
     }
 
     //!!!добавить пользователя
-    public Long addAuthUserT(AuthUser authUser) {
-        final String sql = "insert into auth_user(login, password, role, user_id) values(?,?,?,?)";
+    public Long addAuthUserUserT(AuthUser authUser, User user) {
+        final String sqlUs = "insert into user(firstname, lastname, phone, email, passport_number,passport_data,passport_authority) values(?,?,?,?,?,?,?)";
+        final String sqlAu = "insert into auth_user(login, password, role, user_id) values(?,?,?,?)";
         Connection connection = null;
         try {
             connection = DataSource.getInstance().getConnection();
             connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, authUser.getLogin());
-                ps.setString(2, authUser.getPassword());
-                ps.setString(3, authUser.getRole().name());
-                ps.setLong(4, authUser.getUserId());
-                ps.executeUpdate();
-                try (ResultSet keys = ps.getGeneratedKeys();
+
+            try (PreparedStatement psUser = connection.prepareStatement(sqlUs, Statement.RETURN_GENERATED_KEYS)) {
+                psUser.setString(1, user.getFirstName());
+                psUser.setString(2, user.getLastName());
+                psUser.setString(3, user.getPhone());
+                psUser.setString(4, user.getEmail());
+                psUser.setString(5, user.getPassport_number());
+                psUser.setString(6, user.getPassport_data());
+                psUser.setString(7, user.getPassport_authority());
+                psUser.executeUpdate();
+                try (ResultSet keys = psUser.getGeneratedKeys();
                 ) {
                     keys.next();
-                    long key = keys.getLong(1);
-                    connection.commit();
-                         log.info("authuser saved:{} with id:{}", authUser, key);
-                    return key;
+                    long userId = keys.getLong(1);
+                    log.info("user saved:{} with id:{}", user, userId);
+                    try (PreparedStatement psAuthUser = connection.prepareStatement(sqlAu, Statement.RETURN_GENERATED_KEYS)) {
+                        psAuthUser.setString(1, authUser.getLogin());
+                        psAuthUser.setString(2, authUser.getPassword());
+                        psAuthUser.setString(3, authUser.getRole().name());
+                        psAuthUser.setLong(4, userId);
+                        psAuthUser.executeUpdate();
+                        try (ResultSet keysAuthUser = psAuthUser.getGeneratedKeys();
+                        ) {
+                            keysAuthUser.next();
+                            long authUtherId = keysAuthUser.getLong(1);
+                            connection.commit();
+                            log.info("authuser saved:{} with id:{}", authUser, authUtherId);
+                            return authUtherId;
+                        }
+                    }
                 }
             }
         } catch (SQLException e) {
-             log.error("fail to save autchuser:{}", authUser, e);
+            log.error("fail to save autchuser:{}", authUser, e);
             try {
                 connection.rollback();
-                    log.info("rollback is completed");
+                log.info("rollback is completed");
             } catch (SQLException ex) {
-                 log.error("rollback didn't work", ex);
+                log.error("rollback didn't work", ex);
                 throw new RuntimeException(e);
             }
             throw new RuntimeException(e);
@@ -259,28 +278,42 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
                 try {
                     connection.close();
                 } catch (SQLException e) {
-                        log.error("fail close connection", e);
+                    log.error("fail close connection", e);
                 }
             }
         }
     }
 
     //!!! обновить пользователя
-    public boolean updateAuthUserT(AuthUser authUser) {
-        final String sql = "update auth_user set login=?, password=?, role=? where id=?";
+    public boolean updateAuthUserUserT(AuthUser authUser, User user) {
+        final String sqlAu = "update auth_user set login=?, password=?, role=? where id=?";
+        final String sqlUs = "update user set firstname=?, lastname=?, phone=?, email=?, passport_number=?,passport_data=?,passport_authority=? where id=?";
         Connection connection = null;
         try {
             connection = DataSource.getInstance().getConnection();
             connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, authUser.getLogin());
-                ps.setString(2, authUser.getPassword());
-                ps.setString(3, authUser.getRole().name());
-                ps.setLong(4, authUser.getId());
-                final int count = ps.executeUpdate();
-                connection.commit();
+
+            try (PreparedStatement ps = connection.prepareStatement(sqlUs)) {
+                ps.setString(1, user.getFirstName());
+                ps.setString(2, user.getLastName());
+                ps.setString(3, user.getPhone());
+                ps.setString(4, user.getEmail());
+                ps.setString(5, user.getPassport_number());
+                ps.setString(6, user.getPassport_data());
+                ps.setString(7, user.getPassport_authority());
+                ps.setLong(8, user.getId());
+                int count = ps.executeUpdate();
+                //    log.info("user updated:{} with id:{}", user, user.getId());
+                try (PreparedStatement psAu = connection.prepareStatement(sqlAu)) {
+                    psAu.setString(1, authUser.getLogin());
+                    psAu.setString(2, authUser.getPassword());
+                    psAu.setString(3, authUser.getRole().name());
+                    psAu.setLong(4, authUser.getId());
+                    count += psAu.executeUpdate();
+                    connection.commit();
 //                    log.info("user updated:{} with id:{}", user, user.getId());
-                return count > 0;
+                    return count > 0;
+                }
             }
         } catch (SQLException e) {
 //             log.error("fail to update user:{}", user, e);
@@ -303,7 +336,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         }
     }
 
-    //удаление юзера JOIN
+    //удаление юзера JOIN. Лучше так не делать.
     public boolean deleteAuthUserT(Long id) {
         final String sql = "delete au, u from auth_user au left join user u on au.user_id = u.id where au.id=?";
         Connection connection = null;
