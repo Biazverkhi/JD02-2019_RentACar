@@ -1,7 +1,9 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
+import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
 import by.fastrentcar.model.user.AuthUserUserDTO;
+import by.fastrentcar.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,10 +21,10 @@ import static org.mockito.Mockito.when;
 
 public class DefaultUserServiceTest {
     @Mock
-    AuthUserDAO dao;
+    AuthUserDAO dao= DefaultAuthUserDAO.getInstance();
 
     @InjectMocks
-    DefaultUserService service;
+    UserService service=DefaultUserService.getInstance();
 
 
 

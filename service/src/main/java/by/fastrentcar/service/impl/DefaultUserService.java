@@ -10,7 +10,7 @@ import by.fastrentcar.service.UserService;
 import java.util.List;
 
 public class DefaultUserService implements UserService {
-    public DefaultUserService() {
+    private DefaultUserService() {
     }
 
     private static class SingletonHolder {

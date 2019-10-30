@@ -1,7 +1,9 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
+import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
 import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.service.SecurityService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,10 +18,10 @@ import static org.mockito.Mockito.when;
 public class DefaultSecurityServiceTest {
 
     @Mock
-    AuthUserDAO dao;
+    AuthUserDAO dao= DefaultAuthUserDAO.getInstance();
 
     @InjectMocks
-    DefaultSecurityService service;
+    SecurityService service=DefaultSecurityService.getInstance();
     @Test
     void testLoginCorrect() {
         when(dao.getByLoginT("admin")).thenReturn(new AuthUser(null, "admin", "pass", null, null));
