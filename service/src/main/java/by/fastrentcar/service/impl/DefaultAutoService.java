@@ -4,6 +4,7 @@ import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.impl.DefaultAutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
+
 import java.util.List;
 
 public class DefaultAutoService implements AutoService {
@@ -26,13 +27,13 @@ public class DefaultAutoService implements AutoService {
     }
 
     @Override
-    public void updateAuto(Auto auto) {
-        defaultAutoDAO.updateAutoT(auto);
+    public boolean updateAuto(Auto auto) {
+        return defaultAutoDAO.updateAutoT(auto);
     }
 
     @Override
-    public void deleteAuto(Long id) {
-        defaultAutoDAO.deleteAutoT(id);
+    public boolean deleteAuto(Long id) {
+        return defaultAutoDAO.deleteAutoT(id);
     }
 
     @Override

@@ -4,6 +4,7 @@ import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.dao.impl.DefaultOrderDAO;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
+
 import java.util.List;
 
 public class DefaultOrderService implements OrderService {
@@ -27,13 +28,13 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
-    public void updateOrder(Order order) {
-        defaultOrderDAO.updateOrderT(order);
+    public boolean updateOrder(Order order) {
+        return defaultOrderDAO.updateOrderT(order);
     }
 
     @Override
-    public void deleteOrder(Long id) {
-         defaultOrderDAO.deleteOrderT(id);
+    public boolean deleteOrder(Long id) {
+        return defaultOrderDAO.deleteOrderT(id);
     }
 
     @Override

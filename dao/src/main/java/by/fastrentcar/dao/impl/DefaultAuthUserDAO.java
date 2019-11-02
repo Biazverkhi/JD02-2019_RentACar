@@ -1,9 +1,9 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.dao.DataSource;
 import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import org.slf4j.Logger;
@@ -173,7 +173,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     //!!!для вывода на панель пользователя для редактированияя
     public AuthUserUserDTO getAuthUserUserDTO(String login) {
-        final String sql = "select * from auth_user where login=?";
+        final String sql = "select * from auth_user left join user u on auth_user.user_id = u.id  where login=?";
         Connection connection = null;
         try {
             connection = DataSource.getInstance().getConnection();

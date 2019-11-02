@@ -7,9 +7,9 @@ import java.util.List;
 public interface AutoService {
     Long addAuto(Auto auto);
 
-    void updateAuto(Auto auto);
+    boolean updateAuto(Auto auto);
 
-    void deleteAuto(Long id);
+    boolean deleteAuto(Long id);
 
     List<Auto> getListAuto();
 
