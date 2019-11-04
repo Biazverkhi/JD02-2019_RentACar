@@ -1,5 +1,12 @@
 package by.fastrentcar.dao.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "userH")
 public class Auto {
     private Long id;
     private String brand;
@@ -20,6 +27,8 @@ public class Auto {
         this.status = status;
     }
 
+    @Id
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
