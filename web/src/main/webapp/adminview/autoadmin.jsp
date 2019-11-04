@@ -44,8 +44,8 @@
                 <td><select name ="status" ><option value="свободно">свободно</option>
                     <option value="резерв">резерв</option><option value="занято">занято</option>
                     <option selected value="${auto.status}">${auto.status}</option></select></td>
-                <td> <input formaction="${pageContext.request.contextPath}/updateauto" formmethod="post" type="submit" value="обновить"></td>
-                <td>  <input formaction="${pageContext.request.contextPath}/deleteauto" formmethod="post" type="submit" value="удалить"></td>
+                <td><input formaction="updateauto" formmethod="post" type="submit" value="обновить"></td>
+                <td><input formaction="deleteauto" formmethod="post" type="submit" value="удалить"></td>
                     <%--                    <td><input type="checkbox" name="id" value=${user.id} > </td>--%>
             </tr>
             </form>
@@ -76,7 +76,7 @@
         <td><select name ="status" ><option value="свободно">свободно</option>
             <option value="резерв">резерв</option><option value="занято">занято</option>
            </select></td>
-        <td> <input formaction="${pageContext.request.contextPath}/addauto" formmethod="post" type="submit"  value="добавить"></td>
+        <td><input formaction="addauto" formmethod="post" type="submit" value="добавить"></td>
     </tr>
     </form>
 </table>

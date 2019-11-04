@@ -27,8 +27,8 @@
 </c:choose>
 <hr>
 
-<c:if test="${autos != null}">mvn
-    <table width="70%" cellspacing="0" cellpadding="4" border="1">
+<c:if test="${autos != null}">
+    <table width="80%" cellspacing="0" cellpadding="4" border="1">
         <tbody>
         <tr>
             <th style="width: 70px">Марка</th>
@@ -55,11 +55,12 @@
                     </c:when>
                     <c:otherwise>
                         <form>
-                            <td><input name="brand" required type="text" value=${auto.brand}></td>
-                            <td><input name="model" required type="text" value=${auto.model}></td>
-                            <td><input name="fuel" required type="text" value=${auto.fuel}></td>
-                            <td><input name="date" required type="text" value=${auto.date}></td>
-                            <td><input name="price" required type="text" value=${auto.price}></td>
+                            <td><input name="brand" readonly required hidden type="text"
+                                       value=${auto.brand}>${auto.brand}</td>
+                            <td><input name="model" readonly required type="text" value=${auto.model}></td>
+                            <td><input name="fuel" readonly required type="text" value=${auto.fuel}></td>
+                            <td><input name="date" readonly required type="text" value=${auto.date}></td>
+                            <td><input name="price" readonly required type="text" value=${auto.price}></td>
                             <td><input name="startOrderDate" required type="datetime-local"  placeholder="Начало аренды"></td>
                             <td><input name="stopOrderDate" required type="datetime-local"  placeholder="Конец аренды"></td>
                             <input type="hidden" name="authuserId" value=${authuser.id}>

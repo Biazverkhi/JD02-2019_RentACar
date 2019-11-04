@@ -3,6 +3,8 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.dao.AuthUserDAO;
 import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
 import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.AuthUserDTO;
+import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,23 +26,23 @@ public class DefaultSecurityServiceTest {
     SecurityService service=DefaultSecurityService.getInstance();
     @Test
     void testLoginCorrect() {
-        when(dao.getByLoginT("admin")).thenReturn(new AuthUser(null, "admin", "pass", null, null));
-        AuthUser user = service.login("admin", "pass");
+        when(dao.getByLoginT("admin")).thenReturn(new AuthUser(null, "admin", "pass", Role.USER, null));
+        AuthUserDTO user = service.login("admin", "pass");
         assertNotNull(user);
         assertEquals(user.getLogin(),"admin");
-        assertNotNull(user.getPassword(),"pass");
+        assertNotNull(user.getRole());
     }
 
     @Test
     void testLoginWrongPass() {
         when(dao.getByLoginT("admin")).thenReturn(new AuthUser(null, "admin", "pass", null, null));
-    AuthUser login = service.login("admin", "pass2");
+        AuthUserDTO login = service.login("admin", "pass2");
     assertNull(login);
 }
     @Test
     void testLoginNotExist() {
         when(dao.getByLoginT("admin")).thenReturn(null);
-        AuthUser login = service.login("admin", "admin");
+        AuthUserDTO login = service.login("admin", "pass");
         assertNull(login);
     }
 }

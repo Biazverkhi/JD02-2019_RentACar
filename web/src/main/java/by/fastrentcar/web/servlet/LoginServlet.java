@@ -1,6 +1,6 @@
 package by.fastrentcar.web.servlet;
 
-import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
 import by.fastrentcar.service.impl.DefaultSecurityService;
@@ -12,41 +12,47 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/login")
+@WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     private SecurityService securityService = DefaultSecurityService.getInstance();
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) {
-//        Object authUser = rq.getSession().getAttribute("authUser");
-//        if (authUser == null) {
-//            WebUtils.forward("login", rq, rs);
-//            return;
+        HttpSession session = rq.getSession(false);
+        AuthUserDTO authUserDTO = (AuthUserDTO) session.getAttribute("authuser");
+        boolean loggedUser = session != null && authUserDTO != null && authUserDTO.getRole().equals(Role.USER);
+        if (loggedUser) {
+            WebUtils.redirect("index", rq, rs);
+        }
+//        else {           // WebUtils.forward("login", rq, rs);
 //        }
-//        WebUtils.redirect("userpage", rq, rs);
+
+
     }
 
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) {
         String login = rq.getParameter("login");
         String password = rq.getParameter("password");
-        AuthUser user = securityService.login(login, password);
+        HttpSession session = rq.getSession();
+        AuthUserDTO user = securityService.login(login, password);
         if (user == null) {
-            rq.getSession().setAttribute("error", "login or password invalid");
+            session.setAttribute("error", "login or password invalid");
             WebUtils.redirect("index", rq, rs);
             return;
         }
         log.info("user {} logged", user.getLogin());
-        rq.getSession().setAttribute("authuser", user);
-        if (user.getRole().equals(Role.USER)){
+        session.setAttribute("authuser", user);
+        if (user.getRole().equals(Role.USER)) {
             WebUtils.redirect("index", rq, rs);
-    } else {
-        WebUtils.redirect("adminpage.jsp", rq, rs);}
+        } else {
+            WebUtils.forward("adminview/adminpage", rq, rs);
+        }
+    }
 
 }
-
-    }
 
 
 

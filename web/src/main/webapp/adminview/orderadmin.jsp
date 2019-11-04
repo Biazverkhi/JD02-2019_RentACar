@@ -90,7 +90,7 @@
             <option value="открыт">открыт</option><option value="одобрен">одобрен</option>
             </select></td>
         <td><input name="priceArend" required type="number" placeholder="Стоимость"}></td>
-        <td> <input formaction="${pageContext.request.contextPath}/addorder" formmethod="post" type="submit"  value="добавить"></td>
+        <td><input formaction="addorder" formmethod="post" type="submit" value="добавить"></td>
     </tr>
     </form>
 </table>

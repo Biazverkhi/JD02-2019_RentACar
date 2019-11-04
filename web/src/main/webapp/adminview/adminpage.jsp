@@ -18,11 +18,11 @@
 <a href="${pageContext.request.contextPath}/logout" >Выход</a>
 <hr>
 <hr>
-<a href="${pageContext.request.contextPath}/useradmin" >Администрирование пользователей</a>
+<a href="${pageContext.request.contextPath}/adminview/useradmin">Администрирование пользователей</a>
 <hr>
-<a href="${pageContext.request.contextPath}/autoadmin" >Администрирование авто</a>
+<a href="${pageContext.request.contextPath}/adminview/autoadmin">Администрирование авто</a>
 <hr>
-<a href="${pageContext.request.contextPath}/orderadmin" >Обработка заявок</a>
+<a href="${pageContext.request.contextPath}/adminview/orderadmin">Обработка заявок</a>
 
 
 

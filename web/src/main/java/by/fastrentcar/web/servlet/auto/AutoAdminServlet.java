@@ -4,13 +4,14 @@ import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
 import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet("/autoadmin")
+@WebServlet("/adminview/autoadmin")
 public class AutoAdminServlet extends HttpServlet {
     private AutoService defaultAutoService = DefaultAutoService.getInstance();
 
@@ -18,7 +19,7 @@ public class AutoAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         List<Auto> list = defaultAutoService.getListAuto();
         req.setAttribute("autos", list);
-       WebUtils.forward("autoadmin", req, resp);
+        WebUtils.forward("adminview/autoadmin", req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)  {

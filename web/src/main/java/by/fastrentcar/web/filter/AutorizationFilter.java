@@ -1,6 +1,8 @@
 package by.fastrentcar.web.filter;
 
 
+import by.fastrentcar.model.user.AuthUserDTO;
+import by.fastrentcar.model.user.Role;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.*;
@@ -11,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebFilter({"/*"})
-public class AutentificationFilter implements Filter {
+@WebFilter("/adminview/*")
+public class AutorizationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
 
@@ -23,17 +25,15 @@ public class AutentificationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        String indexURI = req.getContextPath() + "/index";
-        String loginURI = req.getContextPath() + "/login";
-        String regisrtationURI = req.getContextPath() + "/registration";
-        boolean loginRequest = req.getRequestURI().equals(loginURI);
-        boolean indexRequest = req.getRequestURI().equals(indexURI);
-        boolean registrationRequest = req.getRequestURI().equals(regisrtationURI);
         boolean logged = session != null && session.getAttribute("authuser") != null;
-        if (logged || loginRequest || indexRequest || registrationRequest) {
-            chain.doFilter(req, res);
-        } else {
-            WebUtils.redirect("index", req, res);
+        if (logged) {
+            AuthUserDTO authUserDTO = (AuthUserDTO) session.getAttribute("authuser");
+            Role role = authUserDTO.getRole();
+            if (role.equals(Role.ADMIN)) {
+                chain.doFilter(req, res);
+            } else {
+                WebUtils.redirect("index", req, res);
+            }
         }
 
 

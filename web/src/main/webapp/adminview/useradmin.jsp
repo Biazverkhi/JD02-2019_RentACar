@@ -95,7 +95,7 @@
             <td><input name="passport_number" required type="text" placeholder="номер пасспорта"></td>
             <td><input name="passport_data" required type="date" placeholder="дата пасспорта"></td>
             <td><input name="passport_authority" required type="text" placeholder="орган выдачи пасспорта"></td>
-            <td><input formaction="${pageContext.request.contextPath}/add" formmethod="post" type="submit" value="добавить"></td>
+            <td><input formaction="add" formmethod="post" type="submit" value="добавить"></td>
         </tr>
     </form>
 </table>

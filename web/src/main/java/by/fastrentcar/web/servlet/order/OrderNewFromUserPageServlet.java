@@ -1,12 +1,12 @@
 package by.fastrentcar.web.servlet.order;
 
-import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.order.Order;
+import by.fastrentcar.model.order.OrderDTO;
+import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.BussinesLogic;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.service.impl.DefaultBussinesLogic;
 import by.fastrentcar.service.impl.DefaultOrderService;
-import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -24,11 +24,11 @@ public class OrderNewFromUserPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        AuthUser authuser = (AuthUser)(req.getSession().getAttribute("authuser"));
+        AuthUserDTO authuser = (AuthUserDTO) (req.getSession().getAttribute("authuser"));
         Long authuserId=authuser.getId();
         List<Order> list = defaultOrderService.getListOrderByIdUser(authuserId);
         req.setAttribute("ordersuser", list);
-        WebUtils.forward("userpage", req, resp);return;
+        WebUtils.forward("userpage", req, resp);
 
     }
 

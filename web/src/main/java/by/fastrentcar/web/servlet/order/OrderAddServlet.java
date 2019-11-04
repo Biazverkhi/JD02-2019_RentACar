@@ -4,13 +4,14 @@ import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
-@WebServlet("/addorder")
+@WebServlet("/adminview/addorder")
 public class OrderAddServlet extends HttpServlet {
     private OrderService defaultOrderService = DefaultOrderService.getInstance();
     // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
@@ -33,6 +34,6 @@ public class OrderAddServlet extends HttpServlet {
                 createOrderDate, startOrderDate, stopOrderDate,
                 comment, reservStatus,priceArend);
         defaultOrderService.addOrder(order);
-        WebUtils.redirect("orderadmin", req, resp);
+        WebUtils.redirect("adminview/orderadmin", req, resp);
     }
 }

@@ -3,12 +3,13 @@ package by.fastrentcar.web.servlet.order;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/deleteorder")
+@WebServlet("/adminview/deleteorder")
 public class OrderDeleteServlet extends HttpServlet {
     private OrderService defaultOrderService = DefaultOrderService.getInstance();
 
@@ -20,6 +21,6 @@ public class OrderDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         Long id = Long.valueOf(req.getParameter("id"));
         defaultOrderService.deleteOrder(id);
-        WebUtils.redirect("orderadmin", req, resp);
+        WebUtils.redirect("adminview/orderadmin", req, resp);
     }
 }

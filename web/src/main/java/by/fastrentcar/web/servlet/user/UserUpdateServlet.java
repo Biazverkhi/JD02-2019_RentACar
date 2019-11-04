@@ -6,12 +6,13 @@ import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
 import by.fastrentcar.service.impl.DefaultUserService;
 import by.fastrentcar.web.WebUtils;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/update")
+@WebServlet("/adminview/update")
 public class UserUpdateServlet extends HttpServlet {
     private UserService defaultUserService = DefaultUserService.getInstance();
    // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
@@ -38,7 +39,7 @@ public class UserUpdateServlet extends HttpServlet {
         User user = new User(userid, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(id, login, password, role, userid);
         defaultUserService.updateCustomer(authUser, user);
-        WebUtils.redirect("useradmin", req, resp);
+        WebUtils.redirect("adminview/useradmin", req, resp);
     }
 }
 

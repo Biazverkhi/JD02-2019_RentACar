@@ -23,6 +23,7 @@ public class DefaultOrderDAOTest {
     void getOrderByIdTest() {
         assertNotNull(dao.getOrderByIdT(1l));
         assertEquals("открыт", dao.getOrderByIdT(1l).getReservStatus());
+        assertNotNull(dao.getListOrderByIdUserT(1l));
 
 
     }

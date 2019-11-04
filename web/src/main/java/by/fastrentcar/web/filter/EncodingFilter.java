@@ -17,10 +17,7 @@ public class EncodingFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) rs;
         req.setCharacterEncoding(UTF_8);
         res.setCharacterEncoding(UTF_8);
-
-
         String locale = req.getParameter("locale");
-
         if (locale==null){
             locale = (String) req.getSession().getAttribute("locale");
             if (locale==null) {
@@ -29,10 +26,6 @@ public class EncodingFilter implements Filter {
         }else {
             req.getSession().setAttribute("locale", locale);
         }
-
-
-
-        filterChain.doFilter(rq, rs);
-
+        filterChain.doFilter(req, res);
     }
 }

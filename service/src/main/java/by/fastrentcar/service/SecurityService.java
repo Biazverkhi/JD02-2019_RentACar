@@ -1,7 +1,7 @@
 package by.fastrentcar.service;
 
-import by.fastrentcar.model.user.AuthUser;
+import by.fastrentcar.model.user.AuthUserDTO;
 
 public interface SecurityService {
-    AuthUser login(String login, String password);
+    AuthUserDTO login(String login, String password);
 }

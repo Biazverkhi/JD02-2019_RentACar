@@ -4,12 +4,13 @@ import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
 import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/addauto")
+@WebServlet("/adminview/addauto")
 public class AutoAddServlet extends HttpServlet {
     private AutoService defaultAutoService = DefaultAutoService.getInstance();
    // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
@@ -28,6 +29,6 @@ public class AutoAddServlet extends HttpServlet {
         String status = req.getParameter("status");
         Auto auto = new Auto(null, brand, model,fuel,date,price,status);
         defaultAutoService.addAuto(auto);
-        WebUtils.redirect("autoadmin", req, resp);
+        WebUtils.redirect("adminview/autoadmin", req, resp);
     }
 }
