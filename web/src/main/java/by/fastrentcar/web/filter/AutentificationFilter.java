@@ -30,7 +30,13 @@ public class AutentificationFilter implements Filter {
         boolean indexRequest = req.getRequestURI().equals(indexURI);
         boolean registrationRequest = req.getRequestURI().equals(regisrtationURI);
         boolean logged = session != null && session.getAttribute("authuser") != null;
-        if (logged || loginRequest || indexRequest || registrationRequest) {
+        //пропускает если:
+        //или пользователь незалогинен и запрос с логина или регистрации
+        //или запрос с index
+        //пользователь залогинен и запрос не с регистрации и логина
+        if ((!logged && (loginRequest || registrationRequest))
+                || indexRequest
+                || logged && (!loginRequest && !registrationRequest)) {
             chain.doFilter(req, res);
         } else {
             WebUtils.redirect("index", req, res);

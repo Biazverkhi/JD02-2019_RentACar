@@ -1,7 +1,6 @@
 package by.fastrentcar.web.servlet.user;
 
 import by.fastrentcar.model.user.AuthUser;
-import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
@@ -12,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/registration")
 public class UserRegistrationServlet extends HttpServlet {
@@ -20,14 +18,8 @@ public class UserRegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession(false);
-        AuthUserDTO authUserDTO = (AuthUserDTO) session.getAttribute("authuser");
-        boolean loggedUser = session != null && authUserDTO != null && authUserDTO.getRole().equals(Role.USER);
-        if (loggedUser) {
-            WebUtils.redirect("index", req, resp);
-        } else {
-            WebUtils.forward("registration", req, resp);
-        }
+
+        WebUtils.forward("registration", req, resp);
 
     }
 

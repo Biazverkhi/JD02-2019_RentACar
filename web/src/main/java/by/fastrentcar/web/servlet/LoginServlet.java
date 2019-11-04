@@ -20,18 +20,9 @@ public class LoginServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) {
-        HttpSession session = rq.getSession(false);
-        AuthUserDTO authUserDTO = (AuthUserDTO) session.getAttribute("authuser");
-        boolean loggedUser = session != null && authUserDTO != null && authUserDTO.getRole().equals(Role.USER);
-        if (loggedUser) {
-            WebUtils.redirect("index", rq, rs);
-        }
-//        else {           // WebUtils.forward("login", rq, rs);
-//        }
-
+        WebUtils.forward("login", rq, rs);
 
     }
-
     @Override
     protected void doPost(HttpServletRequest rq, HttpServletResponse rs) {
         String login = rq.getParameter("login");
