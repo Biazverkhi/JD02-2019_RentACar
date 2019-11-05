@@ -20,10 +20,15 @@ public class DefaultOrderDAOTest {
     }
 
     @Test
+    void getListOrderByIdUserTest() {
+        assertNotNull(dao.getListOrderByIdUserT(24l));
+    }
+
+    @Test
     void getOrderByIdTest() {
         assertNotNull(dao.getOrderByIdT(1l));
-        assertEquals("открыт", dao.getOrderByIdT(1l).getReservStatus());
-        assertNotNull(dao.getListOrderByIdUserT(1l));
+        assertEquals("rrr", dao.getOrderByIdT(1l).getReservStatus());
+        // assertNotNull(dao.getListOrderByIdUserT(1l));
 
 
     }
@@ -37,7 +42,7 @@ public class DefaultOrderDAOTest {
 
     @Test
     void addUpdateDeleteOrder() {
-        Order order = new Order(null, 24l, 648l, LocalDateTime.now(), LocalDateTime.of(2019, 5, 26, 12, 23, 56), LocalDateTime.of(2019, 5, 27, 12, 23, 56), "comment", "rrr", 235d);
+        Order order = new Order(null, 248l, 648l, LocalDateTime.now(), LocalDateTime.of(2019, 5, 26, 12, 23, 56), LocalDateTime.of(2019, 5, 27, 12, 23, 56), "comment", "rrr", 235d);
         ID = dao.addOrderT(order);
         assertNotNull(ID);
         Order order2 = new Order(ID, 24l, 645l, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), "comment", "rrr", 237d);

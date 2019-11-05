@@ -1,8 +1,13 @@
 package by.fastrentcar.dao.entity;
 
+import by.fastrentcar.model.order.Order;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-public class Order {
+@Entity
+@Table(name = "orders")
+public class OrderEntity {
     private Long id;
     private Long authuserId;
     private Long autoId;
@@ -13,7 +18,20 @@ public class Order {
     private Double priceArend;
     private String reservStatus;
 
-    public Order(Long id, Long authuserId, Long autoId, LocalDateTime createOrderDate, LocalDateTime startOrderDate, LocalDateTime stopOrderDate, String comment, String reservStatus, Double priceArend) {
+
+    public OrderEntity(Order order) {
+        this.id = order.getId();
+        this.authuserId = order.getAuthuserId();
+        this.autoId = order.getAutoId();
+        this.createOrderDate = order.getCreateOrderDate();
+        this.startOrderDate = order.getStartOrderDate();
+        this.stopOrderDate = order.getStopOrderDate();
+        this.comment = order.getComment();
+        this.reservStatus = order.getReservStatus();
+        this.priceArend = order.getPriceArend();
+    }
+
+    public OrderEntity(Long id, Long authuserId, Long autoId, LocalDateTime createOrderDate, LocalDateTime startOrderDate, LocalDateTime stopOrderDate, String comment, String reservStatus, Double priceArend) {
         this.id = id;
         this.authuserId = authuserId;
         this.autoId = autoId;
@@ -25,6 +43,13 @@ public class Order {
         this.priceArend = priceArend;
     }
 
+    public OrderEntity() {
+
+    }
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -33,6 +58,7 @@ public class Order {
         this.id = id;
     }
 
+    @Column(name = "authuser_id")
     public Long getAuthuserId() {
         return authuserId;
     }
@@ -40,6 +66,8 @@ public class Order {
     public void setAuthuserId(Long authuserId) {
         this.authuserId = authuserId;
     }
+
+    @Column(name = "auto_id")
 
     public Long getAutoId() {
         return autoId;
@@ -49,6 +77,8 @@ public class Order {
         this.autoId = autoId;
     }
 
+    @Column(name = "create_order_date")
+
     public LocalDateTime getCreateOrderDate() {
         return createOrderDate;
     }
@@ -56,6 +86,8 @@ public class Order {
     public void setCreateOrderDate(LocalDateTime createOrderDate) {
         this.createOrderDate = createOrderDate;
     }
+
+    @Column(name = "start_order_date")
 
     public LocalDateTime getStartOrderDate() {
         return startOrderDate;
@@ -65,6 +97,8 @@ public class Order {
         this.startOrderDate = startOrderDate;
     }
 
+    @Column(name = "stop_order_date")
+
     public LocalDateTime getStopOrderDate() {
         return stopOrderDate;
     }
@@ -72,6 +106,8 @@ public class Order {
     public void setStopOrderDate(LocalDateTime stopOrderDate) {
         this.stopOrderDate = stopOrderDate;
     }
+
+    @Column(name = "commentary")
 
     public String getComment() {
         return comment;
@@ -81,6 +117,8 @@ public class Order {
         this.comment = comment;
     }
 
+    @Column(name = "reserv_status")
+
     public String getReservStatus() {
         return reservStatus;
     }
@@ -89,11 +127,30 @@ public class Order {
         this.reservStatus = reservStatus;
     }
 
+    @Column(name = "price_arend")
+
     public Double getPriceArend() {
         return priceArend;
     }
 
     public void setPriceArend(Double priceArend) {
         this.priceArend = priceArend;
+    }
+
+    public Order convertOrderByOrderEntity() {
+        return new Order(
+                this.id,
+                this.authuserId,
+                this.autoId,
+                this.createOrderDate,
+                this.startOrderDate,
+                this.stopOrderDate,
+                this.comment,
+                this.reservStatus,
+                this.priceArend
+
+        );
+
+
     }
 }
