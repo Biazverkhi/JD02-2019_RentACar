@@ -50,21 +50,52 @@ public class DefaultOrderDAO implements OrderDAO {
 
     @Override
     public boolean updateOrderT(Order order) {
-
-        Session session = EMUtil.getEntityManager();
-        OrderEntity orderEntity = new OrderEntity(order);
-        boolean flag = false;
+        Session session = null;
+        int count = 0;
         try {
+            OrderEntity orderEntity = new OrderEntity(order);
+            session = EMUtil.getEntityManager();
             session.beginTransaction();
-            session.update(orderEntity);
+            count = session.createQuery("update OrderEntity oe " +
+                    "set oe.authuserId=:authuserId, " +
+                    "oe.autoId=:autoId, " +
+                    "oe.createOrderDate=:createOrderDate, " +
+                    "oe.startOrderDate=:startOrderDate, " +
+                    "oe.stopOrderDate=:stopOrderDate, " +
+                    "oe.comment=:comment, " +
+                    "oe.reservStatus=:reservStatus, " +
+                    "oe.priceArend=:priceArend " +
+                    "where oe.id=:id")
+                    .setParameter("authuserId", orderEntity.getAuthuserId())
+                    .setParameter("autoId", orderEntity.getAutoId())
+                    .setParameter("createOrderDate", orderEntity.getCreateOrderDate())
+                    .setParameter("startOrderDate", orderEntity.getStartOrderDate())
+                    .setParameter("stopOrderDate", orderEntity.getStopOrderDate())
+                    .setParameter("comment", orderEntity.getComment())
+                    .setParameter("reservStatus", orderEntity.getReservStatus())
+                    .setParameter("priceArend", orderEntity.getPriceArend())
+                    .setParameter("id", orderEntity.getId())
+                    .executeUpdate();
             session.getTransaction().commit();
-            flag = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
+            //             log.error("fail to update user:{}", user, e);
+            try {
+                session.getTransaction().rollback();
+                //log.info("rollback is completed");
+            } catch (HibernateException ex) {
+                // log.error("rollback didn't work", ex);
+                throw new RuntimeException(e);
+            }
         } finally {
-            session.close();
+            if (session != null) {
+                try {
+                    session.close();
+                } catch (HibernateException e) {
+                    //  log.error("fail close connection", e);
+                }
+            }
         }
-        return flag;
+        return count > 0;
     }
 
     @Override

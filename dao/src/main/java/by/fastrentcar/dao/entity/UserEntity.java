@@ -1,7 +1,12 @@
 package by.fastrentcar.dao.entity;
 
+import by.fastrentcar.model.user.User;
 
-public class User {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+public class UserEntity {
     private Long id;
     private String firstName;
     private String lastName;
@@ -10,18 +15,11 @@ public class User {
     private String passport_number;
     private String passport_data;
     private String passport_authority;
+    private AuthUserEntity authUserEntity;
 
-    public User(Long id, String firstName, String lastName, String phone, String email, String passport_number, String passport_data, String passport_authority) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
-        this.passport_number = passport_number;
-        this.passport_data = passport_data;
-        this.passport_authority = passport_authority;
-    }
-
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -85,6 +83,42 @@ public class User {
     public void setPassport_authority(String passport_authority) {
         this.passport_authority = passport_authority;
     }
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userEntity", cascade = CascadeType.ALL)
+    public AuthUserEntity getAuthUserEntity() {
+        return authUserEntity;
+    }
+
+    public void setAuthUserEntity(AuthUserEntity authUserEntity) {
+        this.authUserEntity = authUserEntity;
+    }
+
+    public UserEntity() {
+    }
+
+    public UserEntity(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.passport_number = user.getPassport_number();
+        this.passport_data = user.getPassport_data();
+        this.passport_authority = user.getPassport_authority();
+        this.authUserEntity = null;
+    }
+
+    public User convertUserbyUserEntity() {
+        return new User(this.id,
+                this.firstName,
+                this.lastName,
+                this.phone,
+                this.email,
+                this.passport_number,
+                this.passport_data,
+                this.passport_authority);
+    }
+
 
 }
 
