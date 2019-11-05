@@ -16,25 +16,13 @@ public class AutoEntity {
     private String status;
 
     public AutoEntity(Auto auto) {
-        AutoEntity autoEntity = new AutoEntity(
-                this.id = auto.getId(),
-                this.brand = auto.getBrand(),
-                this.model = auto.getModel(),
-                this.fuel = auto.getFuel(),
-                this.date = auto.getDate(),
-                this.price = auto.getPrice(),
-                this.status = auto.getStatus());
-    }
-
-
-    public AutoEntity(Long id, String brand, String model, String fuel, String date, Double price, String status) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.fuel = fuel;
-        this.date = date;
-        this.price = price;
-        this.status = status;
+        this.id = auto.getId();
+        this.brand = auto.getBrand();
+        this.model = auto.getModel();
+        this.fuel = auto.getFuel();
+        this.date = auto.getDate();
+        this.price = auto.getPrice();
+        this.status = auto.getStatus();
     }
 
     public AutoEntity() {
@@ -101,7 +89,7 @@ public class AutoEntity {
     }
 
     public Auto convertAutoByAutoEntity() {
-        Auto auto = new Auto(
+        return new Auto(
                 this.id,
                 this.brand,
                 this.model,
@@ -109,7 +97,7 @@ public class AutoEntity {
                 this.date,
                 this.price,
                 this.status);
-        return auto;
+
     }
 
 }

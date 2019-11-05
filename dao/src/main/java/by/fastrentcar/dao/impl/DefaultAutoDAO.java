@@ -29,53 +29,6 @@ public class DefaultAutoDAO implements AutoDAO {
     }
 
     @Override
-    public Auto getAutoByIdT(Long id) {
-        Session session = null;
-        AutoEntity autoEntity = null;
-        try {
-            session = EMUtil.getEntityManager();
-            session.beginTransaction();
-            autoEntity = session.get(AutoEntity.class, id);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return autoEntity != null ? autoEntity.convertAutoByAutoEntity() : null;
-    }
-
-
-    @Override
-    public List<Auto> getListAutoT() {
-
-        Session session = null;
-        List<Auto> auto = new ArrayList<>();
-        try {
-            session = EMUtil.getEntityManager();
-            session.beginTransaction();
-
-            Query query = session.createQuery("from AutoEntity");
-            List autoEntity = query.list();
-            System.out.println("entity size: " + autoEntity.size());
-
-            for (Object ae : autoEntity) {
-                auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
-            }
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            session.getTransaction().rollback();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return auto;
-    }
-
-    @Override
     public Long addAutoT(Auto auto) {
         Session session = EMUtil.getEntityManager();
         AutoEntity autoEntity = new AutoEntity(auto);
@@ -130,4 +83,52 @@ public class DefaultAutoDAO implements AutoDAO {
         }
         return flag;
     }
+
+    @Override
+    public Auto getAutoByIdT(Long id) {
+        Session session = null;
+        AutoEntity autoEntity = null;
+        try {
+            session = EMUtil.getEntityManager();
+            session.beginTransaction();
+            autoEntity = session.get(AutoEntity.class, id);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return autoEntity != null ? autoEntity.convertAutoByAutoEntity() : null;
+    }
+
+
+    @Override
+    public List<Auto> getListAutoT() {
+
+        Session session = null;
+        List<Auto> auto = new ArrayList<>();
+        try {
+            session = EMUtil.getEntityManager();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from AutoEntity");
+            List autoEntity = query.list();
+            System.out.println("entity size: " + autoEntity.size());
+
+            for (Object ae : autoEntity) {
+                auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
+            }
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return auto;
+    }
+
 }

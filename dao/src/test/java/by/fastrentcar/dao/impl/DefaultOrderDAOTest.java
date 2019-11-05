@@ -21,7 +21,7 @@ public class DefaultOrderDAOTest {
 
     @Test
     void getListOrderByIdUserTest() {
-        assertNotNull(dao.getListOrderByIdUserT(24l));
+        assertNotNull(dao.getListOrderByIdUserT(25l));
     }
 
     @Test

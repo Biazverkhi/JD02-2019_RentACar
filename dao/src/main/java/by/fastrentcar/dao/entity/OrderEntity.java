@@ -18,7 +18,6 @@ public class OrderEntity {
     private Double priceArend;
     private String reservStatus;
 
-
     public OrderEntity(Order order) {
         this.id = order.getId();
         this.authuserId = order.getAuthuserId();
@@ -29,18 +28,6 @@ public class OrderEntity {
         this.comment = order.getComment();
         this.reservStatus = order.getReservStatus();
         this.priceArend = order.getPriceArend();
-    }
-
-    public OrderEntity(Long id, Long authuserId, Long autoId, LocalDateTime createOrderDate, LocalDateTime startOrderDate, LocalDateTime stopOrderDate, String comment, String reservStatus, Double priceArend) {
-        this.id = id;
-        this.authuserId = authuserId;
-        this.autoId = autoId;
-        this.createOrderDate = createOrderDate;
-        this.startOrderDate = startOrderDate;
-        this.stopOrderDate = stopOrderDate;
-        this.comment = comment;
-        this.reservStatus = reservStatus;
-        this.priceArend = priceArend;
     }
 
     public OrderEntity() {
