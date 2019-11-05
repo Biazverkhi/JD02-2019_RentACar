@@ -1,19 +1,24 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AutoDAO;
-import by.fastrentcar.dao.DataSource;
+import by.fastrentcar.dao.EMUtil;
+import by.fastrentcar.dao.entity.AutoEntity;
 import by.fastrentcar.model.auto.Auto;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultAutoDAO implements AutoDAO {
     private DefaultAutoDAO() {
     }
-     private static final Logger log = LoggerFactory.getLogger(DefaultAutoDAO.class);
+
+    private static final Logger log = LoggerFactory.getLogger(DefaultAutoDAO.class);
 
     private static class SingletonHolder {
         static final AutoDAO HOLDER_INSTANCE = new DefaultAutoDAO();
@@ -25,219 +30,104 @@ public class DefaultAutoDAO implements AutoDAO {
 
     @Override
     public Auto getAutoByIdT(Long id) {
-        final String sql = "select * from auto where id=?";
-        Connection connection = null;
+        Session session = null;
+        AutoEntity autoEntity = null;
         try {
-            connection = DataSource.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setLong(1, id);
-                try (ResultSet rs = ps.executeQuery()) {
-                    Auto auto = rs.next() ? new Auto(
-                            rs.getLong("id"),
-                            rs.getString("brand"),
-                            rs.getString("model"),
-                            rs.getString("fuel"),
-                            rs.getString("date"),
-                            rs.getDouble("price"),
-                            rs.getString("status")
-                    ) : null;
-                    connection.commit();
-                    return auto;
-                }
-            }
-        } catch (SQLException e) {
-            //   log.error("user search error, login:{}", login, e);
-            try {
-                connection.rollback();
-                //    log.info("rollback is completed");
-            } catch (SQLException ex) {
-                //   log.error("rollback didn't work", ex);
-                throw new RuntimeException(e);
-            }
-            throw new RuntimeException(e);
+            session = EMUtil.getEntityManager();
+            session.beginTransaction();
+            autoEntity = session.get(AutoEntity.class, id);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    //   log.error("fail close connection", e);
-                }
+            if (session != null) {
+                session.close();
             }
         }
+        return autoEntity != null ? autoEntity.convertAutoByAutoEntity() : null;
     }
+
 
     @Override
     public List<Auto> getListAutoT() {
-        final List<Auto> autos = new ArrayList<>();
-        final String sql = "select * from auto";
-        Connection connection = null;
-        try {
-            connection = DataSource.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        autos.add(new Auto(
-                                        rs.getLong("id"),
-                                        rs.getString("brand"),
-                                        rs.getString("model"),
-                                        rs.getString("fuel"),
-                                        rs.getString("date"),
-                                        rs.getDouble("price"),
-                                        rs.getString("status")
 
-                                )
-                        );
-                    }
-                    connection.commit();
-                    return autos;
-                }
+        Session session = null;
+        List<Auto> auto = new ArrayList<>();
+        try {
+            session = EMUtil.getEntityManager();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from AutoEntity");
+            List autoEntity = query.list();
+            System.out.println("entity size: " + autoEntity.size());
+
+            for (Object ae : autoEntity) {
+                auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
             }
-        } catch (SQLException e) {
-            // log.error("users search error", e);
-            try {
-                connection.rollback();
-                //log.info("rollback is completed");
-            } catch (SQLException ex) {
-                // log.error("rollback didn't work", ex);
-                throw new RuntimeException(e);
-            }
-            throw new RuntimeException(e);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    //   log.error("fail close connection", e);
-                }
+            if (session != null) {
+                session.close();
             }
         }
-
+        return auto;
     }
 
     @Override
     public Long addAutoT(Auto auto) {
-        final String sql = "insert into auto( brand, model, fuel, date, price,status) values(?,?,?,?,?,?)";
-        Connection connection = null;
+        Session session = EMUtil.getEntityManager();
+        AutoEntity autoEntity = new AutoEntity(auto);
+        Long key = null;
         try {
-            connection = DataSource.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, auto.getBrand());
-                ps.setString(2, auto.getModel());
-                ps.setString(3, auto.getFuel());
-                ps.setString(4, auto.getDate());
-                ps.setDouble(5, auto.getPrice());
-                ps.setString(6, auto.getStatus());
-
-                ps.executeUpdate();
-                try (ResultSet keys = ps.getGeneratedKeys();
-                ) {
-                    keys.next();
-                    long key = keys.getLong(1);
-                    connection.commit();
-                    //      log.info("authuser saved:{} with id:{}", authUser, key);
-                    return key;
-                }
-            }
-        } catch (SQLException e) {
-            // log.error("fail to save autchuser:{}", authUser, e);
-            try {
-                connection.rollback();
-                //     log.info("rollback is completed");
-            } catch (SQLException ex) {
-                //   log.error("rollback didn't work", ex);
-                throw new RuntimeException(e);
-            }
-            throw new RuntimeException(e);
+            session.beginTransaction();
+            // session.persist(autoEntity);
+            key = (Long) session.save(autoEntity);
+            session.getTransaction().commit();
+            // EMUtil.closeEMFactory();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    //     log.error("fail close connection", e);
-                }
-            }
+            session.close();
         }
-
+        return key;
     }
 
     @Override
     public boolean updateAutoT(Auto auto) {
-        final String sql = "update auto set brand=?, model=?, fuel=?, date=?, price=?, status=? where id=?";
-        Connection connection = null;
+        Session session = EMUtil.getEntityManager();
+        AutoEntity autoEntity = new AutoEntity(auto);
+        boolean flag = false;
         try {
-            connection = DataSource.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, auto.getBrand());
-                ps.setString(2, auto.getModel());
-                ps.setString(3, auto.getFuel());
-                ps.setString(4, auto.getDate());
-                ps.setDouble(5, auto.getPrice());
-                ps.setString(6, auto.getStatus());
+            session.beginTransaction();
+            session.update(autoEntity);
+            session.getTransaction().commit();
+            flag = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
 
-                ps.setLong(7, auto.getId());
-
-                final int count = ps.executeUpdate();
-                connection.commit();
-                //    log.info("user updated:{} with id:{}", user, user.getId());
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            // log.error("fail to update user:{}", user, e);
-            try {
-                connection.rollback();
-                //log.info("rollback is completed");
-            } catch (SQLException ex) {
-                // log.error("rollback didn't work", ex);
-                throw new RuntimeException(e);
-            }
-            throw new RuntimeException(e);
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    //  log.error("fail close connection", e);
-                }
-            }
+            session.close();
         }
-
+        return flag;
     }
 
     @Override
     public boolean deleteAutoT(Long id) {
-        final String sql = "delete from auto where id=?";
-        Connection connection = null;
+        Session session = EMUtil.getEntityManager();
+        boolean flag = false;
         try {
-            connection = DataSource.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setLong(1, id);
-                final int count = ps.executeUpdate();
-                connection.commit();
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            // log.error("user delete error, id:{}", id, e);
-            try {
-                connection.rollback();
-                // log.info("rollback is completed");
-            } catch (SQLException ex) {
-                // log.error("rollback didn't work", ex);
-                throw new RuntimeException(e);
-            }
-            throw new RuntimeException(e);
+            session.beginTransaction();
+            session.delete(session.get(AutoEntity.class, id));
+            session.getTransaction().commit();
+            flag = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
+
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    // log.error("fail close connection", e);
-                }
-            }
+            session.close();
         }
+        return flag;
     }
 }
