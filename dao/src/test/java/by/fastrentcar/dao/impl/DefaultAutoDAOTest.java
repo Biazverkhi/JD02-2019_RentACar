@@ -34,10 +34,10 @@ public class DefaultAutoDAOTest {
 
     @Test
     void addUpdateDeleteAuto() {
-        Auto auto = new Auto(null, "11", "22", "33", "44", 245d, "ww");
+        Auto auto = new Auto(null, "1123", "22", "33", "44", 245d, "ww");
         ID = dao.addAutoT(auto);
         assertNotNull(ID);
-        Auto auto2 = new Auto(ID, "11test", "22test", "33test", "44test", 245d, "wwtest");
+        Auto auto2 = new Auto(ID, "11113test", "22test", "33test", "44test", 245d, "wwtest");
         assertEquals(true, dao.updateAutoT(auto2));
         assertEquals(true, dao.deleteAutoT(ID));
     }

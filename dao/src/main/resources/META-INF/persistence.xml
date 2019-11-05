@@ -12,9 +12,9 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/example?createDatabaseIfNotExist=true&amp;logger=com.mysql.cj.log.StandardLogger&amp;profileSQL=true&amp;serverTimezone=UTC"/>
+                      value="jdbc:mysql://localhost:3306/rentacar?createDatabaseIfNotExist=true&amp;logger=com.mysql.cj.log.StandardLogger&amp;profileSQL=true&amp;serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="mySQLpass123"/>
+            <property name="javax.persistence.jdbc.password" value="assembler"/>
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
             <property name="hibernate.hdm2ddl.auto" value="validate"/>
             <property name="hibernate.connection.pool_size" value="10"/>

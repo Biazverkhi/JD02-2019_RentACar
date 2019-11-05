@@ -1,13 +1,12 @@
 package by.fastrentcar.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import by.fastrentcar.model.auto.Auto;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name = "userH")
-public class Auto {
+@Table(name = "auto")
+public class AutoEntity {
     private Long id;
     private String brand;
     private String model;
@@ -17,7 +16,7 @@ public class Auto {
     private String status;
 
 
-    public Auto(Long id, String brand, String model, String fuel, String date, Double price, String status) {
+    public AutoEntity(Long id, String brand, String model, String fuel, String date, Double price, String status) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -27,8 +26,13 @@ public class Auto {
         this.status = status;
     }
 
+    public AutoEntity() {
+
+    }
+
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -83,6 +87,29 @@ public class Auto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Auto convertAutoByAutoEntity() {
+        Auto auto = new Auto(
+                this.id,
+                this.brand,
+                this.model,
+                this.fuel,
+                this.date,
+                this.price,
+                this.status);
+        return auto;
+    }
+
+    public AutoEntity(Auto auto) {
+        AutoEntity autoEntity = new AutoEntity(
+                this.id = auto.getId(),
+                this.brand = auto.getBrand(),
+                this.model = auto.getModel(),
+                this.fuel = auto.getFuel(),
+                this.date = auto.getDate(),
+                this.price = auto.getPrice(),
+                this.status = auto.getStatus());
     }
 }
 
