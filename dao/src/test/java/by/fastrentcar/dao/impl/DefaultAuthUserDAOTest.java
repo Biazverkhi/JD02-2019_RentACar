@@ -46,11 +46,11 @@ public class DefaultAuthUserDAOTest {
         AuthUser au = new AuthUser(null, "test", "test", Role.USER, null);
         User u = new User(null, "Lexa", "ttt", "ttt", "ttt", "tttt", "ttt", "ttttt");
         assertNotNull(dao.addAuthUserUserT(au, u));
-//        AuthUser au2 = new AuthUser(dao.getAuthUserUserDTO("test").getid(), "testupdate", "testupdate", Role.USER, dao.getAuthUserUserDTO("test").getUserId());
-//        User u2 = new User(dao.getAuthUserUserDTO("test").getUserId(), "Lexa", "ttt", "ttt", "ttt", "tttt", "ttt", "ttttt");
-//        assertNotNull(dao.updateAuthUserUserT(au2, u2));
-//        assertEquals("testupdate", dao.getAuthUserUserDTO("testupdate").getLogin());
-//        dao.deleteAuthUserT(dao.getByLoginT("testupdate").getId());
+        AuthUser au2 = new AuthUser(dao.getAuthUserUserDTO("test").getid(), "testupdate", "testupdate", Role.USER, dao.getAuthUserUserDTO("test").getUserId());
+        User u2 = new User(dao.getAuthUserUserDTO("test").getUserId(), "Lexa", "ttt", "ttt", "ttt", "tttt", "ttt", "ttttt");
+        assertNotNull(dao.updateAuthUserUserT(au2, u2));
+        assertEquals("testupdate", dao.getAuthUserUserDTO("testupdate").getLogin());
+        dao.deleteAuthUserT(dao.getByLoginT("testupdate").getId());
 
 
     }

@@ -14,12 +14,12 @@ public class AuthUserUserDTO {
     private String passport_data;
     private String passport_authority;
 
-    public AuthUserUserDTO(Long id, String login, String password, Role role, Long userId, String firstName, String lastName, String phone, String email, String passport_number, String passport_data, String passport_authority) {
+    public AuthUserUserDTO(Long id, String login, String password, Role role, Long user_id, String firstName, String lastName, String phone, String email, String passport_number, String passport_data, String passport_authority) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
-        this.user_id = userId;
+        this.user_id = user_id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -27,6 +27,21 @@ public class AuthUserUserDTO {
         this.passport_number = passport_number;
         this.passport_data = passport_data;
         this.passport_authority = passport_authority;
+    }
+
+    public AuthUserUserDTO(AuthUser authUser, User user) {
+        this.id = authUser.getId();
+        this.login = authUser.getLogin();
+        this.password = authUser.getPassword();
+        this.role = authUser.getRole();
+        this.user_id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.passport_number = user.getPassport_number();
+        this.passport_data = user.getPassport_data();
+        this.passport_authority = user.getPassport_authority();
     }
 
     public Long getid() {

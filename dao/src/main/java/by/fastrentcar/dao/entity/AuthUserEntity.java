@@ -41,6 +41,7 @@ public class AuthUserEntity {
         this.password = password;
     }
 
+    @Enumerated(EnumType.STRING)
     public Role getRole() {
         return role;
     }
@@ -76,17 +77,17 @@ public class AuthUserEntity {
         this.login = authUser.getLogin();
         this.password = authUser.getPassword();
         this.role = authUser.getRole();
-        // this.user_id = authUser.getUserId();
+        this.user_id = authUser.getUserId();
         this.userEntity = userEntity;
     }
 
-//    public AuthUser convertAuthUserByAuthUserEntity() {
-//
-//        return new AuthUser(this.Id,
-//                this.login,
-//                this.password,
-//                this.role,
-//                this.user_id
-//        );
-//    }
+    public AuthUser convertAuthUserByAuthUserEntity() {
+
+        return new AuthUser(this.Id,
+                this.login,
+                this.password,
+                this.role,
+                this.user_id
+        );
+    }
 }
