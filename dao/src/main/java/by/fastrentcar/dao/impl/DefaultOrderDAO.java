@@ -2,6 +2,7 @@ package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.EMUtil;
 import by.fastrentcar.dao.OrderDAO;
+import by.fastrentcar.dao.entity.AuthUserEntity;
 import by.fastrentcar.dao.entity.OrderEntity;
 import by.fastrentcar.model.order.Order;
 import org.hibernate.HibernateException;
@@ -36,6 +37,9 @@ public class DefaultOrderDAO implements OrderDAO {
         try {
             session.beginTransaction();
             // session.persist(autoEntity);
+            AuthUserEntity authUserEntity = session.get(AuthUserEntity.class, order.getAuthuserId());
+            orderEntity.setAuthUserEntity(authUserEntity);
+            authUserEntity.getOrderEntity().add(orderEntity);
             key = (Long) session.save(orderEntity);
             session.getTransaction().commit();
             // EMUtil.closeEMFactory();
@@ -57,8 +61,7 @@ public class DefaultOrderDAO implements OrderDAO {
             session = EMUtil.getEntityManager();
             session.beginTransaction();
             count = session.createQuery("update OrderEntity oe " +
-                    "set oe.authuserId=:authuserId, " +
-                    "oe.autoId=:autoId, " +
+                    "set oe.autoId=:autoId, " +
                     "oe.createOrderDate=:createOrderDate, " +
                     "oe.startOrderDate=:startOrderDate, " +
                     "oe.stopOrderDate=:stopOrderDate, " +
@@ -66,7 +69,6 @@ public class DefaultOrderDAO implements OrderDAO {
                     "oe.reservStatus=:reservStatus, " +
                     "oe.priceArend=:priceArend " +
                     "where oe.id=:id")
-                    .setParameter("authuserId", orderEntity.getAuthuserId())
                     .setParameter("autoId", orderEntity.getAutoId())
                     .setParameter("createOrderDate", orderEntity.getCreateOrderDate())
                     .setParameter("startOrderDate", orderEntity.getStartOrderDate())

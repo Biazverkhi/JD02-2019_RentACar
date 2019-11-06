@@ -47,6 +47,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
             }
             session.getTransaction().commit();
         } catch (HibernateException e) {
+            assert session != null;
             session.getTransaction().rollback();
         } finally {
             if (session != null) {

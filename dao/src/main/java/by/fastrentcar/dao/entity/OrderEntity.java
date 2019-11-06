@@ -17,6 +17,7 @@ public class OrderEntity {
     private String comment;
     private Double priceArend;
     private String reservStatus;
+    private AuthUserEntity authUserEntity;
 
     public OrderEntity(Order order) {
         this.id = order.getId();
@@ -45,7 +46,7 @@ public class OrderEntity {
         this.id = id;
     }
 
-    @Column(name = "authuser_id")
+    @Column(name = "authuser_id", insertable = false, updatable = false)
     public Long getAuthuserId() {
         return authuserId;
     }
@@ -123,6 +124,17 @@ public class OrderEntity {
     public void setPriceArend(Double priceArend) {
         this.priceArend = priceArend;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "authuser_id", referencedColumnName = "id")
+    public AuthUserEntity getAuthUserEntity() {
+        return authUserEntity;
+    }
+
+    public void setAuthUserEntity(AuthUserEntity authUserEntity) {
+        this.authUserEntity = authUserEntity;
+    }
+
 
     public Order convertOrderByOrderEntity() {
         return new Order(

@@ -41,7 +41,7 @@
         <c:forEach items="${orders}" var="order">
             <form > <tr>
                 <td><input name="id"  type="text" readonly value=${order.id}></td>
-                <td><input name="authuserId" required type="text"  value=${order.authuserId}></td>
+                <td><input name="authuserId" required type="text" readonly value=${order.authuserId}></td>
                 <td><input name="autoId" required type="text"  value=${order.autoId}></td>
                 <td><input name="createOrderDate" required type="datetime-local"  value=${order.createOrderDate} ></td>
                 <td><input name="startOrderDate" required type="datetime-local" value=${order.startOrderDate}></td>

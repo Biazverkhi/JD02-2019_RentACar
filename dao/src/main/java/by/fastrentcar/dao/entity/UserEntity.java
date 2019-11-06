@@ -16,6 +16,7 @@ public class UserEntity {
     private String passport_data;
     private String passport_authority;
     private AuthUserEntity authUserEntity;
+    //private List<OrderEntity> orderEntity=new ArrayList<>();
 
     @Id
     @Column(name = "id")
@@ -93,6 +94,14 @@ public class UserEntity {
         this.authUserEntity = authUserEntity;
     }
 
+    //public List<OrderEntity> getOrderEntity() {
+    //    return orderEntity;
+    //}
+
+//    public void setOrderEntity(List<OrderEntity> orderEntity) {
+//        this.orderEntity = orderEntity;
+//    }
+
     public UserEntity() {
     }
 
@@ -106,6 +115,7 @@ public class UserEntity {
         this.passport_data = user.getPassport_data();
         this.passport_authority = user.getPassport_authority();
         this.authUserEntity = null;
+        //   this.orderEntity = null;
     }
 
     public User convertUserbyUserEntity() {

@@ -4,6 +4,8 @@ import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "auth_user")
@@ -14,6 +16,17 @@ public class AuthUserEntity {
     private Role role;
     private UserEntity userEntity;
     private Long user_id;
+    private List<OrderEntity> orderEntity = new ArrayList<>();
+
+    @OneToMany(mappedBy = "authUserEntity")
+    public List<OrderEntity> getOrderEntity() {
+        return orderEntity;
+    }
+
+    public void setOrderEntity(List<OrderEntity> orderEntity) {
+        this.orderEntity = orderEntity;
+    }
+
 
     @Id
     @Column(name = "id")
