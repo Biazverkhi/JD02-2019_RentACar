@@ -8,6 +8,7 @@
         <class>by.fastrentcar.dao.entity.OrderEntity</class>
         <class>by.fastrentcar.dao.entity.AuthUserEntity</class>
         <class>by.fastrentcar.dao.entity.UserEntity</class>
+        <class>by.fastrentcar.dao.entity.AutoServicesEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

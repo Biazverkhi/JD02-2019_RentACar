@@ -3,6 +3,8 @@ package by.fastrentcar.dao.entity;
 import by.fastrentcar.model.auto.Auto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "auto")
@@ -14,26 +16,22 @@ public class AutoEntity {
     private String date;
     private Double price;
     private String status;
-
-    public AutoEntity(Auto auto) {
-        this.id = auto.getId();
-        this.brand = auto.getBrand();
-        this.model = auto.getModel();
-        this.fuel = auto.getFuel();
-        this.date = auto.getDate();
-        this.price = auto.getPrice();
-        this.status = auto.getStatus();
-    }
-
-    public AutoEntity() {
-
-    }
+    private List<AutoServicesEntity> autoServicesEntity = new ArrayList<>();
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
+    }
+
+    @ManyToMany(mappedBy = "autoEntity", cascade = CascadeType.ALL)
+    public List<AutoServicesEntity> getAutoServicesEntity() {
+        return autoServicesEntity;
+    }
+
+    public void setAutoServicesEntity(List<AutoServicesEntity> autoServicesEntity) {
+        this.autoServicesEntity = autoServicesEntity;
     }
 
     public void setId(Long id) {
@@ -86,6 +84,20 @@ public class AutoEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public AutoEntity(Auto auto) {
+        this.id = auto.getId();
+        this.brand = auto.getBrand();
+        this.model = auto.getModel();
+        this.fuel = auto.getFuel();
+        this.date = auto.getDate();
+        this.price = auto.getPrice();
+        this.status = auto.getStatus();
+    }
+
+    public AutoEntity() {
+
     }
 
     public Auto convertAutoByAutoEntity() {

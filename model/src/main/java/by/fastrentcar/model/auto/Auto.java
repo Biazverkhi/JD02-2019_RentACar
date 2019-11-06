@@ -9,6 +9,8 @@ public class Auto {
     private Double price;
     private String status;
 
+    public Auto() {
+    }
 
     public Auto(Long id, String brand, String model, String fuel, String date, Double price, String status) {
         this.id = id;
