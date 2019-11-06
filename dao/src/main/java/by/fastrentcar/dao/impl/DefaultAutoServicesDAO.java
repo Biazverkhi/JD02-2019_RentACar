@@ -17,6 +17,9 @@ import java.util.List;
 public class DefaultAutoServicesDAO implements AutoServicesDAO {
     private static final Logger log = LoggerFactory.getLogger(DefaultAutoServicesDAO.class);
 
+    private DefaultAutoServicesDAO() {
+    }
+
     private static class SingletonHolder {
         static final AutoServicesDAO HOLDER_INSTANCE = new DefaultAutoServicesDAO();
     }
