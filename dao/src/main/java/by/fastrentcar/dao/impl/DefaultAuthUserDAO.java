@@ -40,8 +40,11 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         try {
             session = EMUtil.getEntityManager();
             session.beginTransaction();
-            authUserEntity = (AuthUserEntity) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
-                    .setParameter("login", login).getSingleResult();
+            List<AuthUserEntity> list = (List<AuthUserEntity>) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
+                    .setParameter("login", login).getResultList();
+            if (list != null && !list.isEmpty()) {
+                authUserEntity = list.get(0);
+            }
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
@@ -110,11 +113,13 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         try {
             session = EMUtil.getEntityManager();
             session.beginTransaction();
-            AuthUserEntity authUserEntity = (AuthUserEntity) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
-                    .setParameter("login", login).getSingleResult();
-            User user = authUserEntity.getUserEntity().convertUserbyUserEntity();
-            AuthUser authUser = authUserEntity.convertAuthUserByAuthUserEntity();
-            authUserUserDTO = new AuthUserUserDTO(authUser, user);
+            List<AuthUserEntity> list = (List<AuthUserEntity>) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
+                    .setParameter("login", login).getResultList();
+            if (list != null && !list.isEmpty()) {
+                User user = list.get(0).getUserEntity().convertUserbyUserEntity();
+                AuthUser authUser = list.get(0).convertAuthUserByAuthUserEntity();
+                authUserUserDTO = new AuthUserUserDTO(authUser, user);
+            }
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();

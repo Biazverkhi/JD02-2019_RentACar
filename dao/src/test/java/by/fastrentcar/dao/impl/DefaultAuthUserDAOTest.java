@@ -6,8 +6,7 @@ import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultAuthUserDAOTest {
     AuthUserDAO dao = DefaultAuthUserDAO.getInstance();
@@ -28,6 +27,11 @@ public class DefaultAuthUserDAOTest {
         assertEquals("ADMIN", dao.getByLoginT("wertual").getRole().name());
         assertNotNull(dao.getByLoginT("wertual"));
 
+    }
+
+    @Test
+    void getByLoginTest() {
+        assertNull(dao.getByLoginT("25"));
     }
 
     @Test
