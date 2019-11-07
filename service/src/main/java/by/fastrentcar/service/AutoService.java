@@ -13,6 +13,8 @@ public interface AutoService {
 
     List<Auto> getListAuto();
 
+    List<Auto> getListAuto(int start, int stop);
+
     Auto getAuto(Long id);
 
 

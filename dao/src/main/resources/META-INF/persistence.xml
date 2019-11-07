@@ -16,9 +16,46 @@
                       value="jdbc:mysql://localhost:3306/rentacar?createDatabaseIfNotExist=true&amp;logger=com.mysql.cj.log.StandardLogger&amp;profileSQL=true&amp;serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="assembler"/>
+            <!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>-->
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
             <property name="hibernate.hdm2ddl.auto" value="validate"/>
+            <property name="hibernate.use_sql_comments" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.connection.pool_size" value="10"/>
+            <property name="hibernate.connection.isolation" value="2"/>
+            <!--            <property name="hibernate.cache.region.factory_class"-->
+            <!--                      value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->
+            <!--            <property name="hibernate.cache.use_second_level_cache" value="true"/>-->
+            <!--            <property name="hibernate.cache.use_query_cache" value="true"/>-->
+            <!--&lt;!&ndash;            <property name="hibernate.cache.auto_evict_collection_cache" value="true"/>&ndash;&gt;-->
+            <!--            <property name="net.sf.ehcache.configurationResourceName" value="ehcache.xml"/>-->
+
         </properties>
     </persistence-unit>
+    <persistence-unit name="by.fastrentcar.test" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>by.fastrentcar.dao.entity.AutoEntity</class>
+        <class>by.fastrentcar.dao.entity.OrderEntity</class>
+        <class>by.fastrentcar.dao.entity.AuthUserEntity</class>
+        <class>by.fastrentcar.dao.entity.UserEntity</class>
+        <class>by.fastrentcar.dao.entity.AutoServicesEntity</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:jpadb"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.use_sql_comments" value="false"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.cache.region.factory_class"
+                      value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="net.sf.ehcache.configurationResourceName" value="ehcache.xml"/>
+
+        </properties>
+    </persistence-unit>
+
 </persistence>

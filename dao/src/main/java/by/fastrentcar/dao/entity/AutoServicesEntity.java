@@ -2,6 +2,7 @@ package by.fastrentcar.dao.entity;
 
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "auto_services")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class AutoServicesEntity {
     private Long id;
     private Services services;

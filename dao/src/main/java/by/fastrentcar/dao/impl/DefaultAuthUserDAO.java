@@ -38,7 +38,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         Session session = null;
         AuthUserEntity authUserEntity = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             List<AuthUserEntity> list = (List<AuthUserEntity>) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
                     .setParameter("login", login).getResultList();
@@ -63,7 +63,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         Session session = null;
         AuthUserEntity authUserEntity = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             authUserEntity = session.get(AuthUserEntity.class, id);
             session.getTransaction().commit();
@@ -84,7 +84,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         Session session = null;
         List<AuthUserUserDTO> authUserUserDTO = new ArrayList<>();
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
 
             Query query = session.createQuery("from UserEntity");
@@ -112,7 +112,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         Session session = null;
         AuthUserUserDTO authUserUserDTO = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             List<AuthUserEntity> list = (List<AuthUserEntity>) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
                     .setParameter("login", login).getResultList();
@@ -134,7 +134,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     @Override
     public Long addAuthUserUserT(AuthUser authuser, User user) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         Long key = null;
         try {
             session.beginTransaction();
@@ -155,7 +155,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     @Override
     public boolean updateAuthUserUserT(AuthUser authuser, User user) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();
@@ -176,7 +176,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     @Override
     public boolean deleteAuthUserT(Long id) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();

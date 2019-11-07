@@ -1,12 +1,15 @@
 package by.fastrentcar.dao.entity;
 
 import by.fastrentcar.model.order.Order;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class OrderEntity {
     private Long id;
     private Long authuserId;

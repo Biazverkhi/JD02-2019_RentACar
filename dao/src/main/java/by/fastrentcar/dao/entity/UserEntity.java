@@ -1,11 +1,14 @@
 package by.fastrentcar.dao.entity;
 
 import by.fastrentcar.model.user.User;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class UserEntity {
     private Long id;
     private String firstName;

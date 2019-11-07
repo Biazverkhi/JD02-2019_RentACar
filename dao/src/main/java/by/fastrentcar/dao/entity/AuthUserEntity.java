@@ -2,6 +2,7 @@ package by.fastrentcar.dao.entity;
 
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "auth_user")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class AuthUserEntity {
     private Long Id;
     private String login;

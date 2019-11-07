@@ -31,7 +31,7 @@ public class DefaultOrderDAO implements OrderDAO {
 
     @Override
     public Long addOrderT(Order order) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         OrderEntity orderEntity = new OrderEntity(order);
         Long key = null;
         try {
@@ -58,7 +58,7 @@ public class DefaultOrderDAO implements OrderDAO {
         int count = 0;
         try {
             OrderEntity orderEntity = new OrderEntity(order);
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             count = session.createQuery("update OrderEntity oe " +
                     "set oe.autoId=:autoId, " +
@@ -102,7 +102,7 @@ public class DefaultOrderDAO implements OrderDAO {
 
     @Override
     public boolean deleteOrderT(Long id) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();
@@ -124,7 +124,7 @@ public class DefaultOrderDAO implements OrderDAO {
         Session session = null;
         List<Order> order = new ArrayList<>();
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
 
             Query query = session.createQuery("from OrderEntity");
@@ -151,7 +151,7 @@ public class DefaultOrderDAO implements OrderDAO {
         Session session = null;
         List<Order> order = new ArrayList<>();
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
 
             Query query = session.createQuery("from OrderEntity oe where oe.authuserId= :id");
@@ -178,7 +178,7 @@ public class DefaultOrderDAO implements OrderDAO {
         Session session = null;
         OrderEntity orderEntity = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             orderEntity = session.get(OrderEntity.class, id);
             session.getTransaction().commit();

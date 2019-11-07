@@ -1,6 +1,7 @@
 package by.fastrentcar.dao.entity;
 
 import by.fastrentcar.model.auto.Auto;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "auto")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 public class AutoEntity {
     private Long id;
     private String brand;

@@ -30,7 +30,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
 
     @Override
     public boolean addAutoServicesToAuto(Long autoId, Long servicesId) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();
@@ -51,7 +51,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
 
     @Override
     public Long addAutoServicesT(AutoServices autoServices) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         AutoServicesEntity autoServicesEntity = new AutoServicesEntity(autoServices);
         Long key = null;
         try {
@@ -70,7 +70,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
 
     @Override
     public boolean updateAutoServicesT(AutoServices autoServices) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         AutoServicesEntity autoServicesEntity = new AutoServicesEntity(autoServices);
         boolean flag = false;
         try {
@@ -89,7 +89,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
 
     @Override
     public boolean deleteAutoServicesT(Long id) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();
@@ -110,7 +110,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
         Session session = null;
         List<AutoServices> autoServices = new ArrayList<>();
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
 
             Query query = session.createQuery("from AutoServicesEntity");
@@ -136,7 +136,7 @@ public class DefaultAutoServicesDAO implements AutoServicesDAO {
         Session session = null;
         AutoServicesEntity autoServicesEntity = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             autoServicesEntity = session.get(AutoServicesEntity.class, id);
             session.getTransaction().commit();

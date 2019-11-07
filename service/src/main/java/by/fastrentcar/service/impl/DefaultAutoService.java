@@ -42,6 +42,11 @@ public class DefaultAutoService implements AutoService {
     }
 
     @Override
+    public List<Auto> getListAuto(int start, int stop) {
+        return defaultAutoDAO.getListAutoT(start, stop);
+    }
+
+    @Override
     public Auto getAuto(Long id) {
         return defaultAutoDAO.getAutoByIdT(id);
     }

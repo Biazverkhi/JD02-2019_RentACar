@@ -4,7 +4,6 @@ import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.EMUtil;
 import by.fastrentcar.dao.entity.AutoEntity;
 import by.fastrentcar.model.auto.Auto;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -30,7 +29,7 @@ public class DefaultAutoDAO implements AutoDAO {
 
     @Override
     public Long addAutoT(Auto auto) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         AutoEntity autoEntity = new AutoEntity(auto);
         Long key = null;
         try {
@@ -39,7 +38,7 @@ public class DefaultAutoDAO implements AutoDAO {
             key = (Long) session.save(autoEntity);
             session.getTransaction().commit();
             // EMUtil.closeEMFactory();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -49,7 +48,7 @@ public class DefaultAutoDAO implements AutoDAO {
 
     @Override
     public boolean updateAutoT(Auto auto) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         AutoEntity autoEntity = new AutoEntity(auto);
         boolean flag = false;
         try {
@@ -58,7 +57,7 @@ public class DefaultAutoDAO implements AutoDAO {
             session.getTransaction().commit();
             flag = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
 
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -68,7 +67,7 @@ public class DefaultAutoDAO implements AutoDAO {
 
     @Override
     public boolean deleteAutoT(Long id) {
-        Session session = EMUtil.getEntityManager();
+        Session session = EMUtil.getSession();
         boolean flag = false;
         try {
             session.beginTransaction();
@@ -76,7 +75,7 @@ public class DefaultAutoDAO implements AutoDAO {
             session.getTransaction().commit();
             flag = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
 
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -89,11 +88,11 @@ public class DefaultAutoDAO implements AutoDAO {
         Session session = null;
         AutoEntity autoEntity = null;
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
             autoEntity = session.get(AutoEntity.class, id);
             session.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
             if (session != null) {
@@ -110,7 +109,7 @@ public class DefaultAutoDAO implements AutoDAO {
         Session session = null;
         List<Auto> auto = new ArrayList<>();
         try {
-            session = EMUtil.getEntityManager();
+            session = EMUtil.getSession();
             session.beginTransaction();
 
             Query query = session.createQuery("from AutoEntity");
@@ -121,7 +120,33 @@ public class DefaultAutoDAO implements AutoDAO {
                 auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
             }
             session.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return auto;
+    }
+
+    public List<Auto> getListAutoT(int start, int stop) {
+
+        Session session = null;
+        List<Auto> auto = new ArrayList<>();
+        try {
+            session = EMUtil.getSession();
+            session.beginTransaction();
+
+            List autoEntity = session.createQuery("from AutoEntity")
+                    .setFirstResult(start)
+                    .setMaxResults(stop)
+                    .getResultList();
+            for (Object ae : autoEntity) {
+                auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
             session.getTransaction().rollback();
         } finally {
             if (session != null) {
