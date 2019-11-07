@@ -1,6 +1,7 @@
 package by.fastrentcar.service;
 
 import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.auto.AutoServices;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface AutoService {
     List<Auto> getListAuto(int start, int stop);
 
     Auto getAuto(Long id);
+
+    List<AutoServices> getAutoServicesByAutoIdT(Long id);
 
 
 }

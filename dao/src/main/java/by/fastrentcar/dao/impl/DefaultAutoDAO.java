@@ -3,7 +3,9 @@ package by.fastrentcar.dao.impl;
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.EMUtil;
 import by.fastrentcar.dao.entity.AutoEntity;
+import by.fastrentcar.dao.entity.AutoServicesEntity;
 import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.auto.AutoServices;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -156,4 +158,28 @@ public class DefaultAutoDAO implements AutoDAO {
         return auto;
     }
 
+    @Override
+    public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
+        Session session = null;
+        List<AutoServices> autoServices = new ArrayList<>();
+        try {
+            session = EMUtil.getSession();
+            session.beginTransaction();
+
+            AutoEntity autoEntity = session.get(AutoEntity.class, id);
+            List<AutoServicesEntity> autoServicesEntities = autoEntity.getAutoServicesEntity();
+            for (AutoServicesEntity ase : autoServicesEntities) {
+                autoServices.add(ase.convertAutoServicesByAutoServicesEntity());
+            }
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return autoServices;
+
+    }
 }

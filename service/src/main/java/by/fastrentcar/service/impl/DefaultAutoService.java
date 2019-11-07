@@ -3,6 +3,7 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.dao.impl.DefaultAutoDAO;
 import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoService;
 
 import java.util.List;
@@ -49,5 +50,10 @@ public class DefaultAutoService implements AutoService {
     @Override
     public Auto getAuto(Long id) {
         return defaultAutoDAO.getAutoByIdT(id);
+    }
+
+    @Override
+    public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
+        return defaultAutoDAO.getAutoServicesByAutoIdT(id);
     }
 }

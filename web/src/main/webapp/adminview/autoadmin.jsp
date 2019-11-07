@@ -30,6 +30,8 @@
             <th >Тип топлива</th>
             <th >Год</th>
             <th>Цена/сутки</th>
+            <th>Статус</th>
+
         </tr>
         <c:forEach items="${autos}" var="auto">
             <form > <tr>
@@ -44,6 +46,8 @@
                 <td><select name ="status" ><option value="свободно">свободно</option>
                     <option value="резерв">резерв</option><option value="занято">занято</option>
                     <option selected value="${auto.status}">${auto.status}</option></select></td>
+                <td><input formaction="services" formtarget="_blank" formmethod="post" type="submit" value="serviser">
+                </td>
                 <td><input formaction="updateauto" formmethod="post" type="submit" value="обновить"></td>
                 <td><input formaction="deleteauto" formmethod="post" type="submit" value="удалить"></td>
                     <%--                    <td><input type="checkbox" name="id" value=${user.id} > </td>--%>

@@ -1,6 +1,7 @@
 package by.fastrentcar.dao;
 
 import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.auto.AutoServices;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface AutoDAO {
     List<Auto> getListAutoT(int start, int stop);
 
     Auto getAutoByIdT(Long id);
+
+    List<AutoServices> getAutoServicesByAutoIdT(Long id);
 
 }

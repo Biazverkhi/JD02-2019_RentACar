@@ -50,7 +50,7 @@
     </table>
     <%--        <input formaction="useradmin" formmethod="post" type="submit" value="обновить">--%>
 </c:if>
-<h3>Добавить новое авто</h3>
+<h3>Добавить нового сервайзера</h3>
 <table width="100%" cellspacing="0" cellpadding="4" border="1">
     <tr>
         <th style="width: 100px">Id</th>
@@ -69,5 +69,27 @@
         </tr>
     </form>
 </table>
+
+
+<h3>Назначить сервайзера на авто</h3>
+<table width="100%" cellspacing="0" cellpadding="4" border="1">
+    <tr>
+        <th style="width: 100px">Id авто</th>
+        <th style="width: 70px">Id сервайзерам</th>
+
+    </tr>
+    <form>
+        <tr>
+            <td><input name="autoId" required type="text" placeholder="Id автомобиля"></td>
+            <td><input name="servicesId" required type="text" placeholder="Id сервайзера"></td>
+
+            <td><input formaction="addservicestoauto" formmethod="post" type="submit" value="назначить"></td>
+        </tr>
+    </form>
+</table>
+
+
 </body>
+
+
 </html>
