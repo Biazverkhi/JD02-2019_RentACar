@@ -22,6 +22,9 @@
 <hr>
 <a href="${pageContext.request.contextPath}/adminview/autoadmin">Администрирование авто</a>
 <hr>
+<a href="${pageContext.request.contextPath}/adminview/autoservicesadmin">Сервис для обслуживания авто</a>
+
+<hr>
 <a href="${pageContext.request.contextPath}/adminview/orderadmin">Обработка заявок</a>
 
 
