@@ -52,6 +52,8 @@
                         <td>${auto.fuel}</td>
                         <td>${auto.date}</td>
                         <td>${auto.price}</td>
+
+
                     </c:when>
                     <c:otherwise>
                         <form>
@@ -70,20 +72,36 @@
 
 
                     </c:otherwise>
-
-
                 </c:choose>
-
-
                     <%--                    <td><input type="checkbox" name="id" value=${user.id} > </td>--%>
             </tr>
 
         </c:forEach>
+
         </tbody>
     </table>
-
-
 </c:if>
+
+<c:choose>
+    <c:when test="${prev != null}">
+        <a href="${pageContext.request.contextPath}/prev"> Prev </a>
+
+
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+<c:choose>
+    <c:when test="${next != null}">
+        <a href="${pageContext.request.contextPath}/next"> Next </a>
+
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+
+
+
 
 </body>
 </html>

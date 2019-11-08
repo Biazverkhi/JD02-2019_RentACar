@@ -20,5 +20,7 @@ public interface AutoService {
 
     List<AutoServices> getAutoServicesByAutoIdT(Long id);
 
+    long getCountAuto();
+
 
 }

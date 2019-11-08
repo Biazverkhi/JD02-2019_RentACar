@@ -25,17 +25,21 @@ public class AutentificationFilter implements Filter {
         HttpSession session = req.getSession(false);
         String indexURI = req.getContextPath() + "/index";
         String loginURI = req.getContextPath() + "/login";
+        String nextURI = req.getContextPath() + "/next";
+        String prevURI = req.getContextPath() + "/prev";
         String regisrtationURI = req.getContextPath() + "/registration";
         boolean loginRequest = req.getRequestURI().equals(loginURI);
         boolean indexRequest = req.getRequestURI().equals(indexURI);
         boolean registrationRequest = req.getRequestURI().equals(regisrtationURI);
+        boolean next = req.getRequestURI().equals(nextURI);
+        boolean prev = req.getRequestURI().equals(prevURI);
         boolean logged = session != null && session.getAttribute("authuser") != null;
         //пропускает если:
         //или пользователь незалогинен и запрос с логина или регистрации
         //или запрос с index
         //пользователь залогинен и запрос не с регистрации и логина
         if ((!logged && (loginRequest || registrationRequest))
-                || indexRequest
+                || indexRequest || next || prev
                 || logged && (!loginRequest && !registrationRequest)) {
             chain.doFilter(req, res);
         } else {

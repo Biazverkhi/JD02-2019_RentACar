@@ -31,6 +31,18 @@ public class DefaultAutoDAOTest {
         assertEquals(false, dao.getListAutoT().isEmpty());
     }
 
+    @Test
+    void getAutoListTest2() {
+        assertNotNull(dao.getListAutoT(0, 10));
+    }
+
+
+    @Test
+    void getCountAuto() {
+        assertNotNull(dao.getCountAuto());
+
+
+    }
 
     @Test
     void addUpdateDeleteAuto() {

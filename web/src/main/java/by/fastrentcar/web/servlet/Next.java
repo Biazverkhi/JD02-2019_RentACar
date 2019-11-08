@@ -13,43 +13,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/index", "/prev", "/next"})
-public class IndexPageServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/page/next"})
+public class Next extends HttpServlet {
+
+
     private AutoService defaultAutoService = DefaultAutoService.getInstance();
-    private static final Logger log = LoggerFactory.getLogger(IndexPageServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(by.fastrentcar.web.servlet.IndexPageServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         log.info("start servler");
         Page p;
-        if (req.getSession().getAttribute("page") == null) {
+        if (req.getAttribute("page") == null) {
             p = new Page();
-            log.info("New page " + p.toString());
         } else {
-
-            p = (Page) req.getSession().getAttribute("page");
-            log.info("page from atribute " + p.toString());
-            req.removeAttribute("page");
+            p = (Page) req.getAttribute("page");
         }
         p.countRowAll = (int) defaultAutoService.getCountAuto();
         p.numPageAll = 1 + p.countRowAll / p.maxResult;
-        String contextpath_next = req.getContextPath() + "/next";
-        String contextpath_prev = req.getContextPath() + "/prev";
+        p.numPage = p.startPos / p.maxResult + 1;
+        String contextpath_next = req.getContextPath() + "/page/next";
         String requestURI = req.getRequestURI();
+        String servletpath = req.getServletPath();
+        StringBuffer requestURl = req.getRequestURL();
+        log.info("contextpath_next " + contextpath_next);
+        log.info("requestURI " + requestURI);
+        log.info("servletpath " + servletpath);
+        log.info("requestURl " + requestURl);
 
         if (contextpath_next.equals(requestURI)) {
             log.info("/next");
-            ++p.numPage;
-            log.info("page " + p.numPage);
+
+            p.startPos = p.numPage * p.maxResult;
 
         }
 
-        if (contextpath_prev.equals(requestURI)) {
-            log.info("/prev");
-            p.numPage -= 1;
-            log.info("page " + p.numPage);
-
-        }
         if (p.numPage == 1) {
             req.setAttribute("prev", null);
         } else {
@@ -60,30 +58,25 @@ public class IndexPageServlet extends HttpServlet {
         } else {
             req.setAttribute("next", null);
         }
-        p.startPos = (p.numPage - 1) * p.maxResult;
 
         List<Auto> list = defaultAutoService.getListAuto(p.startPos, p.maxResult);
         req.setAttribute("autos", list);
-        log.info("page to atribute " + p.toString());
-
-        req.getSession().setAttribute("page", p);
+        req.setAttribute("page", p);
         WebUtils.forward("index", req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        WebUtils.redirect("registration", req, resp);
     }
 
-    private class Page {
-        int numPage = 1;
+    private static class Page {
+        int numPage;
         int numPageAll;
         int countRowAll;
-        int startPos;
+        int startPos = 0;
         int maxResult = 10;
-
-        @Override
-        public String toString() {
-            return "Page {numPage:" + numPage + " startPos: " + startPos;
-        }
     }
 }
+
+

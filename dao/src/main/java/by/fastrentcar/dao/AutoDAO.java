@@ -14,6 +14,7 @@ public interface AutoDAO {
 
     List<Auto> getListAutoT();
 
+    long getCountAuto();
     List<Auto> getListAutoT(int start, int stop);
 
     Auto getAutoByIdT(Long id);

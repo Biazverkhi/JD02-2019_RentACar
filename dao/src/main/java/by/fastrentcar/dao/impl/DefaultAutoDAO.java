@@ -159,6 +159,28 @@ public class DefaultAutoDAO implements AutoDAO {
     }
 
     @Override
+    public long getCountAuto() {
+        Session session = null;
+        Long count = 0l;
+        try {
+            session = EMUtil.getSession();
+            session.beginTransaction();
+
+            Query query = session.createQuery("select count(*) from AutoEntity");
+            List list = query.getResultList();
+            count = (Long) list.get(0);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return count;
+    }
+
+    @Override
     public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
         Session session = null;
         List<AutoServices> autoServices = new ArrayList<>();

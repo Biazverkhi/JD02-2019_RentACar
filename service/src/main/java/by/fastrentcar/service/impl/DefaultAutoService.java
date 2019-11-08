@@ -56,4 +56,9 @@ public class DefaultAutoService implements AutoService {
     public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
         return defaultAutoDAO.getAutoServicesByAutoIdT(id);
     }
+
+    @Override
+    public long getCountAuto() {
+        return defaultAutoDAO.getCountAuto();
+    }
 }
