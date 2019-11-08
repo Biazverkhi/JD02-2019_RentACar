@@ -17,13 +17,6 @@ public class DefaultAutoDAOTest {
         assertEquals(dao, DefaultAutoDAO.getInstance());
     }
 
-    @Test
-    void getAutoByIdTest() {
-        assertNotNull(dao.getAutoByIdT(675l));
-        assertEquals("BMV", dao.getAutoByIdT(675l).getBrand());
-
-
-    }
 
     @Test
     void getAutoListTest() {
@@ -48,6 +41,8 @@ public class DefaultAutoDAOTest {
     void addUpdateDeleteAuto() {
         Auto auto = new Auto(null, "1123", "22", "33", "44", 245d, "ww");
         ID = dao.addAutoT(auto);
+        assertNotNull(dao.getAutoByIdT(ID));
+
         assertNotNull(ID);
         Auto auto2 = new Auto(ID, "11113test", "22test", "33test", "44test", 245d, "wwtest");
         assertEquals(true, dao.updateAutoT(auto2));

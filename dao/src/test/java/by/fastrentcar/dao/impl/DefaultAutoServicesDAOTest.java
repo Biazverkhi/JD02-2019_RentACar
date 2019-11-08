@@ -26,7 +26,7 @@ public class DefaultAutoServicesDAOTest {
 
     @Test
     void addAutoServicesToAutoTest() {
-        assertEquals(true, dao.addAutoServicesToAuto(675l, 24l));
+        assertEquals(true, dao.addAutoServicesToAuto(5841l, 24l));
         assertEquals(false, dao.addAutoServicesToAuto(676l, 24l));
 
 

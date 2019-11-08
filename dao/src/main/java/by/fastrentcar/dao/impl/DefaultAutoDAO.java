@@ -7,11 +7,13 @@ import by.fastrentcar.dao.entity.AutoServicesEntity;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +116,13 @@ public class DefaultAutoDAO implements AutoDAO {
             session = EMUtil.getSession();
             session.beginTransaction();
 
-            Query query = session.createQuery("from AutoEntity");
-            List autoEntity = query.list();
-            System.out.println("entity size: " + autoEntity.size());
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<AutoEntity> criteria = cb.createQuery(AutoEntity.class);//указываем результат
+            Root<AutoEntity> autoEntityRoot = criteria.from(AutoEntity.class);//указываем откуда
+            criteria.select(autoEntityRoot);
+            List autoEntity = session.createQuery(criteria).getResultList();
+
 
             for (Object ae : autoEntity) {
                 auto.add(((AutoEntity) ae).convertAutoByAutoEntity());
@@ -166,9 +172,10 @@ public class DefaultAutoDAO implements AutoDAO {
             session = EMUtil.getSession();
             session.beginTransaction();
 
-            Query query = session.createQuery("select count(*) from AutoEntity");
-            List list = query.getResultList();
-            count = (Long) list.get(0);
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
+            criteria.select(cb.count(criteria.from(AutoEntity.class)));
+            count = session.createQuery(criteria).getResultList().get(0);
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
