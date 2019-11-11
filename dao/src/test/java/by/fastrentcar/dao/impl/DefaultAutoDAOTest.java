@@ -4,8 +4,7 @@ import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultAutoDAOTest {
     static Long ID;
@@ -45,7 +44,7 @@ public class DefaultAutoDAOTest {
 
         assertNotNull(ID);
         Auto auto2 = new Auto(ID, "11113test", "22test", "33test", "44test", 245d, "wwtest");
-        assertEquals(true, dao.updateAutoT(auto2));
+        assertTrue(dao.updateAutoT(auto2));
         assertEquals(true, dao.deleteAutoT(ID));
     }
 

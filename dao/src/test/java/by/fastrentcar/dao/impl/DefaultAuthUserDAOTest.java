@@ -22,9 +22,10 @@ public class DefaultAuthUserDAOTest {
 
     @Test
     void getUserAdmin() {
-        assertEquals("wertual", dao.getByLoginT("wertual").getLogin());
-        assertEquals("assembler", dao.getByLoginT("wertual").getPassword());
-        assertEquals("ADMIN", dao.getByLoginT("wertual").getRole().name());
+        AuthUser wertual = dao.getByLoginT("wertual");
+        assertEquals("wertual", wertual.getLogin());
+        assertEquals("assembler", wertual.getPassword());
+        assertEquals(Role.ADMIN, wertual.getRole());
         assertNotNull(dao.getByLoginT("wertual"));
 
     }

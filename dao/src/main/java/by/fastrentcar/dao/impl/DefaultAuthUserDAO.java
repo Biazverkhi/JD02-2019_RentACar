@@ -114,7 +114,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         try {
             session = EMUtil.getSession();
             session.beginTransaction();
-            List<AuthUserEntity> list = (List<AuthUserEntity>) session.createQuery("from AuthUserEntity aue where aue.login=:login ")
+            List<AuthUserEntity> list = session.createQuery("from AuthUserEntity aue where aue.login=:login ")
                     .setParameter("login", login).getResultList();
             if (list != null && !list.isEmpty()) {
                 User user = list.get(0).getUserEntity().convertUserbyUserEntity();
