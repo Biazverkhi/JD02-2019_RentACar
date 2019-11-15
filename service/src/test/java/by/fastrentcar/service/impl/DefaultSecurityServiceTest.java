@@ -1,7 +1,6 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class DefaultSecurityServiceTest {
 
     @Mock
-    AuthUserDAO dao= DefaultAuthUserDAO.getInstance();
+    AuthUserDAO dao;
 
     @InjectMocks
     SecurityService service=DefaultSecurityService.getInstance();

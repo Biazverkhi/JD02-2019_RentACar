@@ -1,11 +1,12 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
+import by.fastrentcar.dao.ConfigSpringDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
@@ -21,31 +22,25 @@ public class DefaultUserService implements UserService {
         return DefaultUserService.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private AuthUserDAO defaultAuthUserDAO = DefaultAuthUserDAO.getInstance();
+    AuthUserDAO authUserDAO = new AnnotationConfigApplicationContext(ConfigSpringDAO.class).getBean(AuthUserDAO.class);
 
-    @Override
     public List<AuthUserUserDTO> getListAuthUserUserDTO() {
-        return defaultAuthUserDAO.getListAuthUserUserDTO();
+        return authUserDAO.getListAuthUserUserDTO();
     }
 
     public AuthUserUserDTO getAuthUserUserDTO(String login) {
-        return defaultAuthUserDAO.getAuthUserUserDTO(login);
+        return authUserDAO.getAuthUserUserDTO(login);
     }
 
-    @Override
     public Long addCustomer(AuthUser authUser, User user) {
-        return defaultAuthUserDAO.addAuthUserUserT(authUser, user);
+        return authUserDAO.addAuthUserUserT(authUser, user);
     }
 
-    @Override
     public boolean updateCustomer(AuthUser authUser, User user) {
-        return defaultAuthUserDAO.updateAuthUserUserT(authUser, user);
+        return authUserDAO.updateAuthUserUserT(authUser, user);
     }
 
-    @Override
     public boolean deleteCutomer(Long id) {
-        return defaultAuthUserDAO.deleteAuthUserT(id);
+        return authUserDAO.deleteAuthUserT(id);
     }
-
-
 }

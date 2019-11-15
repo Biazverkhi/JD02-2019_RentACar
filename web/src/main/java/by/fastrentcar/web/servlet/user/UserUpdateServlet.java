@@ -4,7 +4,6 @@ import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
-import by.fastrentcar.service.impl.DefaultUserService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminview/update")
 public class UserUpdateServlet extends HttpServlet {
-    private UserService defaultUserService = DefaultUserService.getInstance();
+    private UserService defaultUserService;
    // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
 
     @Override

@@ -3,6 +3,7 @@ package by.fastrentcar.dao.impl;
 import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.model.order.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DefaultOrderDAOTest {
     static Long ID;
-    OrderDAO dao = DefaultOrderDAO.getInstance();
+    final OrderDAO dao = new AnnotationConfigApplicationContext("by.fastrentcar.dao").getBean(OrderDAO.class);
+
+
 
     @Test
     void getInstance() {
         assertNotNull(dao);
-        assertEquals(dao, DefaultOrderDAO.getInstance());
     }
 
     @Test
@@ -26,6 +28,7 @@ public class DefaultOrderDAOTest {
 
     @Test
     void getOrderByIdTest() {
+
         assertNotNull(dao.getOrderByIdT(1l));
         assertEquals("rrr", dao.getOrderByIdT(1l).getReservStatus());
         // assertNotNull(dao.getListOrderByIdUserT(1l));

@@ -19,20 +19,6 @@ import java.util.List;
 
 public class DefaultAuthUserDAO implements AuthUserDAO {
     private static final Logger log = LoggerFactory.getLogger(DefaultAuthUserDAO.class);
-
-    private DefaultAuthUserDAO() {
-    }
-
-//https://habr.com/ru/post/129494/ //    варианты синглтона
-
-    private static class SingletonHolder {
-        static final AuthUserDAO HOLDER_INSTANCE = new DefaultAuthUserDAO();
-    }
-
-    public static AuthUserDAO getInstance() {
-        return DefaultAuthUserDAO.SingletonHolder.HOLDER_INSTANCE;
-    }
-
     @Override
     public AuthUser getByLoginT(String login) {
         Session session = null;
@@ -192,6 +178,4 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         return flag;
 
     }
-
-
 }

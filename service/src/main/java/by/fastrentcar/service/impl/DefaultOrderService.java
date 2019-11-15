@@ -1,15 +1,13 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.OrderDAO;
-import by.fastrentcar.dao.impl.DefaultOrderDAO;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
 public class DefaultOrderService implements OrderService {
-    private DefaultOrderService() {
-    }
 
     private static class SingletonHolder {
         static final OrderService HOLDER_INSTANCE = new DefaultOrderService();
@@ -20,35 +18,35 @@ public class DefaultOrderService implements OrderService {
         return DefaultOrderService.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private OrderDAO defaultOrderDAO = DefaultOrderDAO.getInstance();
+    private OrderDAO orderDAO = new AnnotationConfigApplicationContext("by.fastrentcar.dao").getBean(OrderDAO.class);
 
     @Override
     public Long addOrder(Order order) {
-        return defaultOrderDAO.addOrderT(order);
+        return orderDAO.addOrderT(order);
     }
 
     @Override
     public boolean updateOrder(Order order) {
-        return defaultOrderDAO.updateOrderT(order);
+        return orderDAO.updateOrderT(order);
     }
 
     @Override
     public boolean deleteOrder(Long id) {
-        return defaultOrderDAO.deleteOrderT(id);
+        return orderDAO.deleteOrderT(id);
     }
 
     @Override
     public List<Order> getListOrder() {
-        return defaultOrderDAO.getListOrderT();
+        return orderDAO.getListOrderT();
     }
 
     @Override
     public List<Order> getListOrderByIdUser(Long authuser_id) {
-        return defaultOrderDAO.getListOrderByIdUserT( authuser_id);
+        return orderDAO.getListOrderByIdUserT(authuser_id);
     }
 
     @Override
     public Order getOrder(Long id) {
-        return defaultOrderDAO.getOrderByIdT(id);
+        return orderDAO.getOrderByIdT(id);
     }
 }

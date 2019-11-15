@@ -3,17 +3,18 @@ package by.fastrentcar.dao.impl;
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultAutoDAOTest {
     static Long ID;
-    AutoDAO dao = DefaultAutoDAO.getInstance();
+    final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans-by-AutoDao.xml");
+    final AutoDAO dao = context.getBean(AutoDAO.class);
 
     @Test
     void getInstance() {
         assertNotNull(dao);
-        assertEquals(dao, DefaultAutoDAO.getInstance());
     }
 
 

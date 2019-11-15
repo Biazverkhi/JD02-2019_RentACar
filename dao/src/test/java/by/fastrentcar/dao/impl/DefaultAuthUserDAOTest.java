@@ -1,23 +1,28 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
+import by.fastrentcar.dao.ConfigSpringDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultAuthUserDAOTest {
-    AuthUserDAO dao = DefaultAuthUserDAO.getInstance();
+    private static AuthUserDAO dao;
+
+    @BeforeEach
+    void beforeTest() {
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigSpringDAO.class);
+        dao = context.getBean(AuthUserDAO.class);
+    }
 
     @Test
     void getInstance() {
-
         assertNotNull(dao);
-        assertEquals(dao, DefaultAuthUserDAO.getInstance());
-
-
     }
 
     @Test
@@ -27,7 +32,6 @@ public class DefaultAuthUserDAOTest {
         assertEquals("assembler", wertual.getPassword());
         assertEquals(Role.ADMIN, wertual.getRole());
         assertNotNull(dao.getByLoginT("wertual"));
-
     }
 
     @Test
@@ -46,7 +50,6 @@ public class DefaultAuthUserDAOTest {
     }
 
     @Test
-
     void addUpateDeleteUser() {
         AuthUser au = new AuthUser(null, "test", "test", Role.USER, null);
         User u = new User(null, "Lexa", "ttt", "ttt", "ttt", "tttt", "ttt", "ttttt");
@@ -56,7 +59,5 @@ public class DefaultAuthUserDAOTest {
         assertNotNull(dao.updateAuthUserUserT(au2, u2));
         assertEquals("testupdate", dao.getAuthUserUserDTO("testupdate").getLogin());
         dao.deleteAuthUserT(dao.getByLoginT("testupdate").getId());
-
-
     }
 }

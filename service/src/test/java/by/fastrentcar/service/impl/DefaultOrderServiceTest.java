@@ -1,7 +1,6 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.OrderDAO;
-import by.fastrentcar.dao.impl.DefaultOrderDAO;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
 import org.junit.jupiter.api.Test;
@@ -25,16 +24,14 @@ public class DefaultOrderServiceTest {
     static LocalDateTime dateTime = LocalDateTime.of(2019, 9, 25, 14, 25, 32);
 
     @Mock
-    OrderDAO dao = DefaultOrderDAO.getInstance();
+    OrderDAO dao;
 
     @InjectMocks
     OrderService service = DefaultOrderService.getInstance();
 
     @Test
     void getInstance() {
-        assertNotNull(DefaultOrderDAO.getInstance());
-        assertNotNull(DefaultOrderService.getInstance());
-        assertEquals(service, DefaultOrderService.getInstance());
+        assertNotNull(service);
     }
 
     @Test

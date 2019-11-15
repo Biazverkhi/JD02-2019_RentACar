@@ -1,7 +1,6 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.impl.DefaultAuthUserDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.Role;
@@ -25,16 +24,15 @@ import static org.mockito.Mockito.when;
 
 public class DefaultUserServiceTest {
     @Mock
-    AuthUserDAO dao = DefaultAuthUserDAO.getInstance();
+    AuthUserDAO dao;
 
     @InjectMocks
     UserService service = DefaultUserService.getInstance();
 
     @Test
     void getInstance() {
-        assertNotNull(DefaultAuthUserDAO.getInstance());
+        assertNotNull(dao);
         assertNotNull(DefaultSecurityService.getInstance());
-        assertEquals(service, DefaultUserService.getInstance());
     }
 
     @Test

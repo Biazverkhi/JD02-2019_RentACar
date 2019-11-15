@@ -1,7 +1,6 @@
 package by.fastrentcar.web.servlet.user;
 
 import by.fastrentcar.service.UserService;
-import by.fastrentcar.service.impl.DefaultUserService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminview/delete")
 public class UserDeleteServlet extends HttpServlet {
-    private UserService defaultUserService = DefaultUserService.getInstance();
+    private UserService defaultUserService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

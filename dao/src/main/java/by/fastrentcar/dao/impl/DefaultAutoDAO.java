@@ -18,18 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultAutoDAO implements AutoDAO {
-    private DefaultAutoDAO() {
-    }
-
     private static final Logger log = LoggerFactory.getLogger(DefaultAutoDAO.class);
-
-    private static class SingletonHolder {
-        static final AutoDAO HOLDER_INSTANCE = new DefaultAutoDAO();
-    }
-
-    public static AutoDAO getInstance() {
-        return DefaultAutoDAO.SingletonHolder.HOLDER_INSTANCE;
-    }
 
     @Override
     public Long addAutoT(Auto auto) {

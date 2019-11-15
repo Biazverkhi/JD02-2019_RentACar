@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet.user;
 
 import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.service.UserService;
-import by.fastrentcar.service.impl.DefaultUserService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @WebServlet("/adminview/useradmin")
 public class UserAdminServlet extends HttpServlet {
-   private UserService defaultUserService = DefaultUserService.getInstance();
+    private UserService defaultUserService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {

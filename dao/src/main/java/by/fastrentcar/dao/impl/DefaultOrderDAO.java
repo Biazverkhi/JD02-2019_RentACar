@@ -11,23 +11,15 @@ import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DefaultOrderDAO implements OrderDAO {
-    private DefaultOrderDAO() {
-    }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultOrderDAO.class);
-
-    private static class SingletonHolder {
-        static final OrderDAO HOLDER_INSTANCE = new DefaultOrderDAO();
-    }
-
-    public static OrderDAO getInstance() {
-        return DefaultOrderDAO.SingletonHolder.HOLDER_INSTANCE;
-    }
 
     @Override
     public Long addOrderT(Order order) {

@@ -16,35 +16,35 @@ public class DefaultAutoServicesService implements AutoServicesService {
         return DefaultAutoServicesService.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private AutoServicesDAO defaultAutoServicesDAO = DefaultAutoServicesDAO.getInstance();
+    private AutoServicesDAO autoServicesDAO = DefaultAutoServicesDAO.getInstance();
 
     @Override
     public Long addAutoServicesT(AutoServices autoServices) {
-        return defaultAutoServicesDAO.addAutoServicesT(autoServices);
+        return autoServicesDAO.addAutoServicesT(autoServices);
     }
 
     @Override
     public boolean updateAutoServicesT(AutoServices autoServices) {
-        return defaultAutoServicesDAO.updateAutoServicesT(autoServices);
+        return autoServicesDAO.updateAutoServicesT(autoServices);
     }
 
     @Override
     public boolean deleteAutoServicesT(Long id) {
-        return defaultAutoServicesDAO.deleteAutoServicesT(id);
+        return autoServicesDAO.deleteAutoServicesT(id);
     }
 
     @Override
     public List<AutoServices> getListAutoServicesT() {
-        return defaultAutoServicesDAO.getListAutoServicesT();
+        return autoServicesDAO.getListAutoServicesT();
     }
 
     @Override
     public AutoServices getAutoServicesByIdT(Long id) {
-        return defaultAutoServicesDAO.getAutoServicesByIdT(id);
+        return autoServicesDAO.getAutoServicesByIdT(id);
     }
 
     @Override
     public boolean addAutoServicesToAuto(Long autoId, Long servicesId) {
-        return defaultAutoServicesDAO.addAutoServicesToAuto(autoId, servicesId);
+        return autoServicesDAO.addAutoServicesToAuto(autoId, servicesId);
     }
 }

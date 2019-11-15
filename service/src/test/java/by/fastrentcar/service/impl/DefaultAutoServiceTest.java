@@ -1,7 +1,6 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AutoDAO;
-import by.fastrentcar.dao.impl.DefaultAutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
 import org.junit.jupiter.api.Test;
@@ -22,16 +21,14 @@ import static org.mockito.Mockito.when;
 
 public class DefaultAutoServiceTest {
     @Mock
-    AutoDAO dao = DefaultAutoDAO.getInstance();
+    AutoDAO dao;
 
     @InjectMocks
     AutoService service = DefaultAutoService.getInstance();
 
     @Test
     void getInstance() {
-        assertNotNull(DefaultAutoDAO.getInstance());
-        assertNotNull(DefaultAutoService.getInstance());
-        assertEquals(service, DefaultAutoService.getInstance());
+        assertNotNull(service);
     }
 
     @Test
