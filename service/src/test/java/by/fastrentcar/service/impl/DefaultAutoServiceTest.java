@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 
 public class DefaultAutoServiceTest {
+
     @Mock
     AutoDAO dao;
 
@@ -35,6 +36,7 @@ public class DefaultAutoServiceTest {
     void getListAuto() {
         when(dao.getListAutoT()).thenReturn(new ArrayList<Auto>());
         List<Auto> auto = service.getListAuto();
+        verify(dao).getListAutoT();
         assertNotNull(auto);
     }
 
