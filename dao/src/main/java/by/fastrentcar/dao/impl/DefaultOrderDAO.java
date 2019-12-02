@@ -1,6 +1,5 @@
 package by.fastrentcar.dao.impl;
 
-import by.fastrentcar.dao.EMUtil;
 import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.dao.entity.AuthUserEntity;
 import by.fastrentcar.dao.entity.OrderEntity;
@@ -11,12 +10,10 @@ import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class DefaultOrderDAO implements OrderDAO {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultOrderDAO.class);

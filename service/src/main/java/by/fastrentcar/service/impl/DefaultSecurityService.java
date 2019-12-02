@@ -1,25 +1,17 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.ConfigSpringDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.SecurityService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class DefaultSecurityService implements SecurityService {
-    private DefaultSecurityService() {
+
+    public DefaultSecurityService(AuthUserDAO authUserDAO) {
+        this.authUserDAO = authUserDAO;
     }
 
-    private static class SingletonHolder {
-        static final SecurityService HOLDER_INSTANCE = new DefaultSecurityService();
-    }
-
-    public static SecurityService getInstance() {
-        return DefaultSecurityService.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-    AuthUserDAO authUserDAO = new AnnotationConfigApplicationContext(ConfigSpringDAO.class).getBean(AuthUserDAO.class);
+    AuthUserDAO authUserDAO;
 
     public AuthUserDTO login(String login, String password) {
         AuthUser authuser = authUserDAO.getByLoginT(login);

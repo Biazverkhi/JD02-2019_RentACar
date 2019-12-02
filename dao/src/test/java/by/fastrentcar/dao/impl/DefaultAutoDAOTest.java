@@ -3,13 +3,13 @@ package by.fastrentcar.dao.impl;
 import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultAutoDAOTest {
     static Long ID;
-    final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans-by-AutoDao.xml");
+    final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DAOConfig.class);
     final AutoDAO dao = context.getBean(AutoDAO.class);
 
     @Test

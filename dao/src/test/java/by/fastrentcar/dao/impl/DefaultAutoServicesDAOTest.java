@@ -4,19 +4,15 @@ import by.fastrentcar.dao.AutoServicesDAO;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DefaultAutoServicesDAOTest {
     static Long ID;
-    AutoServicesDAO dao = DefaultAutoServicesDAO.getInstance();
+    AutoServicesDAO dao = new AnnotationConfigApplicationContext(DAOConfig.class).getBean(AutoServicesDAO.class);
 
-    @Test
-    void getInstance() {
-        assertNotNull(dao);
-        assertEquals(dao, DefaultAutoServicesDAO.getInstance());
-    }
 
     @Test
     void getAutoServicesByIdTest() {

@@ -1,7 +1,6 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AutoServicesDAO;
-import by.fastrentcar.dao.EMUtil;
 import by.fastrentcar.dao.entity.AutoEntity;
 import by.fastrentcar.dao.entity.AutoServicesEntity;
 import by.fastrentcar.model.auto.AutoServices;
@@ -17,16 +16,6 @@ import java.util.List;
 public class DefaultAutoServicesDAO implements AutoServicesDAO {
     private static final Logger log = LoggerFactory.getLogger(DefaultAutoServicesDAO.class);
 
-    private DefaultAutoServicesDAO() {
-    }
-
-    private static class SingletonHolder {
-        static final AutoServicesDAO HOLDER_INSTANCE = new DefaultAutoServicesDAO();
-    }
-
-    public static AutoServicesDAO getInstance() {
-        return DefaultAutoServicesDAO.SingletonHolder.HOLDER_INSTANCE;
-    }
 
     @Override
     public boolean addAutoServicesToAuto(Long autoId, Long servicesId) {

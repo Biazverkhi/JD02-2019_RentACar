@@ -5,12 +5,14 @@ import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
+import by.fastrentcar.service.ConfigSpringService;
 import by.fastrentcar.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,8 @@ public class DefaultUserServiceTest {
     AuthUserDAO dao;
 
     @InjectMocks
-    UserService service = DefaultUserService.getInstance();
+    UserService service = new AnnotationConfigApplicationContext(ConfigSpringService.class).getBean(DefaultUserService.class);
 
-    @Test
-    void getInstance() {
-        assertNotNull(dao);
-        assertNotNull(DefaultSecurityService.getInstance());
-    }
 
     @Test
     void getListAuthUserUserDTO() {

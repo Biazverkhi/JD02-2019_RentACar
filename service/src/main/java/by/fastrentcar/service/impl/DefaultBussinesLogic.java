@@ -7,16 +7,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class DefaultBussinesLogic implements BussinesLogic {
-    private DefaultBussinesLogic() {
+    public DefaultBussinesLogic() {
     }
 
-    private static class SingletonHolder {
-        static final BussinesLogic HOLDER_INSTANCE = new DefaultBussinesLogic();
-    }
-
-    public static BussinesLogic getInstance() {
-        return DefaultBussinesLogic.SingletonHolder.HOLDER_INSTANCE;
-    }
 
     @Override
     public Double getPriceArend(OrderDTO orderDTO) {

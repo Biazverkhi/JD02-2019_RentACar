@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DefaultOrderDAOTest {
     static Long ID;
-    final OrderDAO dao = new AnnotationConfigApplicationContext("by.fastrentcar.dao").getBean(OrderDAO.class);
+    final OrderDAO dao = new AnnotationConfigApplicationContext(DAOConfig.class).getBean(OrderDAO.class);
 
 
 

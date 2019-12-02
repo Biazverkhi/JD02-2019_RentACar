@@ -1,6 +1,5 @@
 package by.fastrentcar.dao.impl;
 
-import by.fastrentcar.dao.DataSource;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

@@ -3,22 +3,16 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 
 public class DefaultOrderService implements OrderService {
 
-    private static class SingletonHolder {
-        static final OrderService HOLDER_INSTANCE = new DefaultOrderService();
-
+    public DefaultOrderService(OrderDAO orderDAO) {
+        this.orderDAO = orderDAO;
     }
 
-    public static OrderService getInstance() {
-        return DefaultOrderService.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-    private OrderDAO orderDAO = new AnnotationConfigApplicationContext("by.fastrentcar.dao").getBean(OrderDAO.class);
+    private OrderDAO orderDAO;
 
     @Override
     public Long addOrder(Order order) {

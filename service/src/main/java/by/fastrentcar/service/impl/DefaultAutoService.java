@@ -4,23 +4,16 @@ import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
 public class DefaultAutoService implements AutoService {
-    private DefaultAutoService() {
+
+    public DefaultAutoService(AutoDAO autoDAO) {
+        this.autoDAO = autoDAO;
     }
 
-    private static class SingletonHolder {
-        static final AutoService HOLDER_INSTANCE = new DefaultAutoService();
-    }
-
-    public static AutoService getInstance() {
-        return DefaultAutoService.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-    private AutoDAO autoDAO = new ClassPathXmlApplicationContext("beans-by-AutoDao.xml").getBean(AutoDAO.class);
+    private AutoDAO autoDAO;
 
 
     @Override

@@ -1,7 +1,6 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.ConfigSpringDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
@@ -16,7 +15,7 @@ public class DefaultAuthUserDAOTest {
 
     @BeforeEach
     void beforeTest() {
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigSpringDAO.class);
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DAOConfig.class);
         dao = context.getBean(AuthUserDAO.class);
     }
 

@@ -1,22 +1,19 @@
 package by.fastrentcar.service.impl;
 
 import by.fastrentcar.dao.AutoServicesDAO;
-import by.fastrentcar.dao.impl.DefaultAutoServicesDAO;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoServicesService;
 
 import java.util.List;
 
 public class DefaultAutoServicesService implements AutoServicesService {
-    private static class SingletonHolder {
-        static final AutoServicesService HOLDER_INSTANCE = new DefaultAutoServicesService();
+
+
+    public DefaultAutoServicesService(AutoServicesDAO autoServicesDAO) {
+        this.autoServicesDAO = autoServicesDAO;
     }
 
-    public static AutoServicesService getInstance() {
-        return DefaultAutoServicesService.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-    private AutoServicesDAO autoServicesDAO = DefaultAutoServicesDAO.getInstance();
+    private AutoServicesDAO autoServicesDAO;
 
     @Override
     public Long addAutoServicesT(AutoServices autoServices) {

@@ -1,30 +1,20 @@
 package by.fastrentcar.dao.impl;
 
 import by.fastrentcar.dao.AuthUserDAO;
-import by.fastrentcar.dao.AutoDAO;
-import by.fastrentcar.dao.ConfigSpringDAO;
 import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.dao.spring.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SpringTest {
 
-    @Test
-    void task1() {
-        final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans-by-AutoDao.xml");
-        final AutoDAO dao = context.getBean(AutoDAO.class);
-        assertNotNull(dao.getListAutoT(0, 10));
-        context.close();
-    }
 
 
     @Test
     void task2() {
-        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigSpringDAO.class);
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DAOConfig.class);
         AuthUserDAO dao = context.getBean(AuthUserDAO.class);
         assertNotNull(dao.getAuthUserUserDTO("11"));
         context.close();
