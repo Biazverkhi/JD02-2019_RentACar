@@ -1,58 +1,58 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoService;
+import by.fastrentcar.springdata.AutoDAO;
 
 import java.util.List;
 
 public class DefaultAutoService implements AutoService {
 
-    public DefaultAutoService(AutoDAO autoDAO) {
-        this.autoDAO = autoDAO;
+    public DefaultAutoService(AutoDAO autoJpaRepository) {
+        this.autoJpaRepository = autoJpaRepository;
     }
 
-    private AutoDAO autoDAO;
+    private AutoDAO autoJpaRepository;
 
 
     @Override
     public Long addAuto(Auto auto) {
-        return autoDAO.addAutoT(auto);
+        return autoJpaRepository.addAutoT(auto);
     }
 
     @Override
     public boolean updateAuto(Auto auto) {
-        return autoDAO.updateAutoT(auto);
+        return autoJpaRepository.updateAutoT(auto);
     }
 
     @Override
     public boolean deleteAuto(Long id) {
-        return autoDAO.deleteAutoT(id);
+        return autoJpaRepository.deleteAutoT(id);
     }
 
     @Override
     public List<Auto> getListAuto() {
-        return autoDAO.getListAutoT();
+        return autoJpaRepository.getListAutoT();
     }
 
     @Override
     public List<Auto> getListAuto(int start, int stop) {
-        return autoDAO.getListAutoT(start, stop);
+        return autoJpaRepository.getListAutoT(start, stop);
     }
 
     @Override
     public Auto getAuto(Long id) {
-        return autoDAO.getAutoByIdT(id);
+        return autoJpaRepository.getAutoByIdT(id);
     }
 
     @Override
     public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
-        return autoDAO.getAutoServicesByAutoIdT(id);
+        return autoJpaRepository.getAutoServicesByAutoIdT(id);
     }
 
     @Override
     public long getCountAuto() {
-        return autoDAO.getCountAuto();
+        return autoJpaRepository.getCountAuto();
     }
 }

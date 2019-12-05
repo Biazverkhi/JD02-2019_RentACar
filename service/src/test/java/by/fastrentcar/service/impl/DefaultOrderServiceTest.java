@@ -1,8 +1,8 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.dao.OrderDAO;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
+import by.fastrentcar.springdata.OrderDAO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

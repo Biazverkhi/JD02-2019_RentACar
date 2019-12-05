@@ -1,10 +1,10 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.dao.AutoServicesDAO;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
 import by.fastrentcar.service.AutoServicesService;
-import by.fastrentcar.service.ConfigSpringService;
+import by.fastrentcar.service.config.ConfigSpringService;
+import by.fastrentcar.springdata.AutoServicesDAO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

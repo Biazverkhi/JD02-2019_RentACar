@@ -1,8 +1,8 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.dao.AutoDAO;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
+import by.fastrentcar.springdata.repository.AutoJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class DefaultAutoServiceTest {
 
     @Mock
-    AutoDAO dao;
+    AutoJpaRepository dao;
 
     @InjectMocks
     AutoService service = DefaultAutoService.getInstance();
@@ -42,7 +42,7 @@ public class DefaultAutoServiceTest {
 
     @Test
     void getAuto() {
-        when(dao.getAutoByIdT(1L)).thenReturn(new Auto(1l, "11", "11", "123", "12l", 235d, "11"));
+        when(dao.getAutoById(1L)).thenReturn(new Auto(1l, "11", "11", "123", "12l", 235d, "11"));
         Auto auto = service.getAuto(1l);
         assertNotNull(auto);
         assertEquals("12l", auto.getDate());

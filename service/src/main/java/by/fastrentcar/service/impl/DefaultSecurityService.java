@@ -1,9 +1,9 @@
 package by.fastrentcar.service.impl;
 
-import by.fastrentcar.dao.AuthUserDAO;
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.SecurityService;
+import by.fastrentcar.springdata.AuthUserDAO;
 
 public class DefaultSecurityService implements SecurityService {
 
