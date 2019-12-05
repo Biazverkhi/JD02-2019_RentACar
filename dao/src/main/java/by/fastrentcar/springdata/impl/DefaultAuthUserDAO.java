@@ -10,8 +10,9 @@ import by.fastrentcar.springdata.repository.AuthUserJpaRepository;
 import by.fastrentcar.springdata.repository.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DefaultAuthUserDAO implements AuthUserDAO {
     @Autowired
@@ -21,22 +22,24 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     @Override
     public AuthUser getByLoginT(String login) {
-        return authUserJpaRepository.findByLogin(login).convertAuthUserByAuthUserEntity();
+        AuthUserEntity authUserEntity = authUserJpaRepository.findByLogin(login);
+        return authUserEntity == null ? null : authUserEntity.convertAuthUserByAuthUserEntity();
     }
 
     @Override
     public AuthUser getByIdT(Long id) {
-        return authUserJpaRepository.getOne(id).convertAuthUserByAuthUserEntity();
+        Optional<AuthUserEntity> optionalAuthUserEntity = authUserJpaRepository.findById(id);
+        return optionalAuthUserEntity.map(AuthUserEntity::convertAuthUserByAuthUserEntity).orElse(null);
     }
 
     @Override
     public List<AuthUserUserDTO> getListAuthUserUserDTO() {
         List<AuthUserEntity> authUserEntityList = authUserJpaRepository.findAll();
-        List<AuthUserUserDTO> authUserUserDTOList = new ArrayList<>();
-        for (AuthUserEntity aue : authUserEntityList) {
-            authUserUserDTOList.add(new AuthUserUserDTO(aue.convertAuthUserByAuthUserEntity(), aue.getUserEntity().convertUserbyUserEntity()));
-        }
-        return authUserUserDTOList;
+//        List<AuthUserUserDTO> authUserUserDTOList = new ArrayList<>();
+//        Function<AuthUserEntity,AuthUserUserDTO> func=s->new AuthUserUserDTO(s.convertAuthUserByAuthUserEntity(),s.getUserEntity().convertUserbyUserEntity());
+//        for (AuthUserEntity aue : authUserEntityList) {
+//            authUserUserDTOList.add(func.apply(aue));        }
+        return authUserEntityList.stream().map(s -> new AuthUserUserDTO(s.convertAuthUserByAuthUserEntity(), s.getUserEntity().convertUserbyUserEntity())).collect(Collectors.toList());
     }
 
     @Override
@@ -52,8 +55,8 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
     @Override
     public AuthUserUserDTO getAuthUserUserDTO(String login) {
         AuthUserEntity authUserEntity = authUserJpaRepository.findByLogin(login);
-        UserEntity userEntity = authUserEntity.getUserEntity();
-        return new AuthUserUserDTO(authUserEntity.convertAuthUserByAuthUserEntity(), userEntity.convertUserbyUserEntity());
+
+        return authUserEntity == null ? null : new AuthUserUserDTO(authUserEntity.convertAuthUserByAuthUserEntity(), authUserEntity.getUserEntity().convertUserbyUserEntity());
     }
 
     @Override
@@ -64,7 +67,7 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 
     @Override
     public boolean deleteAuthUserT(Long id) {
-        authUserJpaRepository.deleteById(id);
+        userJpaRepository.deleteById(getByIdT(id).getUserId());
         return true;
     }
 }

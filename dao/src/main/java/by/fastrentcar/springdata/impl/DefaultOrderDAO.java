@@ -6,13 +6,32 @@ import by.fastrentcar.springdata.entities.OrderEntity;
 import by.fastrentcar.springdata.repository.OrderJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DefaultOrderDAO implements OrderDAO {
 
     @Autowired
     OrderJpaRepository orderJpaRepository;
+
+    @Override
+    public List<Order> getListOrderT() {
+        List<OrderEntity> orderEntityList = orderJpaRepository.findAll();
+        return orderEntityList.stream().map(OrderEntity::convertOrderByOrderEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Order> getListOrderByIdUserT(Long authuser_id) {
+        List<OrderEntity> orderEntityList = orderJpaRepository.findByAuthUserEntityId(authuser_id);
+        return orderEntityList.stream().map(OrderEntity::convertOrderByOrderEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public Order getOrderByIdT(Long id) {
+        Optional<OrderEntity> optional = orderJpaRepository.findById(id);
+        return optional.isPresent() ? optional.get().convertOrderByOrderEntity() : null;
+    }
 
     @Override
     public Long addOrderT(Order order) {
@@ -21,42 +40,15 @@ public class DefaultOrderDAO implements OrderDAO {
 
     @Override
     public boolean updateOrderT(Order order) {
-        orderJpaRepository.save(new OrderEntity(order)).getId();
+        addOrderT(order);
         return true;
     }
 
     @Override
     public boolean deleteOrderT(Long id) {
-
         orderJpaRepository.deleteById(id);
         return true;
     }
 
-    @Override
-    public List<Order> getListOrderT() {
-        List<OrderEntity> orderEntityList = orderJpaRepository.findAll();
-        List<Order> orderList = new ArrayList<>();
-        for (OrderEntity oe : orderEntityList
-        ) {
-            orderList.add(oe.convertOrderByOrderEntity());
-        }
-        return orderList;
-    }
 
-    @Override
-    public List<Order> getListOrderByIdUserT(Long authuser_id) {
-        List<OrderEntity> orderEntityList = orderJpaRepository.findByAuthUserEntityId(authuser_id);
-        List<Order> orderList = new ArrayList<>();
-        for (OrderEntity oe : orderEntityList
-        ) {
-            orderList.add(oe.convertOrderByOrderEntity());
-        }
-
-        return orderList;
-    }
-
-    @Override
-    public Order getOrderByIdT(Long id) {
-        return orderJpaRepository.getOne(id).convertOrderByOrderEntity();
-    }
 }

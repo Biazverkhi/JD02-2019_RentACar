@@ -1,16 +1,12 @@
 package by.fastrentcar.web.listener;
 
 
-import by.fastrentcar.service.AutoService;
-import by.fastrentcar.service.impl.DefaultAutoService;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 @WebListener()
 public class ContextListenerAuto implements ServletContextListener {
-    AutoService defaultAutoService = DefaultAutoService.getInstance();
     long idStart;
     long idStop;
 
