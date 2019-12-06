@@ -46,17 +46,10 @@ public class AuthUserJpaRepositoryTest {
     void getListAuthUserUserDTOTest() {
         List<AuthUserUserDTO> list = dao.getListAuthUserUserDTO();
         assertFalse(list.isEmpty());
-        dao.deleteAuthUserT(41l);
-        List<AuthUserUserDTO> list1 = dao.getListAuthUserUserDTO();
-
-        dao.deleteAuthUserT(48l);
-
-        dao.getListAuthUserUserDTO();
-
-//        for (AuthUserUserDTO a : list
-//        ) {
-//            dao.deleteAuthUserT(a.getid());
-//        }
+        for (AuthUserUserDTO a : list
+        ) {
+            dao.deleteAuthUserT(a.getid());
+        }
         assertTrue(dao.getListAuthUserUserDTO().isEmpty());
     }
 
