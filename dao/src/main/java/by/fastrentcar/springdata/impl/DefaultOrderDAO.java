@@ -6,7 +6,6 @@ import by.fastrentcar.springdata.entities.AuthUserEntity;
 import by.fastrentcar.springdata.entities.OrderEntity;
 import by.fastrentcar.springdata.repository.AuthUserJpaRepository;
 import by.fastrentcar.springdata.repository.OrderJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +13,13 @@ import java.util.stream.Collectors;
 
 public class DefaultOrderDAO implements OrderDAO {
 
-    @Autowired
-    OrderJpaRepository orderJpaRepository;
-    @Autowired
-    AuthUserJpaRepository authUserJpaRepository;
+    private OrderJpaRepository orderJpaRepository;
+    private AuthUserJpaRepository authUserJpaRepository;
+
+    public DefaultOrderDAO(OrderJpaRepository orderJpaRepository, AuthUserJpaRepository authUserJpaRepository) {
+        this.orderJpaRepository = orderJpaRepository;
+        this.authUserJpaRepository = authUserJpaRepository;
+    }
 
     @Override
     public List<Order> getListOrderT() {

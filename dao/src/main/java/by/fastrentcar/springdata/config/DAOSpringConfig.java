@@ -8,31 +8,47 @@ import by.fastrentcar.springdata.impl.DefaultAuthUserDAO;
 import by.fastrentcar.springdata.impl.DefaultAutoDAO;
 import by.fastrentcar.springdata.impl.DefaultAutoServicesDAO;
 import by.fastrentcar.springdata.impl.DefaultOrderDAO;
+import by.fastrentcar.springdata.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-public class DAOSpringConfig {
+//@Import(HibernateConfig.class)
+//@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = {"by.fastrentcar.springdata.repository"})
 
+public class DAOSpringConfig {
+    @Autowired
+    private AuthUserJpaRepository authUserJpaRepository;
+    @Autowired
+    private AutoJpaRepository autoJpaRepository;
+    @Autowired
+    private AutoServicesJpaRepository autoServicesJpaRepository;
+    @Autowired
+    private OrderJpaRepository orderJpaRepository;
+    @Autowired
+    private UserJpaRepository userJpaRepository;
 
     @Bean
     public AutoDAO getDefaultAutoDAO() {
-        return new DefaultAutoDAO();
+        return new DefaultAutoDAO(autoJpaRepository);
     }
 
     @Bean
     public AuthUserDAO getDefaultAuthUserDAO() {
-        return new DefaultAuthUserDAO();
+        return new DefaultAuthUserDAO(authUserJpaRepository, userJpaRepository);
     }
 
     @Bean
     public AutoServicesDAO getDefaultAutoServicesDAO() {
-        return new DefaultAutoServicesDAO();
+        return new DefaultAutoServicesDAO(autoServicesJpaRepository, autoJpaRepository);
     }
 
     @Bean
     public OrderDAO getDefaultOrderDAO() {
-        return new DefaultOrderDAO();
+        return new DefaultOrderDAO(orderJpaRepository, authUserJpaRepository);
     }
 
 

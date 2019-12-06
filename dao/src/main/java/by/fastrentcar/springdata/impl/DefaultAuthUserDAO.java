@@ -8,17 +8,20 @@ import by.fastrentcar.springdata.entities.AuthUserEntity;
 import by.fastrentcar.springdata.entities.UserEntity;
 import by.fastrentcar.springdata.repository.AuthUserJpaRepository;
 import by.fastrentcar.springdata.repository.UserJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DefaultAuthUserDAO implements AuthUserDAO {
-    @Autowired
-    AuthUserJpaRepository authUserJpaRepository;
-    @Autowired
-    UserJpaRepository userJpaRepository;
+    private AuthUserJpaRepository authUserJpaRepository;
+    private UserJpaRepository userJpaRepository;
+
+    public DefaultAuthUserDAO(AuthUserJpaRepository authUserJpaRepository, UserJpaRepository userJpaRepository) {
+        this.authUserJpaRepository = authUserJpaRepository;
+        this.userJpaRepository = userJpaRepository;
+    }
 
     @Override
     public AuthUser getByLoginT(String login) {
@@ -39,7 +42,11 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
 //        Function<AuthUserEntity,AuthUserUserDTO> func=s->new AuthUserUserDTO(s.convertAuthUserByAuthUserEntity(),s.getUserEntity().convertUserbyUserEntity());
 //        for (AuthUserEntity aue : authUserEntityList) {
 //            authUserUserDTOList.add(func.apply(aue));        }
-        return authUserEntityList.stream().map(s -> new AuthUserUserDTO(s.convertAuthUserByAuthUserEntity(), s.getUserEntity().convertUserbyUserEntity())).collect(Collectors.toList());
+        return authUserEntityList.isEmpty()
+                ? new ArrayList<>()
+                : authUserEntityList.stream()
+                .map(s -> new AuthUserUserDTO(s.convertAuthUserByAuthUserEntity(), s.getUserEntity().convertUserbyUserEntity()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -48,14 +55,11 @@ public class DefaultAuthUserDAO implements AuthUserDAO {
         AuthUserEntity authUserEntity = new AuthUserEntity(authuser, userEntity);
         userEntity.setAuthUserEntity(authUserEntity);
         return userJpaRepository.save(userEntity).getAuthUserEntity().getId();
-
-
     }
 
     @Override
     public AuthUserUserDTO getAuthUserUserDTO(String login) {
         AuthUserEntity authUserEntity = authUserJpaRepository.findByLogin(login);
-
         return authUserEntity == null ? null : new AuthUserUserDTO(authUserEntity.convertAuthUserByAuthUserEntity(), authUserEntity.getUserEntity().convertUserbyUserEntity());
     }
 

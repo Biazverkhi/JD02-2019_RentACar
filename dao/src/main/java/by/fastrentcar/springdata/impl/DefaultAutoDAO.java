@@ -6,7 +6,6 @@ import by.fastrentcar.springdata.AutoDAO;
 import by.fastrentcar.springdata.entities.AutoEntity;
 import by.fastrentcar.springdata.entities.AutoServicesEntity;
 import by.fastrentcar.springdata.repository.AutoJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
@@ -15,10 +14,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DefaultAutoDAO implements AutoDAO {
-    @Autowired
-    AutoJpaRepository autoJpaRepository;
+    private AutoJpaRepository autoJpaRepository;
 
-    @Override
+    public DefaultAutoDAO(AutoJpaRepository autoJpaRepository) {
+        this.autoJpaRepository = autoJpaRepository;
+    }
+
     public long getCountAuto() {
         return autoJpaRepository.count();
     }

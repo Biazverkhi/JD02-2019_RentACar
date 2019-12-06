@@ -6,18 +6,19 @@ import by.fastrentcar.springdata.entities.AutoEntity;
 import by.fastrentcar.springdata.entities.AutoServicesEntity;
 import by.fastrentcar.springdata.repository.AutoJpaRepository;
 import by.fastrentcar.springdata.repository.AutoServicesJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DefaultAutoServicesDAO implements AutoServicesDAO {
-    @Autowired
-    AutoServicesJpaRepository autoServicesJpaRepository;
-    @Autowired
-    AutoJpaRepository autoJpaRepository;
+    private AutoServicesJpaRepository autoServicesJpaRepository;
+    private AutoJpaRepository autoJpaRepository;
 
+    public DefaultAutoServicesDAO(AutoServicesJpaRepository autoServicesJpaRepository, AutoJpaRepository autoJpaRepository) {
+        this.autoServicesJpaRepository = autoServicesJpaRepository;
+        this.autoJpaRepository = autoJpaRepository;
+    }
 
     @Override
     public List<AutoServices> getListAutoServicesT() {

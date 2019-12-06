@@ -44,14 +44,19 @@ public class AuthUserJpaRepositoryTest {
     @Transactional
     @Test
     void getListAuthUserUserDTOTest() {
-        assertNotNull(dao.getListAuthUserUserDTO());
         List<AuthUserUserDTO> list = dao.getListAuthUserUserDTO();
-        for (AuthUserUserDTO a : list
-        ) {
+        assertFalse(list.isEmpty());
+        dao.deleteAuthUserT(41l);
+        List<AuthUserUserDTO> list1 = dao.getListAuthUserUserDTO();
 
-            dao.deleteAuthUserT(a.getid());
+        dao.deleteAuthUserT(48l);
 
-        }
+        dao.getListAuthUserUserDTO();
+
+//        for (AuthUserUserDTO a : list
+//        ) {
+//            dao.deleteAuthUserT(a.getid());
+//        }
         assertTrue(dao.getListAuthUserUserDTO().isEmpty());
     }
 
