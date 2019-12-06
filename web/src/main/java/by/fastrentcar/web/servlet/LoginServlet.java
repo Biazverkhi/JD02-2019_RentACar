@@ -3,7 +3,6 @@ package by.fastrentcar.web.servlet;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
-import by.fastrentcar.service.impl.DefaultSecurityService;
 import by.fastrentcar.web.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
-    private SecurityService securityService = DefaultSecurityService.getInstance();
+    private SecurityService securityService;
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
     protected void doGet(HttpServletRequest rq, HttpServletResponse rs) {

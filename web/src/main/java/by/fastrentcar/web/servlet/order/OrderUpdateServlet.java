@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet.order;
 
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
-import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 
 @WebServlet("/adminview/updateorder")
 public class OrderUpdateServlet extends HttpServlet {
-    private OrderService defaultOrderService = DefaultOrderService.getInstance();
+    private OrderService defaultOrderService;
    // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
 
     @Override

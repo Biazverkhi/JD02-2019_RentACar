@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
-import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/index", "/prev", "/next"})
 public class IndexPageServlet extends HttpServlet {
-    private AutoService defaultAutoService = DefaultAutoService.getInstance();
+    private AutoService defaultAutoService;
     private static final Logger log = LoggerFactory.getLogger(IndexPageServlet.class);
 
     @Override

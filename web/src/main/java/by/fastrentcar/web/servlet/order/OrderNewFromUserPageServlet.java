@@ -5,8 +5,6 @@ import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.BussinesLogic;
 import by.fastrentcar.service.OrderService;
-import by.fastrentcar.service.impl.DefaultBussinesLogic;
-import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +16,8 @@ import java.util.List;
 
 @WebServlet("/userpage")
 public class OrderNewFromUserPageServlet extends HttpServlet {
-    private OrderService defaultOrderService = DefaultOrderService.getInstance();
-    private BussinesLogic defaultBussinesLogic= DefaultBussinesLogic.getInstance();
+    private OrderService defaultOrderService;
+    private BussinesLogic defaultBussinesLogic;
     // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
 
     @Override

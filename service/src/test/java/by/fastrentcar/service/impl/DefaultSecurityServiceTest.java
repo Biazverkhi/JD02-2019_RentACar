@@ -22,7 +22,7 @@ public class DefaultSecurityServiceTest {
     AuthUserDAO dao;
 
     @InjectMocks
-    SecurityService service=DefaultSecurityService.getInstance();
+    SecurityService service;
     @Test
     void testLoginCorrect() {
         when(dao.getByLoginT("admin")).thenReturn(new AuthUser(null, "admin", "pass", Role.USER, null));

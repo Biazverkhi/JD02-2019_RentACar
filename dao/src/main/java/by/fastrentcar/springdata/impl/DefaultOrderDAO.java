@@ -2,7 +2,9 @@ package by.fastrentcar.springdata.impl;
 
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.springdata.OrderDAO;
+import by.fastrentcar.springdata.entities.AuthUserEntity;
 import by.fastrentcar.springdata.entities.OrderEntity;
+import by.fastrentcar.springdata.repository.AuthUserJpaRepository;
 import by.fastrentcar.springdata.repository.OrderJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +16,8 @@ public class DefaultOrderDAO implements OrderDAO {
 
     @Autowired
     OrderJpaRepository orderJpaRepository;
+    @Autowired
+    AuthUserJpaRepository authUserJpaRepository;
 
     @Override
     public List<Order> getListOrderT() {
@@ -30,12 +34,16 @@ public class DefaultOrderDAO implements OrderDAO {
     @Override
     public Order getOrderByIdT(Long id) {
         Optional<OrderEntity> optional = orderJpaRepository.findById(id);
-        return optional.isPresent() ? optional.get().convertOrderByOrderEntity() : null;
+        return optional.map(OrderEntity::convertOrderByOrderEntity).orElse(null);
     }
 
     @Override
     public Long addOrderT(Order order) {
-        return orderJpaRepository.save(new OrderEntity(order)).getId();
+        OrderEntity oe = new OrderEntity(order);
+        AuthUserEntity aue = authUserJpaRepository.findById(oe.getAuthuserId()).orElse(null);
+        oe.setAuthUserEntity(aue);
+        return orderJpaRepository.save(oe).getId();
+
     }
 
     @Override

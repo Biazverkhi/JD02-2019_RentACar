@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet.order;
 
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
-import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @WebServlet("/adminview/orderadmin")
 public class OrderAdminServlet extends HttpServlet {
-    private OrderService defaultOrderService = DefaultOrderService.getInstance();
+    private OrderService defaultOrderService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {

@@ -1,7 +1,6 @@
 package by.fastrentcar.web.servlet.order;
 
 import by.fastrentcar.service.OrderService;
-import by.fastrentcar.service.impl.DefaultOrderService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminview/deleteorder")
 public class OrderDeleteServlet extends HttpServlet {
-    private OrderService defaultOrderService = DefaultOrderService.getInstance();
+    private OrderService defaultOrderService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

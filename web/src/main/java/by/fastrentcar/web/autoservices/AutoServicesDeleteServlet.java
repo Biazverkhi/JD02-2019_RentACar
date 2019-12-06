@@ -1,7 +1,6 @@
 package by.fastrentcar.web.autoservices;
 
 import by.fastrentcar.service.AutoServicesService;
-import by.fastrentcar.service.impl.DefaultAutoServicesService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminview/deleteautoservices")
 public class AutoServicesDeleteServlet extends HttpServlet {
-    private AutoServicesService defaultAutoServicesService = DefaultAutoServicesService.getInstance();
+    private AutoServicesService defaultAutoServicesService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

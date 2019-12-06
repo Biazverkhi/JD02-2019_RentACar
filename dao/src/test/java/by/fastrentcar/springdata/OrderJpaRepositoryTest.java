@@ -1,51 +1,70 @@
 package by.fastrentcar.springdata;
 
 import by.fastrentcar.model.order.Order;
+import by.fastrentcar.springdata.config.DAOSpringConfig;
+import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {HibernateConfig.class, DAOSpringConfig.class})
 
 public class OrderJpaRepositoryTest {
-    static Long ID;
     @Autowired
     OrderDAO dao;
+
+    static Long ID;
 
     @Test
     void getInstance() {
         assertNotNull(dao);
     }
 
+    @Transactional
     @Test
     void getListOrderTTest() {
-        assertNotNull(dao.getListOrderT());
-        assertEquals(false, dao.getListOrderT().isEmpty());
+        assertFalse(dao.getListOrderT().isEmpty());
+        List<Order> d = dao.getListOrderT();
+        for (Order order : d) {
+            dao.deleteOrderT(order.getId());
+        }
+        assertTrue(dao.getListOrderT().isEmpty());
     }
 
     @Test
     void getListOrderByIdUserTTest() {
-        assertNotNull(dao.getListOrderByIdUserT(25l));
+        assertFalse(dao.getListOrderByIdUserT(48l).isEmpty());
+        assertTrue(dao.getListOrderByIdUserT(47l).isEmpty());
     }
 
     @Test
     void getOrderByIdTTest() {
 
-        assertNotNull(dao.getOrderByIdT(1l));
-        assertEquals("rrr", dao.getOrderByIdT(1l).getReservStatus());
-        // assertNotNull(dao.getListOrderByIdUserT(1l));
+        assertNotNull(dao.getOrderByIdT(14l));
+        assertNull(dao.getOrderByIdT(13l));
     }
 
     @Test
     void addUpdateDeleteOrder() {
-        Order order = new Order(null, 25l, 648l, LocalDateTime.now(), LocalDateTime.of(2019, 5, 26, 12, 23, 56), LocalDateTime.of(2019, 5, 27, 12, 23, 56), "comment", "rrr", 235d);
+        Order order = new Order(null, 48l, 81l, LocalDateTime.now(), LocalDateTime.of(2019, 5, 26, 12, 23, 56), LocalDateTime.of(2019, 5, 27, 12, 23, 56), "commenttt", "rrr", 235d);
         ID = dao.addOrderT(order);
+        dao.getListOrderByIdUserT(48l);
         assertNotNull(ID);
-        Order order2 = new Order(ID, 24l, 645l, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), "comment", "rrr", 237d);
-        assertEquals(true, dao.updateOrderT(order2));
-        assertEquals(true, dao.deleteOrderT(ID));
+        Order oFromDb = dao.getOrderByIdT(ID);
+        oFromDb.setReservStatus("ddd");
+        dao.updateOrderT(oFromDb);
+        assertEquals("ddd", dao.getOrderByIdT(ID).getReservStatus());
+        dao.deleteOrderT(ID);
+        assertNull(dao.getOrderByIdT(ID));
     }
 
 

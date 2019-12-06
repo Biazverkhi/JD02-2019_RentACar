@@ -3,14 +3,12 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
 import by.fastrentcar.service.AutoServicesService;
-import by.fastrentcar.service.config.ConfigSpringService;
 import by.fastrentcar.springdata.AutoServicesDAO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +25,12 @@ public class DefaultAutoServicesServiceTest {
     AutoServicesDAO dao;
 
     @InjectMocks
-    AutoServicesService service = new AnnotationConfigApplicationContext(ConfigSpringService.class).getBean(AutoServicesService.class);
+    AutoServicesService service;
 
 
     @Test
     void addAutoServicesToAutoTest() {
+
         when(dao.addAutoServicesToAuto(1l, 2l)).thenReturn(true);
         assertEquals(true, service.addAutoServicesToAuto(1l, 2l));
         verify(dao).addAutoServicesToAuto(1l, 2l);

@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet.auto;
 
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoService;
-import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @WebServlet("/adminview/services")
 public class AutoServiserViewServlet extends HttpServlet {
-    private AutoService defaultAutoService = DefaultAutoService.getInstance();
+    private AutoService defaultAutoService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

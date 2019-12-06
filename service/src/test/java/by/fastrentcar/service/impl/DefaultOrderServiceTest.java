@@ -27,7 +27,7 @@ public class DefaultOrderServiceTest {
     OrderDAO dao;
 
     @InjectMocks
-    OrderService service = DefaultOrderService.getInstance();
+    OrderService service;
 
     @Test
     void getInstance() {

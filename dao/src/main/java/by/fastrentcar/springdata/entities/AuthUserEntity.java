@@ -5,7 +5,6 @@ import by.fastrentcar.model.user.Role;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,15 +18,22 @@ public class AuthUserEntity {
     private Role role;
     private UserEntity userEntity;
     private Long user_id;
-    private List<OrderEntity> orderEntity = new ArrayList<>();
+    private List<OrderEntity> orderEntity;
 
     @OneToMany(mappedBy = "authUserEntity")
     public List<OrderEntity> getOrderEntity() {
         return orderEntity;
     }
 
-    public void setOrderEntity(List<OrderEntity> orderEntity) {
-        this.orderEntity = orderEntity;
+    @Column(name = "user_id", insertable = false, updatable = false)
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
 
@@ -66,20 +72,15 @@ public class AuthUserEntity {
         this.role = role;
     }
 
-    @Column(name = "user_id", insertable = false, updatable = false)
-    public Long getUser_id() {
-        return user_id;
+    public void setOrderEntity(List<OrderEntity> orderEntity) {
+        this.orderEntity = orderEntity;
     }
+
 
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    public UserEntity getUserEntity() {
-        return userEntity;
-    }
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;

@@ -2,7 +2,6 @@ package by.fastrentcar.web.servlet.auto;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
-import by.fastrentcar.service.impl.DefaultAutoService;
 import by.fastrentcar.web.WebUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/adminview/updateauto")
 public class AutoUpdateServlet extends HttpServlet {
-    private AutoService defaultAutoService = DefaultAutoService.getInstance();
+    private AutoService defaultAutoService;
    // private static final Logger log = LoggerFactory.getLogger(RegistrationServlet.class);
 
     @Override
