@@ -2,32 +2,32 @@ package by.fastrentcar.service.config;
 
 import by.fastrentcar.service.*;
 import by.fastrentcar.service.impl.*;
-import by.fastrentcar.springdata.config.DAOSpringConfig;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConfigSpringService {
+public class ServiceConfigSpring {
 
-    private DAOSpringConfig daoSpringConfig;
+    private DAOConfigSpring daoConfigSpring;
 
-    public ConfigSpringService(DAOSpringConfig daoSpringConfig) {
-        this.daoSpringConfig = daoSpringConfig;
+    public ServiceConfigSpring(DAOConfigSpring daoConfigSpring) {
+        this.daoConfigSpring = daoConfigSpring;
     }
 
     @Bean
     public UserService getDefaultUserService() {
-        return new DefaultUserService(daoSpringConfig.getDefaultAuthUserDAO());
+        return new DefaultUserService(daoConfigSpring.getDefaultAuthUserDAO());
     }
 
     @Bean
     public SecurityService getDefaultSecurityService() {
-        return new DefaultSecurityService(daoSpringConfig.getDefaultAuthUserDAO());
+        return new DefaultSecurityService(daoConfigSpring.getDefaultAuthUserDAO());
     }
 
     @Bean
     public OrderService getDefaultOrderService() {
-        return new DefaultOrderService(daoSpringConfig.getDefaultOrderDAO());
+        return new DefaultOrderService(daoConfigSpring.getDefaultOrderDAO());
     }
 
     @Bean
@@ -37,11 +37,11 @@ public class ConfigSpringService {
 
     @Bean
     public AutoServicesService getDefaultAutoServicesService() {
-        return new DefaultAutoServicesService(daoSpringConfig.getDefaultAutoServicesDAO());
+        return new DefaultAutoServicesService(daoConfigSpring.getDefaultAutoServicesDAO());
     }
 
     @Bean
     public AutoService getDefaultAutoService() {
-        return new DefaultAutoService(daoSpringConfig.getDefaultAutoDAO());
+        return new DefaultAutoService(daoConfigSpring.getDefaultAutoDAO());
     }
 }

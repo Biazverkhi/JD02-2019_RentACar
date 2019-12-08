@@ -14,7 +14,7 @@ public interface AutoService {
 
     List<Auto> getListAuto();
 
-    List<Auto> getListAuto(int start, int stop);
+    List<Auto> getListAuto(int page, int size);
 
     Auto getAuto(Long id);
 

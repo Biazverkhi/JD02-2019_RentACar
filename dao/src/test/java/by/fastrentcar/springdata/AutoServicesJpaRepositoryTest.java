@@ -2,7 +2,7 @@ package by.fastrentcar.springdata;
 
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
-import by.fastrentcar.springdata.config.DAOSpringConfig;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DAOSpringConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DAOConfigSpring.class})
 
 public class AutoServicesJpaRepositoryTest {
     static Long ID;

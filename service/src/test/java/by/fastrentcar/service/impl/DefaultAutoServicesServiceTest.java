@@ -3,12 +3,18 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.auto.Services;
 import by.fastrentcar.service.AutoServicesService;
+import by.fastrentcar.service.config.ServiceConfigSpring;
 import by.fastrentcar.springdata.AutoServicesDAO;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
+import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, SpringExtension.class})
+@ContextConfiguration(classes = {HibernateConfig.class, ServiceConfigSpring.class, DAOConfigSpring.class})
 
 public class DefaultAutoServicesServiceTest {
     @Mock
     AutoServicesDAO dao;
 
     @InjectMocks
+    @Autowired
     AutoServicesService service;
 
 

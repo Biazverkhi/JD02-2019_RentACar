@@ -5,14 +5,18 @@ import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
-import by.fastrentcar.service.config.ConfigSpringService;
+import by.fastrentcar.service.config.ServiceConfigSpring;
 import by.fastrentcar.springdata.AuthUserDAO;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
+import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +26,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, SpringExtension.class})
+@ContextConfiguration(classes = {HibernateConfig.class, ServiceConfigSpring.class, DAOConfigSpring.class})
 
 public class DefaultUserServiceTest {
     @Mock
     AuthUserDAO dao;
-
+    @Autowired
     @InjectMocks
-    UserService service = new AnnotationConfigApplicationContext(ConfigSpringService.class).getBean(DefaultUserService.class);
+    UserService service;
 
 
     @Test

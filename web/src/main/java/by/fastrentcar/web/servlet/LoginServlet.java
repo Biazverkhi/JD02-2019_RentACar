@@ -3,42 +3,47 @@ package by.fastrentcar.web.servlet;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
-import by.fastrentcar.web.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@Controller
+@RequestMapping("/login")
+public class LoginServlet {
     private SecurityService securityService;
+
+    public LoginServlet(SecurityService securityService) {
+        this.securityService = securityService;
+    }
     private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
-    protected void doGet(HttpServletRequest rq, HttpServletResponse rs) {
-        WebUtils.forward("login", rq, rs);
-
+    @GetMapping
+    public String doGet() {
+        return "login";
     }
-    @Override
-    protected void doPost(HttpServletRequest rq, HttpServletResponse rs) {
+
+    @PostMapping
+    public String doPost(HttpServletRequest rq) {
         String login = rq.getParameter("login");
         String password = rq.getParameter("password");
         HttpSession session = rq.getSession();
         AuthUserDTO user = securityService.login(login, password);
         if (user == null) {
             session.setAttribute("error", "login or password invalid");
-            WebUtils.redirect("index", rq, rs);
-            return;
+            return "redirect:index";
         }
         log.info("user {} logged", user.getLogin());
         session.setAttribute("authuser", user);
         if (user.getRole().equals(Role.USER)) {
-            WebUtils.redirect("index", rq, rs);
+            return "redirect:index";
         } else {
-            WebUtils.forward("adminview/adminpage", rq, rs);
+            return "adminview/adminpage";
         }
     }
 

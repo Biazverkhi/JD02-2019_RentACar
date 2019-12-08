@@ -4,7 +4,7 @@ import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
-import by.fastrentcar.springdata.config.DAOSpringConfig;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DAOSpringConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DAOConfigSpring.class})
 
 public class AuthUserJpaRepositoryTest {
     @Autowired

@@ -2,12 +2,18 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
+import by.fastrentcar.service.config.ServiceConfigSpring;
 import by.fastrentcar.springdata.OrderDAO;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
+import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,14 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, SpringExtension.class})
+@ContextConfiguration(classes = {HibernateConfig.class, ServiceConfigSpring.class, DAOConfigSpring.class})
 
 public class DefaultOrderServiceTest {
     static LocalDateTime dateTime = LocalDateTime.of(2019, 9, 25, 14, 25, 32);
 
     @Mock
     OrderDAO dao;
-
+    @Autowired
     @InjectMocks
     OrderService service;
 

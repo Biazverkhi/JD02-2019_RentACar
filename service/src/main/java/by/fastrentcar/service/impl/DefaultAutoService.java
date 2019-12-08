@@ -37,8 +37,8 @@ public class DefaultAutoService implements AutoService {
     }
 
     @Override
-    public List<Auto> getListAuto(int start, int stop) {
-        return autoJpaRepository.getListAutoT(start, stop);
+    public List<Auto> getListAuto(int page, int size) {
+        return autoJpaRepository.getListAutoT(page, size);
     }
 
     @Override

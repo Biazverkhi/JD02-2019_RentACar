@@ -1,7 +1,7 @@
 package by.fastrentcar.springdata;
 
 import by.fastrentcar.model.auto.Auto;
-import by.fastrentcar.springdata.config.DAOSpringConfig;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {HibernateConfig.class, DAOSpringConfig.class})
+@ContextConfiguration(classes = {HibernateConfig.class, DAOConfigSpring.class})
 
 public class AutoJpaRepositoryTest {
     @Autowired
@@ -54,6 +54,13 @@ public class AutoJpaRepositoryTest {
     @Transactional
     @Test
     void getAutoListTest2() {
+        List<Auto> list0 = dao.getListAutoT(0, 10);
+        List<Auto> list1 = dao.getListAutoT(1, 10);
+        List<Auto> list2 = dao.getListAutoT(2, 10);
+        List<Auto> list3 = dao.getListAutoT(3, 10);
+        List<Auto> list4 = dao.getListAutoT(4, 10);
+        List<Auto> list5 = dao.getListAutoT(5, 10);
+        List<Auto> list6 = dao.getListAutoT(6, 10);
         assertEquals(10, dao.getListAutoT(0, 10).size());
         assertEquals(0, dao.getListAutoT(6, 10).size());
         List<Auto> d = dao.getListAutoT();
