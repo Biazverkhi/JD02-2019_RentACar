@@ -1,4 +1,4 @@
-package by.fastrentcar.web.servlet;
+package by.fastrentcar.web.controller;
 
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
@@ -15,17 +15,18 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/login")
-public class LoginServlet {
-    private SecurityService securityService;
+public class LoginController {
+    private final SecurityService securityService;
 
-    public LoginServlet(SecurityService securityService) {
+    public LoginController(SecurityService securityService) {
         this.securityService = securityService;
     }
-    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
+
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @GetMapping
     public String doGet() {
-        return "login";
+        return "/login";
     }
 
     @PostMapping
@@ -36,14 +37,14 @@ public class LoginServlet {
         AuthUserDTO user = securityService.login(login, password);
         if (user == null) {
             session.setAttribute("error", "login or password invalid");
-            return "redirect:index";
+            return "redirect:/index";
         }
         log.info("user {} logged", user.getLogin());
         session.setAttribute("authuser", user);
         if (user.getRole().equals(Role.USER)) {
-            return "redirect:index";
+            return "redirect:/index";
         } else {
-            return "adminview/adminpage";
+            return "/adminview/adminpage";
         }
     }
 

@@ -13,7 +13,7 @@ public class DefaultUserService implements UserService {
     AuthUserDAO authUserDAO;
 
     public DefaultUserService(AuthUserDAO authUserDAO) {
-
+        this.authUserDAO = authUserDAO;
     }
 
     public List<AuthUserUserDTO> getListAuthUserUserDTO() {

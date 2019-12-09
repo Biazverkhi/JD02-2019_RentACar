@@ -1,4 +1,4 @@
-package by.fastrentcar.web.servlet;
+package by.fastrentcar.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,13 +9,16 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping({"/logout"})
-public class LogoutServlet {
+public class LogoutController {
+    public LogoutController() {
+    }
+
     @GetMapping()
     public String doGet(HttpServletRequest req) {
         HttpSession session=req.getSession();
         session.removeAttribute("authuser");
         session.invalidate();
-        return "redirect:index";
+        return "redirect:/index";
 
     }
 }

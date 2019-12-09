@@ -1,4 +1,4 @@
-package by.fastrentcar.web.servlet;
+package by.fastrentcar.web.controller;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.service.AutoService;
@@ -13,13 +13,14 @@ import java.util.List;
 
 @Controller
 @RequestMapping({"/index", "/prev", "/next"})
-public class IndexPageServlet {
+public class IndexPageController {
     private final AutoService defaultAutoService;
 
-    public IndexPageServlet(AutoService defaultAutoService) {
+    public IndexPageController(AutoService defaultAutoService) {
         this.defaultAutoService = defaultAutoService;
     }
-    private static final Logger log = LoggerFactory.getLogger(IndexPageServlet.class);
+
+    private static final Logger log = LoggerFactory.getLogger(IndexPageController.class);
 
     @GetMapping()
     public String doGet(HttpServletRequest req) {
@@ -37,26 +38,21 @@ public class IndexPageServlet {
         p.numPageAll = p.countRowAll % p.size == 0 ? p.countRowAll / p.size : p.countRowAll / p.size + 1;
         if (contextpath_next.equals(requestURI)) {
             ++p.page;
-            log.info("next");
         }
         if (contextpath_prev.equals(requestURI)) {
             --p.page;
-            log.info("prev");
         }
         req.setAttribute("prev", p.page == 0 ? null : "prev");
         req.setAttribute("next", p.numPageAll - p.page - 1 > 0 ? "next" : null);
         List<Auto> list = defaultAutoService.getListAuto(p.page, p.size);
         req.setAttribute("autos", list);
         req.getSession().setAttribute("page", p);
-        return "index";
+        return "/index";
     }
     private class Page {
         int page = 0;
         int numPageAll;
         int countRowAll;
         int size = 10;
-        public String toString() {
-            return "Page {numPage:" + page;
-        }
     }
 }

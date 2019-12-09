@@ -1,29 +1,33 @@
-package by.fastrentcar.web.servlet.user;
+package by.fastrentcar.web.controller;
 
 import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
-import by.fastrentcar.web.WebUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/registration")
-public class UserRegistrationServlet extends HttpServlet {
+@Controller
+@RequestMapping("/registration")
+public class UserRegistrationController {
     private UserService defaultUserService;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-
-        WebUtils.forward("registration", req, resp);
-
+    public UserRegistrationController(UserService defaultUserService) {
+        this.defaultUserService = defaultUserService;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    @GetMapping
+    public String registrationPage(HttpServletRequest req, HttpServletResponse resp) {
+        return "/registration";
+    }
+
+    @PostMapping
+    public String registrationUser(HttpServletRequest req, HttpServletResponse resp) {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String firstname = req.getParameter("firstname");
@@ -36,6 +40,6 @@ public class UserRegistrationServlet extends HttpServlet {
         User user = new User(null, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(null, login, password, Role.USER, null);
         defaultUserService.addCustomer(authUser, user);
-        WebUtils.redirect("index", req, resp);
+        return "redirect:/index";
     }
 }
