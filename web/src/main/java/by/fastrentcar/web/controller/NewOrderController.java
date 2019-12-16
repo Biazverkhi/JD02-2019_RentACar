@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -31,7 +32,7 @@ public class NewOrderController {
         Long authuserId = authuser.getId();
         List<Order> list = defaultOrderService.getListOrderByIdUser(authuserId);
         req.setAttribute("ordersuser", list);
-        return "/userpage";
+        return "userpage";
 
     }
 
@@ -42,13 +43,13 @@ public class NewOrderController {
         LocalDateTime startOrderDate = LocalDateTime.parse(req.getParameter("startOrderDate"));
         LocalDateTime stopOrderDate = LocalDateTime.parse(req.getParameter("stopOrderDate"));
         Double price = Double.valueOf(req.getParameter("price"));
-        LocalDateTime createOrderDate = LocalDateTime.now();
+        LocalDateTime createOrderDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         OrderDTO orderDTO = new OrderDTO(startOrderDate, stopOrderDate, price);
         Double priceArend = defaultBussinesLogic.getPriceArend(orderDTO);
         Order order = new Order(null, authuserId, autoId,
                 createOrderDate, startOrderDate, stopOrderDate,
                 null, "открыт", priceArend);
         defaultOrderService.addOrder(order);
-        return "redirect:/userpage";
+        return "redirect:userpage";
     }
 }

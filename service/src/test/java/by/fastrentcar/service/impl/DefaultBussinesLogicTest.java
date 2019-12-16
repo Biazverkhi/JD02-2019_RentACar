@@ -4,7 +4,6 @@ import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.service.BussinesLogic;
 import by.fastrentcar.service.config.ServiceConfigSpring;
 import by.fastrentcar.springdata.config.DAOConfigSpring;
-import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith({SpringExtension.class})
-@ContextConfiguration(classes = {HibernateConfig.class, ServiceConfigSpring.class, DAOConfigSpring.class})
+@ContextConfiguration(classes = {ServiceConfigSpring.class, DAOConfigSpring.class})
 
 public class DefaultBussinesLogicTest {
     @Autowired

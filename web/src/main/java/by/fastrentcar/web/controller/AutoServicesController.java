@@ -6,13 +6,12 @@ import by.fastrentcar.service.AutoServicesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/adminview")
+//@RequestMapping("/adminview")
 public class AutoServicesController {
     private AutoServicesService defaultAutoServicesService;
 
@@ -24,7 +23,7 @@ public class AutoServicesController {
     public String viewAutoServices(HttpServletRequest req) {
         List<AutoServices> list = defaultAutoServicesService.getListAutoServicesT();
         req.setAttribute("services", list);
-        return "/adminview/autoservicesadmin";
+        return "autoservicesadmin";
     }
 
     @PostMapping("/addservices")
@@ -32,16 +31,9 @@ public class AutoServicesController {
         String services = req.getParameter("services");
         AutoServices autoServices = new AutoServices(null, Services.valueOf(services));
         defaultAutoServicesService.addAutoServicesT(autoServices);
-        return "redirect:/adminview/autoservicesadmin";
+        return "redirect:autoservicesadmin";
     }
 
-    @PostMapping("/addservicestoauto")
-    public String addAutoServicesToAuto(HttpServletRequest req) {
-        Long autoId = Long.valueOf(req.getParameter("autoId"));
-        Long servicesId = Long.valueOf(req.getParameter("servicesId"));
-        defaultAutoServicesService.addAutoServicesToAuto(autoId, servicesId);
-        return "redirect:/adminview/autoservicesadmin";
-    }
 
     @PostMapping("/updateautoservices")
     public String updateAutoServices(HttpServletRequest req) {
@@ -49,13 +41,22 @@ public class AutoServicesController {
         String services = req.getParameter("services");
         AutoServices autoservices = new AutoServices(id, Services.valueOf(services));
         defaultAutoServicesService.updateAutoServicesT(autoservices);
-        return "redirect:/adminview/autoservicesadmin";
+        return "redirect:autoservicesadmin";
     }
 
     @PostMapping("/deleteautoservices")
     public String deleteAutoServices(HttpServletRequest req) {
         Long id = Long.valueOf(req.getParameter("id"));
         defaultAutoServicesService.deleteAutoServicesT(id);
-        return "redirect:/adminview/autoservicesadmin";
+        return "redirect:autoservicesadmin";
     }
+
+    @PostMapping("/addservicestoauto")
+    public String addAutoServicesToAuto(HttpServletRequest req) {
+        Long autoId = Long.valueOf(req.getParameter("autoId"));
+        Long servicesId = Long.valueOf(req.getParameter("servicesId"));
+        defaultAutoServicesService.addAutoServicesToAuto(autoId, servicesId);
+        return "redirect:autoservicesadmin";
+    }
+
 }

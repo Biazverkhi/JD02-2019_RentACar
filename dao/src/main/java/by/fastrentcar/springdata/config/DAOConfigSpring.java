@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = {"by.fastrentcar.springdata.repository"})
 
 public class DAOConfigSpring {
+
     @Autowired
     private AuthUserJpaRepository authUserJpaRepository;
     @Autowired

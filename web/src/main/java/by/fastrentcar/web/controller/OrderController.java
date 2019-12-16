@@ -5,14 +5,13 @@ import by.fastrentcar.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/adminview")
+//@RequestMapping("/adminview")
 public class OrderController {
     private OrderService defaultOrderService;
 
@@ -24,7 +23,7 @@ public class OrderController {
     public String viewOrder(HttpServletRequest req) {
         List<Order> list = defaultOrderService.getListOrder();
         req.setAttribute("orders", list);
-        return "/adminview/orderadmin";
+        return "orderadmin";
     }
 
     @PostMapping("/addorder")
@@ -41,7 +40,7 @@ public class OrderController {
                 createOrderDate, startOrderDate, stopOrderDate,
                 comment, reservStatus, priceArend);
         defaultOrderService.addOrder(order);
-        return "redirect:/adminview/orderadmin";
+        return "redirect:orderadmin";
     }
 
     @PostMapping("/updateorder")
@@ -59,13 +58,13 @@ public class OrderController {
                 createOrderDate, startOrderDate, stopOrderDate,
                 comment, reservStatus, priceArend);
         defaultOrderService.updateOrder(order);
-        return "redirect:/adminview/orderadmin";
+        return "redirect:orderadmin";
     }
 
     @PostMapping("/deleteorder")
     public String deleteOrder(HttpServletRequest req) {
         Long id = Long.valueOf(req.getParameter("id"));
         defaultOrderService.deleteOrder(id);
-        return "redirect:/adminview/orderadmin";
+        return "redirect:orderadmin";
     }
 }

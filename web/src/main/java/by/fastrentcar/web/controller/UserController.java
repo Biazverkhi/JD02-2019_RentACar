@@ -8,13 +8,11 @@ import by.fastrentcar.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/adminview")
 public class UserController {
     private UserService defaultUserService;
 
@@ -26,7 +24,7 @@ public class UserController {
     public String viewUser(HttpServletRequest req) {
         List<AuthUserUserDTO> list = defaultUserService.getListAuthUserUserDTO();
         req.setAttribute("users", list);
-        return "/adminview/useradmin";
+        return "useradmin";
     }
 
     @PostMapping("/add")
@@ -44,7 +42,7 @@ public class UserController {
         User user = new User(null, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(null, login, password, role, null);
         defaultUserService.addCustomer(authUser, user);
-        return "redirect:/adminview/useradmin";
+        return "redirect:useradmin";
     }
 
     @PostMapping("/update")
@@ -65,13 +63,13 @@ public class UserController {
         User user = new User(userid, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(id, login, password, role, userid);
         defaultUserService.updateCustomer(authUser, user);
-        return "redirect:/adminview/useradmin";
+        return "redirect:useradmin";
     }
 
     @PostMapping("/delete")
     public String deleteUser(HttpServletRequest req) {
         Long id = Long.valueOf(req.getParameter("id"));
         defaultUserService.deleteCutomer(id);
-        return "redirect:/adminview/useradmin";
+        return "redirect:useradmin";
     }
 }

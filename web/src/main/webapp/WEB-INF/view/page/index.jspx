@@ -1,0 +1,103 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+    <!--   <title><fmt:message key="page.name.index" bundle="${messages}"/></title>-->
+    <!--   <title><fmt:message key="page.name.index" bundle="${messages}"/></title>-->
+
+    <!--    <title><fmt:message key="page.name.index" bundle="${messages}"/></title>-->
+
+    <!--    <body class="bobyIndex">-->
+    <!--        <div class="bodyIndex">-->
+    <h2>страница index</h2>
+    <!--                <fmt:setLocale value="${locale}"/>-->
+    <!--                <fmt:setBundle basename="localizations" var="messages"/>-->
+
+
+    <!--            <h2><fmt:message key="page.name.index" bundle="${messages}"/></h2>-->
+    <!--            <h3><fmt:message key="page.name.index" bundle="${messages}"/></h3>-->
+    <!--            <hr/>-->
+
+
+    <c:choose>
+        <c:when test="${authuser == null}">
+
+            <jsp:include page="/WEB-INF/view/page/login.jspx"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <h5>Привет! ${authuser.login}</h5>
+            <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
+            <a href="${pageContext.request.contextPath}/logout">Выход</a>
+        </c:otherwise>
+    </c:choose>
+
+    <c:if test="${autos != null}">
+        <table style="width: 1200px;" cellspacing="0" cellpadding="1" border="1">
+            <tr>
+                <th width="5%">Марка</th>
+                <th width="10%">Модель</th>
+                <th width="15%">Тип топлива</th>
+                <th width="10%">Год</th>
+                <th width="10%">Цена/сутки</th>
+                <c:if test="${authuser != null}">
+                    <th width="20%">Начало аренды</th>
+                    <th width="20%">Конец аренды</th>
+                    <th width="10%"></th>
+                </c:if>
+            </tr>
+        </table>
+    </c:if>
+
+    <c:forEach items="${autos}" var="auto">
+        <form>
+
+            <table style="width: 1200px;" cellspacing="0" cellpadding="1" border="1">
+                <tr>
+                    <td width="5%">${auto.brand}</td>
+                    <td width="10%">${auto.model}</td>
+                    <td width="15%">${auto.fuel}</td>
+                    <td width="10%">${auto.date}</td>
+                    <td width="10%"><input name="price" readonly="" required="" type="hidden"
+                                           value="${auto.price}"/>${auto.price}
+                    </td>
+                    <c:if test="${authuser != null}">
+                        <td width="20%"><input name="startOrderDate" required="" type="datetime-local"
+                                               placeholder="Начало аренды"/></td>
+                        <td width="20%"><input name="stopOrderDate" required="" type="datetime-local"
+                                               placeholder="Конец аренды"/></td>
+                        <td width="10%"><input formaction="${pageContext.request.contextPath}/userpage"
+                                               formmethod="post" type="submit" value="забронировать"/></td>
+                    </c:if>
+                </tr>
+            </table>
+            <input type="hidden" name="authuserId" value="${authuser.id}"/>
+            <input type="hidden" name="autoId" value="${auto.id}"/>
+        </form>
+    </c:forEach>
+
+
+    <c:choose>
+        <c:when test="${prev != null}">
+            <a href="${pageContext.request.contextPath}/prev"> Prev </a>
+
+
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+    </c:choose>
+    <c:choose>
+        <c:when test="${next != null}">
+            <a href="${pageContext.request.contextPath}/next"> Next </a>
+
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+    </c:choose>
+
+
+    <!--        </div>-->
+    <!--    </body>-->
+
+
+</jsp:root>

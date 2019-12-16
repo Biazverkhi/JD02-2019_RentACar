@@ -3,9 +3,11 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoServicesService;
 import by.fastrentcar.springdata.AutoServicesDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class DefaultAutoServicesService implements AutoServicesService {
 
 

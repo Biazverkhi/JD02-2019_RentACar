@@ -28,15 +28,15 @@ public class AutoServicesJpaRepositoryTest {
 
     @Test
     void getAutoServicesByIdTTest() {
-        assertNotNull(dao.getAutoServicesByIdT(3l));
+        assertNotNull(dao.getAutoServicesByIdT(9l));
         assertNull(dao.getAutoServicesByIdT(1l));
     }
 
     @Transactional
     @Test
     void addAutoServicesToAutoTest() {
-        dao.addAutoServicesToAuto(82l, 3l);
-        List<AutoServices> a = adao.getAutoServicesByAutoIdT(82l).stream().filter(s -> s.getId().equals(3l)).collect(Collectors.toList());
+        dao.addAutoServicesToAuto(119l, 11l);
+        List<AutoServices> a = adao.getAutoServicesByAutoIdT(119l).stream().filter(s -> s.getId().equals(11l)).collect(Collectors.toList());
         assertFalse(a.isEmpty());
     }
 

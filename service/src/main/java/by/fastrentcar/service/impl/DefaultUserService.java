@@ -5,9 +5,11 @@ import by.fastrentcar.model.user.AuthUserUserDTO;
 import by.fastrentcar.model.user.User;
 import by.fastrentcar.service.UserService;
 import by.fastrentcar.springdata.AuthUserDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class DefaultUserService implements UserService {
 
     AuthUserDAO authUserDAO;

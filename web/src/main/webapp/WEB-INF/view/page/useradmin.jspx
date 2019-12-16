@@ -1,0 +1,100 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+    <title>Панель администрирования пользователей</title>
+
+    <a href="${pageContext.request.contextPath}/logout">Выход</a>
+    <h5>Привет! ${authuser.login}</h5>
+
+    <h3>Панель управления пользователями</h3>
+    <c:if test="${users != null}">
+        <table style="width: 1500px;" cellspacing="0" cellpadding="4" border="1">
+            <tr>
+                <th width="5%">Id</th>
+                <th width="10%">Логин</th>
+                <th width="10%">Пароль</th>
+                <th width="5%">Тип</th>
+                <th width="5%">User-Id</th>
+                <th width="5%">Имя</th>
+                <th width="10%">Фамилия</th>
+                <th width="10%">Телефонный номер</th>
+                <th width="10%">email</th>
+                <th width="10%">Номер паспорта</th>
+                <th width="5%">Дата выдачи паспорта</th>
+                <th width="5%">Орган выдачи паспорта</th>
+                <th width="5%"></th>
+                <th width="5%"></th>
+            </tr>
+            <c:forEach items="${users}" var="user">
+                <form>
+                    <tr>
+                        <td><input size="3" name="id" type="text" readonly="" value="${user.id}"/></td>
+                        <td><input size="10" name="login" required="" type="text" value="${user.login}"/></td>
+                        <td><input size="10" name="password" required="" type="password" value="${user.password}"/></td>
+                        <td><select name="role">
+                            <option value="USER">USER</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option selected="" value="${user.role}">${user.role}</option>
+                        </select></td>
+                        <td><input size="3" name="user_id" type="text" readonly="" value="${user.userId}"/></td>
+                        <td><input size="10" name="firstname" required="" type="text" value="${user.firstName}"/></td>
+                        <td><input size="10" name="lastname" required="" type="text" value="${user.lastName}"/></td>
+                        <td><input size="11" name="phone" required="" type="text" value="${user.phone}"/></td>
+                        <td><input size="15" name="email" required="" type="email" value="${user.email}"/></td>
+                        <td><input size="10" name="passport_number" required="" type="text"
+                                   value="${user.passport_number}"/></td>
+                        <td><input size="5" name="passport_data" required="" type="date" value="${user.passport_data}"/>
+                        </td>
+                        <td><input size="7" name="passport_authority" required="" type="text"
+                                   value="${user.passport_authority}"/></td>
+                        <td><input formaction="update" formmethod="post" type="submit" value="обновить"/></td>
+                        <td><input formaction="delete" formmethod="post" type="submit" value="удалить"/></td>
+                    </tr>
+                </form>
+            </c:forEach>
+
+        </table>
+
+    </c:if>
+    <h3>Добавить нового пользователя</h3>
+
+
+    <table style="width: 1500px;" cellspacing="0" cellpadding="4" border="1">
+        <tr>
+            <th width="10%">Логин</th>
+            <th width="10%">Пароль</th>
+            <th width="5%">Тип</th>
+            <th width="5%">User-Id</th>
+            <th width="5%">Имя</th>
+            <th width="10%">Фамилия</th>
+            <th width="10%">Телефонный номер</th>
+            <th width="10%">email</th>
+            <th width="10%">Номер паспорта</th>
+            <th width="5%">Дата выдачи паспорта</th>
+            <th width="5%">Орган выдачи паспорта</th>
+            <th width="5%"></th>
+        </tr>
+        <form>
+            <tr>
+                <td><input size="10" name="login" required="" type="text" placeholder="логин"/></td>
+                <td><input size="10" name="password" required="" type="text" placeholder="пароль"/></td>
+                <td><select name="role">
+                    <option selected="" value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                </select></td>
+                <td><input size="10" name="firstname" required="" type="text" placeholder="имя"/></td>
+                <td><input size="10" name="lastname" required="" type="text" placeholder="фамилия"/></td>
+                <td><input size="11" name="phone" required="" type="text" placeholder="телефон"/></td>
+                <td><input size="15" name="email" required="" type="email" placeholder="email"/></td>
+                <td><input size="10" name="passport_number" required="" type="text" placeholder="номер пасспорта"/></td>
+                <td><input size="5" name="passport_data" required="" type="date" placeholder="дата пасспорта"/></td>
+                <td><input size="7" name="passport_authority" required="" type="text"
+                           placeholder="орган выдачи пасспорта"/></td>
+                <td><input formaction="add" formmethod="post" type="submit" value="добавить"/></td>
+            </tr>
+        </form>
+    </table>
+
+</jsp:root>

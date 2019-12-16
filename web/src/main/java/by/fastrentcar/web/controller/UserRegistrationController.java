@@ -22,8 +22,8 @@ public class UserRegistrationController {
     }
 
     @GetMapping
-    public String registrationPage(HttpServletRequest req, HttpServletResponse resp) {
-        return "/registration";
+    public String registrationPage() {
+        return "registration";
     }
 
     @PostMapping
@@ -40,6 +40,6 @@ public class UserRegistrationController {
         User user = new User(null, firstname, lastname, phone, email, passport_number, passport_data, passport_authority);
         AuthUser authUser = new AuthUser(null, login, password, Role.USER, null);
         defaultUserService.addCustomer(authUser, user);
-        return "redirect:/index";
+        return "redirect:index";
     }
 }

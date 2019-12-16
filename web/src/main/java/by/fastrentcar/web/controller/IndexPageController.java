@@ -23,7 +23,7 @@ public class IndexPageController {
     private static final Logger log = LoggerFactory.getLogger(IndexPageController.class);
 
     @GetMapping()
-    public String doGet(HttpServletRequest req) {
+    public String getIndexPage(HttpServletRequest req) {
         Page p;
         String contextpath_next = req.getContextPath() + "/next";
         String contextpath_prev = req.getContextPath() + "/prev";
@@ -44,10 +44,11 @@ public class IndexPageController {
         }
         req.setAttribute("prev", p.page == 0 ? null : "prev");
         req.setAttribute("next", p.numPageAll - p.page - 1 > 0 ? "next" : null);
+
         List<Auto> list = defaultAutoService.getListAuto(p.page, p.size);
         req.setAttribute("autos", list);
         req.getSession().setAttribute("page", p);
-        return "/index";
+        return "index";
     }
     private class Page {
         int page = 0;

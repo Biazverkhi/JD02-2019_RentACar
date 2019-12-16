@@ -1,18 +1,30 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
           version="2.0">
+    <h3>Страница LOGIN</h3>
+    <c:choose>
+        <c:when test="${authuser == null}">
+            <form>
+                <input name="login" type="text" required="" placeholder="login"/><i> Логин </i><br/>
+                <input name="password" type="password" placeholder="password" required=""/><i> Пароль </i><br/>
+                <input formaction="${pageContext.request.contextPath}/login" formmethod="post" type="submit"
+                       value="Войти"/><br/>
+                <a href="${pageContext.request.contextPath}/registration">Регистрация</a>
+            </form>
+        </c:when>
+        <c:otherwise>
+            <h5>Привет! ${authuser.login}</h5>
+            <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
+            <a href="${pageContext.request.contextPath}/logout">Выход</a>
+        </c:otherwise>
+    </c:choose>
+    <c:choose>
 
-    <h3>Login</h3>
-    <form action="${pageContext.request.contextPath}/login" method="post">
-        <label for="login">login</label>
-        <input id="login" type="text" name="login"/> <br/>
+        <c:when test="${authuser == null}">
 
-
-        <label for="password">password</label>
-        <input id="password" type="password" name="password"/><br/>
-        <input type="submit"/>
-    </form>
-
-    <p style="color: red">${error}</p>
-
+            <p style="color: #ff003b">${error}</p>
+        </c:when>
+    </c:choose>
 </jsp:root>
+

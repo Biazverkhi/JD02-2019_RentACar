@@ -4,7 +4,9 @@ import by.fastrentcar.model.user.AuthUser;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.SecurityService;
 import by.fastrentcar.springdata.AuthUserDAO;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class DefaultSecurityService implements SecurityService {
 
     public DefaultSecurityService(AuthUserDAO authUserDAO) {

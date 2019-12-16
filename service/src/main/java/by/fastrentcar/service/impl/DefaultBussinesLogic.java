@@ -2,10 +2,12 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.service.BussinesLogic;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Transactional
 public class DefaultBussinesLogic implements BussinesLogic {
     public DefaultBussinesLogic() {
     }

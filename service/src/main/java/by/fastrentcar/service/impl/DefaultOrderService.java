@@ -3,9 +3,11 @@ package by.fastrentcar.service.impl;
 import by.fastrentcar.model.order.Order;
 import by.fastrentcar.service.OrderService;
 import by.fastrentcar.springdata.OrderDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class DefaultOrderService implements OrderService {
 
     public DefaultOrderService(OrderDAO orderDAO) {

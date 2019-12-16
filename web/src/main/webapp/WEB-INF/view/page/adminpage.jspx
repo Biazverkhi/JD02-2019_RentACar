@@ -1,0 +1,19 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0"
+>
+<head>
+    <title>Admin Page</title>
+</head>
+<h2>Привет! ${authuser.login}</h2>
+<a href="${pageContext.request.contextPath}/logout" >Выход</a>
+    <hr/>
+    <a href="${pageContext.request.contextPath}/useradmin">Администрирование пользователей</a>
+    <hr/>
+    <a href="${pageContext.request.contextPath}/autoadmin">Администрирование авто</a>
+    <hr/>
+    <a href="${pageContext.request.contextPath}/autoservicesadmin">Сервис для обслуживания авто</a>
+
+    <hr/>
+    <a href="${pageContext.request.contextPath}/orderadmin">Обработка заявок</a>
+</jsp:root>

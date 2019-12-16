@@ -4,9 +4,11 @@ import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.service.AutoService;
 import by.fastrentcar.springdata.AutoDAO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class DefaultAutoService implements AutoService {
 
     public DefaultAutoService(AutoDAO autoJpaRepository) {

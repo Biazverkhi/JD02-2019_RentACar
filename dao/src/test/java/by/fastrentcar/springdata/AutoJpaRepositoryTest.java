@@ -79,9 +79,9 @@ public class AutoJpaRepositoryTest {
     @Test
     void getAutoServicesByAutoIdTTest() {
         assertTrue(dao.getAutoServicesByAutoIdT(85l).isEmpty());
-        assertTrue(dao.getAutoServicesByAutoIdT(2l).isEmpty());
+        assertFalse(dao.getAutoServicesByAutoIdT(120l).isEmpty());
         assertEquals(0, dao.getAutoServicesByAutoIdT(85l).size());
-        assertEquals(1, dao.getAutoServicesByAutoIdT(82l).size());
+        assertEquals(1, dao.getAutoServicesByAutoIdT(120l).size());
 
     }
 

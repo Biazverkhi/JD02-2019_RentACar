@@ -6,13 +6,12 @@ import by.fastrentcar.service.AutoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/adminview")
+//@RequestMapping("/adminview")
 public class AutoController {
     private AutoService defaultAutoService;
 
@@ -24,7 +23,7 @@ public class AutoController {
     public String viewAuto(HttpServletRequest req) {
         List<Auto> list = defaultAutoService.getListAuto();
         req.setAttribute("autos", list);
-        return "/adminview/autoadmin";
+        return "autoadmin";
     }
 
     @PostMapping("/addauto")
@@ -37,11 +36,12 @@ public class AutoController {
         String status = req.getParameter("status");
         Auto auto = new Auto(null, brand, model, fuel, date, price, status);
         defaultAutoService.addAuto(auto);
-        return "redirect:/adminview/autoadmin";
+        return "redirect:autoadmin";
     }
 
     @PostMapping("/updateauto")
     public String updateAuto(HttpServletRequest req) {
+
         Long id = Long.valueOf(req.getParameter("id"));
         String brand = req.getParameter("brand");
         String model = req.getParameter("model");
@@ -51,14 +51,14 @@ public class AutoController {
         String status = req.getParameter("status");
         Auto auto = new Auto(id, brand, model, fuel, date, price, status);
         defaultAutoService.updateAuto(auto);
-        return "redirect:/adminview/autoadmin";
+        return "redirect:autoadmin";
     }
 
     @PostMapping("/deleteauto")
     public String deleteAuto(HttpServletRequest req) {
         Long id = Long.valueOf(req.getParameter("id"));
         defaultAutoService.deleteAuto(id);
-        return "redirect:/adminview/autoadmin";
+        return "redirect:autoadmin";
     }
 
     @PostMapping("/services")
@@ -67,7 +67,7 @@ public class AutoController {
         List<AutoServices> list = defaultAutoService.getAutoServicesByAutoIdT(autoId);
         req.setAttribute("servicer", list);
         req.setAttribute("id1", autoId);
-        return "/adminview/autoserviser";
+        return "autoserviser";
     }
 }
 

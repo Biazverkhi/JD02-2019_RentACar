@@ -9,12 +9,37 @@
         <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
     </definition>
 
-    <definition name="login" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/page/login.jspx"/>
+    <definition name="index" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/index.jspx"/>
+    </definition>
+    <definition name="registration" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/registration.jspx"/>
     </definition>
 
-    <definition name="student" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/page/student.jspx"/>
+    <definition name="userpage" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/userpage.jspx"/>
+    </definition>
+    <definition name="useradmin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/useradmin.jspx"/>
+    </definition>
+    <definition name="adminpage" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/adminpage.jspx"/>
+    </definition>
+
+    <definition name="autoadmin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/autoadmin.jspx"/>
+    </definition>
+
+    <definition name="autoservicesadmin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/autoservicesadmin.jspx"/>
+    </definition>
+
+    <definition name="autoserviser" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/autoserviser.jspx"/>
+    </definition>
+
+    <definition name="orderadmin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/orderadmin.jspx"/>
     </definition>
 
 </tiles-definitions>

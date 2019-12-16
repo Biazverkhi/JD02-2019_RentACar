@@ -1,14 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: L
-  Date: 11.10.2019
-  Time: 0:01
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+    <html>
 <head>
     <title>Панель администрирования сервиса обслуживания для автомобилей</title>
 
@@ -22,8 +17,7 @@
 <a href="${pageContext.request.contextPath}/logout">Выход</a>
 
 <c:if test="${services!= null}">
-    <table width="100%" cellspacing="0" cellpadding="4" border="1">
-        <tbody>
+    <table style="width: 350px;" cellspacing="0" cellpadding="1" border="1">
         <tr>
             <th style="width: 100px">Id</th>
             <th style="width: 70px">Профессия</th>
@@ -31,47 +25,46 @@
         <c:forEach items="${services}" var="services">
             <form>
                 <tr>
-                    <td><input name="id" type="text" readonly value=${services.id}></td>
+                    <td><input name="id" type="text" readonly="" value="${services.id}"/></td>
                     <td><select name="services">
                         <option value="MOTORIST">моторист</option>
                         <option value="ELECTRICIAN">электрик</option>
                         <option value="MECHANIC">механик</option>
                         <option value="CLEANER">уборщик</option>
-                        <option selected value="${services.services}">${services.services}</option>
+                        <option selected="" value="${services.services}">${services.services}</option>
                     </select></td>
                     <td>
-                        <input formaction="updateautoservices" formmethod="post" type="submit" value="обновить"></td>
-                    <td><input formaction="deleteautoservices" formmethod="post" type="submit" value="удалить"></td>
-                        <%--                    <td><input type="checkbox" name="id" value=${user.id} > </td>--%>
+                        <input formaction="updateautoservices" formmethod="post" type="submit" value="обновить"/></td>
+                    <td><input formaction="deleteautoservices" formmethod="post" type="submit" value="удалить"/></td>
                 </tr>
             </form>
         </c:forEach>
-        </tbody>
     </table>
-    <%--        <input formaction="useradmin" formmethod="post" type="submit" value="обновить">--%>
 </c:if>
 <h3>Добавить нового сервайзера</h3>
-<table width="100%" cellspacing="0" cellpadding="4" border="1">
+<form id="addservices"/>
+
+<table style="width: 150px;" cellspacing="0" cellpadding="1" border="1">
     <tr>
         <th style="width: 100px">Id</th>
         <th style="width: 70px">Профессия</th>
 
     </tr>
-    <form>
         <tr>
-            <td><select name="services">
+            <td><select name="services" form="addservices">
                 <option value="MOTORIST">моторист</option>
                 <option value="ELECTRICIAN">электрик</option>
                 <option value="MECHANIC">механик</option>
                 <option value="CLEANER">уборщик</option>
             </select></td>
-            <td><input formaction="addservices" formmethod="post" type="submit" value="добавить"></td>
+            <td><input formaction="addservices" formmethod="post" type="submit" value="добавить" form="addservices"/>
+            </td>
         </tr>
-    </form>
 </table>
 
 
 <h3>Назначить сервайзера на авто</h3>
+
 <table width="100%" cellspacing="0" cellpadding="4" border="1">
     <tr>
         <th style="width: 100px">Id авто</th>
@@ -80,10 +73,10 @@
     </tr>
     <form>
         <tr>
-            <td><input name="autoId" required type="text" placeholder="Id автомобиля"></td>
-            <td><input name="servicesId" required type="text" placeholder="Id сервайзера"></td>
+            <td><input name="autoId" type="text" placeholder="Id автомобиля"/></td>
+            <td><input name="servicesId" type="text" placeholder="Id сервайзера"/></td>
 
-            <td><input formaction="addservicestoauto" formmethod="post" type="submit" value="назначить"></td>
+            <td><input formaction="addservicestoauto" formmethod="post" type="submit" value="назначить"/></td>
         </tr>
     </form>
 </table>
@@ -93,3 +86,4 @@
 
 
 </html>
+</jsp:root>

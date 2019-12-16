@@ -1,0 +1,104 @@
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+    <html>
+    <head>
+        <title>Панель администрирования автомобилей</title>
+
+    </head>
+
+
+    <body>
+    <h5>Привет! ${authuser.login}</h5>
+
+    <h3>Панель администрирования автомобилей</h3>
+    <a href="${pageContext.request.contextPath}/logout">Выход</a>
+
+    <c:if test="${autos != null}">
+        <table style="width: 1050px;" cellspacing="0" cellpadding="4" border="1">
+            <tr>
+                <th width="10%">Id</th>
+                <th width="10%">Марка</th>
+                <th width="10%">Модель</th>
+                <th width="15%">Тип топлива</th>
+                <th width="10%">Год</th>
+                <th width="10%">Цена/сутки</th>
+                <th width="9%">Статус</th>
+                <th width="26%">управление</th>
+
+            </tr>
+        </table>
+
+        <c:forEach items="${autos}" var="auto">
+
+            <form>
+                <table style="width: 1050px;" cellspacing="0" cellpadding="1" border="1">
+                    <tr>
+                        <td width="10%"><input hidden="" name="id" required="" type="text"
+                                               value="${auto.id}"/>${auto.id}</td>
+                        <td width="10%"><input size="6" name="brand" required="" type="text" value="${auto.brand}"/>
+                        </td>
+                        <td width="10%"><input size="6" name="model" required="" type="text" value="${auto.model}"/>
+                        </td>
+                        <td width="15%"><select name="fuel">
+                            <option value="Бензин">Бензин</option>
+                            <option value="Дизель">Дизель</option>
+                            <option value="Электричество">Электричество</option>
+                            <option selected="" value="${auto.fuel}">${auto.fuel}</option>
+                        </select></td>
+                        <td width="10%"><input size="5" name="date" required="" type="text" value="${auto.date}"/></td>
+                        <td width="10%"><input size="7" name="price" required="" type="text" value="${auto.price}"/>
+                        </td>
+                        <td width="9%"><select name="status">
+                            <option value="свободно">свободно</option>
+                            <option value="резерв">резерв</option>
+                            <option value="занято">занято</option>
+                            <option selected="" value="${auto.status}">${auto.status}</option>
+                        </select></td>
+                        <td width="8%"><input formaction="services" formmethod="post" type="submit" value="serviser"
+                                              formtarget="_blank"/></td>
+                        <td width="9%"><input formaction="updateauto" formmethod="post" type="submit" value="обновить"/>
+                        </td>
+                        <td width="9%"><input formaction="deleteauto" formmethod="post" type="submit" value="удалить"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </c:forEach>
+    </c:if>
+    <h3>Добавить новое авто</h3>
+    <form id="adduto"/>
+    <table width="100%" cellspacing="0" cellpadding="4" border="1">
+        <tr>
+            <th style="width: 70px">Марка</th>
+            <th>Модель</th>
+            <th>Тип топлива</th>
+            <th>Год</th>
+            <th>Цена/сутки</th>
+            <th>Статус</th>
+            <th></th>
+
+        </tr>
+        <tr>
+            <td><input name="brand" required="" type="text" placeholder="Бренд" form="adduto"/></td>
+            <td><input name="model" required="" type="text" placeholder="логин" form="adduto"/></td>
+            <td><select name="fuel" form="adduto">
+                <option selected="" value="Бензин">Бензин</option>
+                <option value="Дизель">Дизель</option>
+                <option value="Электричество">Электричество</option>
+            </select></td>
+            <td><input name="date" required="" type="text" placeholder="год производства" form="adduto"/></td>
+            <td><input name="price" required="" type="text" placeholder="цена/сутки" form="adduto"/></td>
+            <td><select name="status" form="adduto">
+                <option value="свободно">свободно</option>
+                <option value="резерв">резерв</option>
+                <option value="занято">занято</option>
+            </select></td>
+            <td><input formaction="addauto" formmethod="post" type="submit" value="добавить" form="adduto"/></td>
+        </tr>
+    </table>
+    </body>
+    </html>
+</jsp:root>

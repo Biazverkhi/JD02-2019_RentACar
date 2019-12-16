@@ -3,7 +3,7 @@
           version="2.0">
 
 
-    <header class="clearfix">
+    <header class="header">
         <h2>Header</h2>
     </header>
 
