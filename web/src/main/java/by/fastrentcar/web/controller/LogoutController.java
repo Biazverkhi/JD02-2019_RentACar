@@ -1,5 +1,7 @@
 package by.fastrentcar.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping({"/logout"})
+@RequestMapping
 public class LogoutController {
     public LogoutController() {
     }
 
-    @GetMapping()
-    public String logout(HttpServletRequest req) {
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
+    @GetMapping({"/logout"})
+    public String logout(HttpServletRequest req) {
+        log.info("user logout");
         SecurityContextHolder.clearContext();
         try {
             req.logout();

@@ -50,7 +50,7 @@ public class OrderJpaRepositoryTest {
     @Test
     void getOrderByIdTTest() {
 
-        assertNotNull(dao.getOrderByIdT(14l));
+        assertNotNull(dao.getOrderByIdT(39l));
         assertNull(dao.getOrderByIdT(13l));
     }
 

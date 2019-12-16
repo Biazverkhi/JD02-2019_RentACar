@@ -44,16 +44,13 @@ public class LoginController {
             return "redirect:index";
         }
         log.info("user {} logged", user.getLogin());
+
         rq.getSession().setAttribute("authuser", user);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        if (user.getRole().equals(Role.USER)) {
-            return "redirect:index";
-        } else {
-            return "adminpage";
-        }
+        return user.getRole().equals(Role.USER) ? "redirect:index" : "adminpage";
     }
 
 
