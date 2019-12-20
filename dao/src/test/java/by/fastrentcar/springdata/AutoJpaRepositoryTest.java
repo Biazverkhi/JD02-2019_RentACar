@@ -1,6 +1,7 @@
 package by.fastrentcar.springdata;
 
 import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
@@ -54,26 +55,26 @@ public class AutoJpaRepositoryTest {
     @Transactional
     @Test
     void getAutoListTest2() {
-        List<Auto> list0 = dao.getListAutoT(0, 10);
-        List<Auto> list1 = dao.getListAutoT(1, 10);
-        List<Auto> list2 = dao.getListAutoT(2, 10);
-        List<Auto> list3 = dao.getListAutoT(3, 10);
-        List<Auto> list4 = dao.getListAutoT(4, 10);
-        List<Auto> list5 = dao.getListAutoT(5, 10);
-        List<Auto> list6 = dao.getListAutoT(6, 10);
-        assertEquals(10, dao.getListAutoT(0, 10).size());
-        assertEquals(0, dao.getListAutoT(6, 10).size());
+        PageAuto list0 = dao.getListAutoT(new PageAuto());
+        assertEquals(10, dao.getListAutoT(new PageAuto()).getSize());
         List<Auto> d = dao.getListAutoT();
         for (Auto auto : d) {
             dao.deleteAutoT(auto.getId());
         }
-        assertTrue(dao.getListAutoT(0, 10).isEmpty());
+        assertTrue(dao.getListAutoT(new PageAuto()).getAutoList().isEmpty());
     }
 
     @Test
     void getAutoByIdTTest() {
         assertNull(dao.getAutoByIdT(1l));
         assertNotNull(dao.getAutoByIdT(85l));
+    }
+
+    @Test
+    void getDistinctBrendAuto() {
+        List<String> list = dao.getDistinctBrendAuto();
+        assertFalse(dao.getDistinctBrendAuto().isEmpty());
+
     }
 
     @Test

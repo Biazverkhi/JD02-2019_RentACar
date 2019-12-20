@@ -115,9 +115,5 @@ public class AutoEntity {
 
     }
 
-    @Override
-    public String toString() {
-        return "AutoEntity id=" + id + " brabd= " + brand;
-    }
 }
 

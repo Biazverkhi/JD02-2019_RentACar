@@ -8,8 +8,14 @@
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
     </definition>
-
-    <definition name="index" extends="default">
+    <definition name="def" template="/WEB-INF/view/layouts/def.jspx">
+        <put-attribute name="title" value="Tiles tutorial homepage"/>
+        <put-attribute name="header" value="/WEB-INF/view/common/header.jspx"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="menu" value="/WEB-INF/view/page/menu.jspx"/>
+        <put-attribute name="footer" value="/WEB-INF/view/common/footer.jspx"/>
+    </definition>
+    <definition name="index" extends="def">
         <put-attribute name="body" value="/WEB-INF/view/page/index.jspx"/>
     </definition>
     <definition name="registration" extends="default">
@@ -18,6 +24,7 @@
 
     <definition name="userpage" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/page/userpage.jspx"/>
+
     </definition>
     <definition name="useradmin" extends="default">
         <put-attribute name="body" value="/WEB-INF/view/page/useradmin.jspx"/>

@@ -43,7 +43,7 @@
     <c:otherwise>
         <h5>Привет! ${authuser.login}</h5>
         <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
-        <a href="${pageContext.request.contextPath}/logout">Выход</a>
+        <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
     </c:otherwise>
 </c:choose>
 

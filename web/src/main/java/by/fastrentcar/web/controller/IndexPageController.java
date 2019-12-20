@@ -1,18 +1,20 @@
 package by.fastrentcar.web.controller;
 
-import by.fastrentcar.model.auto.Auto;
+import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.service.AutoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping({"/index", "/prev", "/next"})
+@RequestMapping({"/index", "/prev", "/next", "/filtr/*"})
 public class IndexPageController {
     private final AutoService defaultAutoService;
 
@@ -23,37 +25,40 @@ public class IndexPageController {
     private static final Logger log = LoggerFactory.getLogger(IndexPageController.class);
 
     @GetMapping()
-    public String getIndexPage(HttpServletRequest req) {
-        Page p;
+    public String getIndexPage(HttpServletRequest req, ModelMap model, HttpSession session) {
+        PageAuto p = (session.getAttribute("page") == null) ? new PageAuto() : (PageAuto) session.getAttribute("page");
+        sort(p, req);
+        pagination(p, req);
+        p = defaultAutoService.getListAuto(p);
+        model.addAttribute("prev", p.getPage() == 0 ? null : "prev");
+        model.addAttribute("next", p.getNumPageAll() - p.getPage() - 1 > 0 ? "next" : null);
+        session.setAttribute("page", p);
+        return "index";
+    }
+
+    private static void sort(PageAuto p, HttpServletRequest req) {
+        if (p.getColumnName() == null && req.getParameter("sort") != null) {
+            p.setColumnName(req.getParameter("sort"));
+            p.setSort(Sort.Direction.ASC);
+            p.setPage(0);
+        } else if (p.getColumnName() != null && req.getParameter("sort") != null) {
+            p.setSort(p.getSort() == Sort.Direction.ASC ? Sort.Direction.DESC : Sort.Direction.ASC);
+            p.setPage(0);
+        }
+    }
+
+    private static void pagination(PageAuto p, HttpServletRequest req) {
         String contextpath_next = req.getContextPath() + "/next";
         String contextpath_prev = req.getContextPath() + "/prev";
         String requestURI = req.getRequestURI();
-        if (req.getSession().getAttribute("page") == null) {
-            p = new Page();
-        } else {
-            p = (Page) req.getSession().getAttribute("page");
-            req.getSession().removeAttribute("page");
-        }
-        p.countRowAll = (int) defaultAutoService.getCountAuto();
-        p.numPageAll = p.countRowAll % p.size == 0 ? p.countRowAll / p.size : p.countRowAll / p.size + 1;
+
         if (contextpath_next.equals(requestURI)) {
-            ++p.page;
+            p.setPage(p.getPage() + 1);
         }
         if (contextpath_prev.equals(requestURI)) {
-            --p.page;
+            p.setPage(p.getPage() - 1);
         }
-        req.setAttribute("prev", p.page == 0 ? null : "prev");
-        req.setAttribute("next", p.numPageAll - p.page - 1 > 0 ? "next" : null);
+    }
 
-        List<Auto> list = defaultAutoService.getListAuto(p.page, p.size);
-        req.setAttribute("autos", list);
-        req.getSession().setAttribute("page", p);
-        return "index";
-    }
-    private class Page {
-        int page = 0;
-        int numPageAll;
-        int countRowAll;
-        int size = 10;
-    }
+
 }

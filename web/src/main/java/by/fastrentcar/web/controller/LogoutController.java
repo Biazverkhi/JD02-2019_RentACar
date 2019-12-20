@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping
@@ -19,7 +18,7 @@ public class LogoutController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    @GetMapping({"/logout"})
+    @GetMapping({"/logoutUser"})
     public String logout(HttpServletRequest req) {
         log.info("user logout");
         SecurityContextHolder.clearContext();
@@ -28,9 +27,6 @@ public class LogoutController {
         } catch (ServletException e) {
             throw new RuntimeException();
         }
-        HttpSession session=req.getSession();
-        session.removeAttribute("authuser");
-        session.invalidate();
         return "redirect:index";
 
     }

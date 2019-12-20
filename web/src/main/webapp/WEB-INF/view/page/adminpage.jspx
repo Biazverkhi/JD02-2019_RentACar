@@ -6,7 +6,7 @@
     <title>Admin Page</title>
 </head>
 <h2>Привет! ${authuser.login}</h2>
-<a href="${pageContext.request.contextPath}/logout" >Выход</a>
+    <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
     <hr/>
     <a href="${pageContext.request.contextPath}/useradmin">Администрирование пользователей</a>
     <hr/>

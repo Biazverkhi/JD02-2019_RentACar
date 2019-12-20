@@ -14,7 +14,7 @@
     <h5>Привет! ${authuser.login}</h5>
 
     <h3>Панель администрирования автомобилей</h3>
-    <a href="${pageContext.request.contextPath}/logout">Выход</a>
+    <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
 
     <c:if test="${autos != null}">
         <table style="width: 1050px;" cellspacing="0" cellpadding="4" border="1">

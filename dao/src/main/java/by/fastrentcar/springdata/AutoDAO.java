@@ -2,6 +2,7 @@ package by.fastrentcar.springdata;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
+import by.fastrentcar.model.page.PageAuto;
 
 import java.util.List;
 
@@ -16,7 +17,11 @@ public interface AutoDAO {
 
     long getCountAuto();
 
-    List<Auto> getListAutoT(int page, int size);
+    List<String> getDistinctBrendAuto();
+
+    PageAuto getListAutoT(PageAuto page);
+
+    PageAuto getListAutoSortT(PageAuto page);
 
     Auto getAutoByIdT(Long id);
 

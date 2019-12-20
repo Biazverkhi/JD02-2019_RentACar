@@ -10,7 +10,7 @@
 <h1>Страница пользователя</h1>
     <hr/>
 <h5>Привет! ${authuser.login}</h5>
-<a href="${pageContext.request.contextPath}/logout" >Выход</a>
+    <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
 <h3>Ваши текущие заявки</h3>
 
 <c:if test="${ordersuser != null}">

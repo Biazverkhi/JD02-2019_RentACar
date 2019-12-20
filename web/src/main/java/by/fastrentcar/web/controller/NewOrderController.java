@@ -5,10 +5,12 @@ import by.fastrentcar.model.order.OrderDTO;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.service.BussinesLogic;
 import by.fastrentcar.service.OrderService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
+@ControllerAdvice
 @RequestMapping("/userpage")
 public class NewOrderController {
     private OrderService defaultOrderService;
@@ -27,8 +30,8 @@ public class NewOrderController {
     }
 
     @GetMapping
-    public String viewOrderListUser(HttpServletRequest req) {
-        AuthUserDTO authuser = (AuthUserDTO) (req.getSession().getAttribute("authuser"));
+    public String viewOrderListUser(HttpServletRequest req, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
+        AuthUserDTO authuser = (AuthUserDTO) usernamePasswordAuthenticationToken.getPrincipal();
         Long authuserId = authuser.getId();
         List<Order> list = defaultOrderService.getListOrderByIdUser(authuserId);
         req.setAttribute("ordersuser", list);
@@ -36,9 +39,9 @@ public class NewOrderController {
 
     }
 
-    @PostMapping
-    public String addOrderFromUser(HttpServletRequest req) {
-        Long authuserId = Long.valueOf(req.getParameter("authuserId"));
+    @RequestMapping(method = RequestMethod.POST)
+    public String addOrderFromUser(HttpServletRequest req, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
+        Long authuserId = ((AuthUserDTO) usernamePasswordAuthenticationToken.getPrincipal()).getId();
         Long autoId = Long.valueOf(req.getParameter("autoId"));
         LocalDateTime startOrderDate = LocalDateTime.parse(req.getParameter("startOrderDate"));
         LocalDateTime stopOrderDate = LocalDateTime.parse(req.getParameter("stopOrderDate"));

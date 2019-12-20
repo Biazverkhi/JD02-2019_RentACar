@@ -5,7 +5,7 @@
 >
     <title>Панель администрирования пользователей</title>
 
-    <a href="${pageContext.request.contextPath}/logout">Выход</a>
+    <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
     <h5>Привет! ${authuser.login}</h5>
 
     <h3>Панель управления пользователями</h3>

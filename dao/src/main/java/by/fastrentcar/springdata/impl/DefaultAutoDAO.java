@@ -2,10 +2,12 @@ package by.fastrentcar.springdata.impl;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
+import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.springdata.AutoDAO;
 import by.fastrentcar.springdata.entities.AutoEntity;
 import by.fastrentcar.springdata.entities.AutoServicesEntity;
 import by.fastrentcar.springdata.repository.AutoJpaRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
@@ -24,6 +26,12 @@ public class DefaultAutoDAO implements AutoDAO {
         return autoJpaRepository.count();
     }
 
+    @Override
+    public List<String> getDistinctBrendAuto() {
+        List<AutoEntity> list = autoJpaRepository.findDistinctByBrand();
+
+        return list.stream().map(AutoEntity::getBrand).collect(Collectors.toList());
+    }
 
     @Override
     public List<Auto> getListAutoT() {
@@ -31,11 +39,20 @@ public class DefaultAutoDAO implements AutoDAO {
         return autoEntityList.stream().map(AutoEntity::convertAutoByAutoEntity).collect(Collectors.toList());
     }
 
+    @Override
+    public PageAuto getListAutoSortT(PageAuto page) {
+        Page<AutoEntity> p = autoJpaRepository.findAll(PageRequest.of(page.getPage(), page.getSize(), page.getSort(), page.getColumnName()));
+        page.setAutoList(p.toList().stream().map(AutoEntity::convertAutoByAutoEntity).collect(Collectors.toList()));
+        page.setNumPageAll(p.getTotalPages());
+        return page;
+    }
 
     @Override
-    public List<Auto> getListAutoT(int page, int size) {
-        List<AutoEntity> autoEntityList = autoJpaRepository.findAll(PageRequest.of(page, size)).getContent();
-        return autoEntityList.stream().map(AutoEntity::convertAutoByAutoEntity).collect(Collectors.toList());
+    public PageAuto getListAutoT(PageAuto page) {
+        Page<AutoEntity> p = autoJpaRepository.findAll(PageRequest.of(page.getPage(), page.getSize()));
+        page.setAutoList(p.toList().stream().map(AutoEntity::convertAutoByAutoEntity).collect(Collectors.toList()));
+        page.setNumPageAll(p.getTotalPages());
+        return page;
     }
 
     @Override

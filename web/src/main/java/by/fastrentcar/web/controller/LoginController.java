@@ -31,7 +31,7 @@ public class LoginController {
 
     @GetMapping
     public String doGet() {
-        return "login";
+        return "index";
     }
 
     @PostMapping
@@ -45,10 +45,10 @@ public class LoginController {
         }
         log.info("user {} logged", user.getLogin());
 
-        rq.getSession().setAttribute("authuser", user);
+        // rq.getSession().setAttribute("authuser", user);
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        Authentication authuser = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authuser);
 
         return user.getRole().equals(Role.USER) ? "redirect:index" : "adminpage";
     }
