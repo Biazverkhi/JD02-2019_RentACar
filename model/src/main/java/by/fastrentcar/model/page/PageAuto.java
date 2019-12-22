@@ -9,7 +9,7 @@ import java.util.List;
 public class PageAuto {
     private int page;
     private int numPageAll;
-    @Value("size")
+    @Value("#{ T(Integer).valueOf('${size}')}")
     private int size;
     private Sort.Direction sort;
     private List<Auto> autoList;
@@ -21,11 +21,19 @@ public class PageAuto {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
+
     }
 
     public PageAuto() {
     }
 
+    public PageAuto(int page, int numPageAll, Sort.Direction sort, List<Auto> autoList, String columnName) {
+        this.page = page;
+        this.numPageAll = numPageAll;
+        this.sort = sort;
+        this.autoList = autoList;
+        this.columnName = columnName;
+    }
 
     public int getPage() {
         return page;
