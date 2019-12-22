@@ -2,9 +2,9 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
-import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.service.AutoService;
 import by.fastrentcar.springdata.AutoDAO;
+import by.fastrentcar.web.page.page.PageAuto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -39,6 +39,15 @@ public class DefaultAutoService implements AutoService {
         return autoJpaRepository.getListAutoT();
     }
 
+    @Override
+    public List<String> getListBrendAuto() {
+        return autoJpaRepository.getDistinctBrendAuto();
+    }
+
+    @Override
+    public List<String> getListModelAuto() {
+        return autoJpaRepository.getDistinctModelAuto();
+    }
 
     @Override
     public PageAuto getListAuto(PageAuto page) {

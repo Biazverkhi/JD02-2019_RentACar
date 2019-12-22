@@ -19,6 +19,8 @@ public interface AutoDAO {
 
     List<String> getDistinctBrendAuto();
 
+    List<String> getDistinctModelAuto();
+
     PageAuto getListAutoT(PageAuto page);
 
     PageAuto getListAutoSortT(PageAuto page);

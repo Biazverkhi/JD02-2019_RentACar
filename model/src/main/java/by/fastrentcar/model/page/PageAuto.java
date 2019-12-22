@@ -1,6 +1,7 @@
 package by.fastrentcar.model.page;
 
 import by.fastrentcar.model.auto.Auto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -8,7 +9,8 @@ import java.util.List;
 public class PageAuto {
     private int page;
     private int numPageAll;
-    private int size = 10;
+    @Value("size")
+    private int size;
     private Sort.Direction sort;
     private List<Auto> autoList;
     private String columnName;

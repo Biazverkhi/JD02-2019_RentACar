@@ -19,6 +19,7 @@ public class WebConfig {
         this.serviceConfig = serviceConfig;
     }
 
+
     @Bean
     public IndexPageController indexPageController() {
         return new IndexPageController(serviceConfig.getDefaultAutoService());
@@ -64,18 +65,18 @@ public class WebConfig {
         return new NewOrderController(serviceConfig.getDefaultOrderService(), serviceConfig.getDefaultBussinesLogic());
     }
 
-//    @Bean
+    //    @Bean
 //    ViewResolver viewResolver() {
 //        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 //        resolver.setSuffix(".jsp");
 //        return resolver;
 //    }
-@Bean
-public UrlBasedViewResolver tilesViewResolver() {
-    UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-    resolver.setViewClass(TilesView.class);
-    return resolver;
-}
+    @Bean
+    public UrlBasedViewResolver tilesViewResolver() {
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setViewClass(TilesView.class);
+        return resolver;
+    }
 
     @Bean
     public TilesConfigurer tilesConfigurer() {

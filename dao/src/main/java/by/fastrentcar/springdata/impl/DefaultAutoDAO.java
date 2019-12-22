@@ -28,11 +28,16 @@ public class DefaultAutoDAO implements AutoDAO {
 
     @Override
     public List<String> getDistinctBrendAuto() {
-        List<AutoEntity> list = autoJpaRepository.findDistinctByBrand();
+        List<String> list = autoJpaRepository.getDistinctByBrand();
 
-        return list.stream().map(AutoEntity::getBrand).collect(Collectors.toList());
+        return list;
     }
 
+    @Override
+    public List<String> getDistinctModelAuto() {
+        List<String> list = autoJpaRepository.getDistinctByModel();
+        return list;
+    }
     @Override
     public List<Auto> getListAutoT() {
         List<AutoEntity> autoEntityList = autoJpaRepository.findAll();

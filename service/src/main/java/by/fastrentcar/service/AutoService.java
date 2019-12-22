@@ -23,5 +23,9 @@ public interface AutoService {
 
     long getCountAuto();
 
+    List<String> getListBrendAuto();
+
+    List<String> getListModelAuto();
+
 
 }

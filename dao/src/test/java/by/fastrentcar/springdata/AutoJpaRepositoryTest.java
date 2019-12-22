@@ -72,8 +72,13 @@ public class AutoJpaRepositoryTest {
 
     @Test
     void getDistinctBrendAuto() {
-        List<String> list = dao.getDistinctBrendAuto();
         assertFalse(dao.getDistinctBrendAuto().isEmpty());
+
+    }
+
+    @Test
+    void getDistinctModelAuto() {
+        assertFalse(dao.getDistinctModelAuto().isEmpty());
 
     }
 
