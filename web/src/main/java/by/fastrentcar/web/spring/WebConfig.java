@@ -1,9 +1,9 @@
 package by.fastrentcar.web.spring;
 
 import by.fastrentcar.service.config.ServiceConfigSpring;
-import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.web.controller.*;
 import by.fastrentcar.web.page.PageAutoProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,18 +24,17 @@ import java.util.Locale;
 public class WebConfig {
 
     private ServiceConfigSpring serviceConfig;
+    @Autowired
+    private PageAutoProperty pageAutoProperty;
 
-    private DAOConfigSpring daoConfigSpring;
-
-    public WebConfig(ServiceConfigSpring serviceConfig, DAOConfigSpring daoConfigSpring) {
+    public WebConfig(ServiceConfigSpring serviceConfig) {
         this.serviceConfig = serviceConfig;
-        this.daoConfigSpring = daoConfigSpring;
     }
 
 
     @Bean
     public IndexPageController indexPageController() {
-        return new IndexPageController(serviceConfig.getDefaultAutoService(), daoConfigSpring.pageAuto());
+        return new IndexPageController(serviceConfig.getDefaultAutoService(), pageAutoProperty);
     }
 
     @Bean

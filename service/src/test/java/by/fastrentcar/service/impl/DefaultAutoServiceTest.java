@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -32,8 +31,6 @@ public class DefaultAutoServiceTest {
     AutoDAO dao;
     @InjectMocks
     DefaultAutoService service;
-    @Autowired
-    PageAuto pageAuto;
 
     @Test
     void getInstance() {
@@ -82,7 +79,7 @@ public class DefaultAutoServiceTest {
 
     @Test
     void getListAutoTest() {
-
+        PageAuto pageAuto = new PageAuto(10);
         when(dao.getListAutoT(pageAuto)).thenReturn(pageAuto);
         PageAuto page = service.getListAuto(pageAuto);
         verify(dao).getListAutoT(pageAuto);

@@ -2,6 +2,7 @@ package by.fastrentcar.web.controller;
 
 import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.service.AutoService;
+import by.fastrentcar.web.page.PageAutoProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -22,20 +23,23 @@ import java.util.Map;
 @Controller
 @RequestMapping({"index", "prev", "next", ""})
 public class IndexPageController {
-    private final AutoService defaultAutoService;
-    private PageAuto p;
 
-    public IndexPageController(AutoService defaultAutoService, PageAuto pageAuto) {
+    private final AutoService defaultAutoService;
+    private PageAutoProperty prop;
+
+    public IndexPageController(AutoService defaultAutoService, PageAutoProperty prop) {
         this.defaultAutoService = defaultAutoService;
-        this.p = pageAuto;
+        this.prop = prop;
     }
 
     private static final Logger log = LoggerFactory.getLogger(IndexPageController.class);
 
     @GetMapping()
-    public String getIndexPage(HttpServletRequest req, ModelMap model, HttpSession session) {
-        p = (session.getAttribute("page") == null) ? p : (PageAuto) session.getAttribute("page");
-        sort(p, req);
+    public String getIndexPage(HttpServletRequest req, ModelMap model, HttpSession session, @RequestParam(value = "sort", required = false) String sort) {
+        log.info("ufdyj");
+        PageAuto p;
+        p = (session.getAttribute("page") == null) ? new PageAuto(prop.getSize()) : (PageAuto) session.getAttribute("page");
+        sort(p, sort);
         pagination(p, req);
         Map<String, List<String>> auto = new HashMap<>();
         if (session.getAttribute("autofromfiltr") != null) {
@@ -49,16 +53,17 @@ public class IndexPageController {
         return "index";
     }
 
-    private static void sort(PageAuto p, HttpServletRequest req) {
-        if (p.getColumnName() == null && req.getParameter("sort") != null) {
-            p.setColumnName(req.getParameter("sort"));
+    private static void sort(PageAuto p, String sort) {
+        if (p.getColumnName() == null && sort != null) {
+            p.setColumnName(sort);
             p.setSort(Sort.Direction.ASC);
             p.setPage(0);
-        } else if (p.getColumnName() != null && req.getParameter("sort") != null) {
+        } else if (p.getColumnName() != null && sort != null) {
             p.setSort(p.getSort() == Sort.Direction.ASC ? Sort.Direction.DESC : Sort.Direction.ASC);
             p.setPage(0);
         }
     }
+
     private static void pagination(PageAuto p, HttpServletRequest req) {
         String contextpath_next = req.getContextPath() + "/next";
         String contextpath_prev = req.getContextPath() + "/prev";

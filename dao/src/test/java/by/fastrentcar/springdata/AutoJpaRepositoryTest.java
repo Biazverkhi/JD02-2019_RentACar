@@ -25,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AutoJpaRepositoryTest {
     @Autowired
     AutoDAO dao;
-    @Autowired
-    PageAuto pageAuto;
 
     static Long ID;
 
@@ -61,17 +59,18 @@ public class AutoJpaRepositoryTest {
     @Transactional
     @Test
     void getListAutoTTest2() {
-        assertEquals(10, dao.getListAutoT(pageAuto).getSize());
+        assertEquals(10, dao.getListAutoT(new PageAuto(10)).getSize());
         List<Auto> d = dao.getListAutoT();
         for (Auto auto : d) {
             dao.deleteAutoT(auto.getId());
         }
-        assertTrue(dao.getListAutoT(pageAuto).getAutoList().isEmpty());
+        assertTrue(dao.getListAutoT(new PageAuto(10)).getAutoList().isEmpty());
     }
 
     @Transactional
     @Test
     void getListAutoSortTTest2() {
+        PageAuto pageAuto = new PageAuto(10);
         pageAuto.setSort(Sort.Direction.ASC);
         pageAuto.setColumnName("brend");
         assertEquals(10, dao.getListAutoT(pageAuto).getSize());
@@ -90,6 +89,7 @@ public class AutoJpaRepositoryTest {
         Map<String, List<String>> map = new HashMap<>();
         map.put("brand", brand);
         map.put("model", model);
+        PageAuto pageAuto = new PageAuto(10);
         assertNotNull(dao.getListAutoFiltr(pageAuto, map));
 
 
