@@ -55,8 +55,7 @@ public class LoginController {
 
 
     private List<GrantedAuthority> getAuthorities() {
-        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER",
-                (GrantedAuthority) () -> "ROLE_ADMIN");
+        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER");
     }
 
 }

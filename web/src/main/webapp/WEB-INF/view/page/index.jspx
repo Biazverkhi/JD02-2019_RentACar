@@ -2,17 +2,11 @@
           xmlns:jsp="http://java.sun.com/JSP/Page"
           version="2.0"
           xmlns:sec="http://www.springframework.org/security/tags"
-          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags"
 >
-    <!--   <title><fmt:message key="page.name.index" bundle="${messages}"/></title>-->
 
 
-    <!--    <body class="bobyIndex">-->
-    <!--        <div class="bodyIndex">-->
-    <h2>страница index</h2>
-    <!--                <fmt:setLocale value="${locale}"/>-->
-    <!--                <fmt:setBundle basename="localizations" var="messages"/>-->
-    <!--            <h3><fmt:message key="page.name.index" bundle="${messages}"/></h3>-->
+    <h2><spring:message code="page.name.index"/></h2>
 
 
     <sec:authorize access="isAnonymous()">
