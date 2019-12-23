@@ -7,11 +7,15 @@ import by.fastrentcar.springdata.config.HibernateConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,8 +60,7 @@ public class AutoJpaRepositoryTest {
 
     @Transactional
     @Test
-    void getAutoListTest2() {
-        PageAuto list0 = dao.getListAutoT(pageAuto);
+    void getListAutoTTest2() {
         assertEquals(10, dao.getListAutoT(pageAuto).getSize());
         List<Auto> d = dao.getListAutoT();
         for (Auto auto : d) {
@@ -65,6 +68,33 @@ public class AutoJpaRepositoryTest {
         }
         assertTrue(dao.getListAutoT(pageAuto).getAutoList().isEmpty());
     }
+
+    @Transactional
+    @Test
+    void getListAutoSortTTest2() {
+        pageAuto.setSort(Sort.Direction.ASC);
+        pageAuto.setColumnName("brend");
+        assertEquals(10, dao.getListAutoT(pageAuto).getSize());
+        List<Auto> d = dao.getListAutoT();
+        for (Auto auto : d) {
+            dao.deleteAutoT(auto.getId());
+        }
+        assertTrue(dao.getListAutoT(pageAuto).getAutoList().isEmpty());
+    }
+
+
+    @Test
+    void getListAutoFiltrTest() {
+        List<String> brand = Arrays.asList("GMC", "Audi");
+        List<String> model = Arrays.asList("Tundra");
+        Map<String, List<String>> map = new HashMap<>();
+        map.put("brand", brand);
+        map.put("model", model);
+        assertNotNull(dao.getListAutoFiltr(pageAuto, map));
+
+
+    }
+
 
     @Test
     void getAutoByIdTTest() {

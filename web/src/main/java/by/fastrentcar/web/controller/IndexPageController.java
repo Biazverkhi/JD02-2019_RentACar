@@ -8,31 +8,44 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping({"/index", "/prev", "/next", "/filtr/*"})
+@RequestMapping({"index", "prev", "next", ""})
 public class IndexPageController {
     private final AutoService defaultAutoService;
+    private PageAuto p;
 
-    public IndexPageController(AutoService defaultAutoService) {
+    public IndexPageController(AutoService defaultAutoService, PageAuto pageAuto) {
         this.defaultAutoService = defaultAutoService;
+        this.p = pageAuto;
     }
 
     private static final Logger log = LoggerFactory.getLogger(IndexPageController.class);
 
     @GetMapping()
     public String getIndexPage(HttpServletRequest req, ModelMap model, HttpSession session) {
-        PageAuto p = (session.getAttribute("page") == null) ? new PageAuto() : (PageAuto) session.getAttribute("page");
+        p = (session.getAttribute("page") == null) ? p : (PageAuto) session.getAttribute("page");
         sort(p, req);
         pagination(p, req);
-        p = defaultAutoService.getListAuto(p);
+        Map<String, List<String>> auto = new HashMap<>();
+        if (session.getAttribute("autofromfiltr") != null) {
+            auto = (Map<String, List<String>>) session.getAttribute("autofromfiltr");
+        }
+        p = auto.isEmpty() ? defaultAutoService.getListAuto(p) : defaultAutoService.getListAutoFiltr(p, auto);
         model.addAttribute("prev", p.getPage() == 0 ? null : "prev");
         model.addAttribute("next", p.getNumPageAll() - p.getPage() - 1 > 0 ? "next" : null);
         session.setAttribute("page", p);
+        session.setAttribute("auto", defaultAutoService.getCheckBoxColumnAuto());
         return "index";
     }
 
@@ -46,7 +59,6 @@ public class IndexPageController {
             p.setPage(0);
         }
     }
-
     private static void pagination(PageAuto p, HttpServletRequest req) {
         String contextpath_next = req.getContextPath() + "/next";
         String contextpath_prev = req.getContextPath() + "/prev";
@@ -60,5 +72,16 @@ public class IndexPageController {
         }
     }
 
-
+    @PostMapping(value = {"/filtr"})
+    public String filtr(HttpSession session, @RequestParam(value = "model", required = false) String[] model, @RequestParam(value = "brand", required = false) String[] brand) {
+        Map<String, List<String>> autoCheck = new HashMap<>();
+        if (model != null) {
+            autoCheck.put("model", Arrays.asList(model));
+        }
+        if (brand != null) {
+            autoCheck.put("brand", Arrays.asList(brand));
+        }
+        session.setAttribute("autofromfiltr", autoCheck);
+        return "redirect:/index";
+    }
 }

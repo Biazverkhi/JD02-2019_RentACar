@@ -9,6 +9,7 @@ import java.util.List;
 public class PageAuto {
     private int page;
     private int numPageAll;
+
     @Value("#{ T(Integer).valueOf('${size}')}")
     private int size;
     private Sort.Direction sort;

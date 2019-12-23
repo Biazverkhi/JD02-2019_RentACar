@@ -5,6 +5,7 @@ import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.page.PageAuto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AutoDAO {
     Long addAutoT(Auto auto);
@@ -16,6 +17,8 @@ public interface AutoDAO {
     List<Auto> getListAutoT();
 
     long getCountAuto();
+
+    PageAuto getListAutoFiltr(PageAuto page, Map<String, List<String>> auto);
 
     List<String> getDistinctBrendAuto();
 

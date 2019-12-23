@@ -3,17 +3,33 @@
           xmlns:c="http://java.sun.com/jsp/jstl/core"
           version="2.0">
     <h3>Страница menu</h3>
-    <form action="/filtr/brand" method="post">
-        <c:forEach items="${page.autoList}" var="auto">
-            <table>
-                <tr>
-                    <td><input type="checkbox" name="brand" value="${auto.brand}"/>${auto.brand}</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" name="model" value="${auto.model}"/>${auto.model}</td>
-                </tr>
-            </table>
-        </c:forEach>
+    <form action="${pageContext.request.contextPath}/filtr" method="post">
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <c:forEach items="${auto.brend}" var="brend">
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="brand" value="${brend}"/>${brend}
+                                </td>
+                            </tr>
+                        </c:forEach>
+
+                    </table>
+                </td>
+                <td>
+                    <table><c:forEach items="${auto.model}" var="model">
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="model" value="${model}"/>${model}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </table>
+                </td>
+            </tr>
+        </table>
         <input type="submit" name="Показать" value="Показать"/>
     </form>
 

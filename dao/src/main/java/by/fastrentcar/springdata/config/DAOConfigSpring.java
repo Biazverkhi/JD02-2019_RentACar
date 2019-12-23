@@ -10,13 +10,13 @@ import by.fastrentcar.springdata.impl.DefaultAutoDAO;
 import by.fastrentcar.springdata.impl.DefaultAutoServicesDAO;
 import by.fastrentcar.springdata.impl.DefaultOrderDAO;
 import by.fastrentcar.springdata.repository.*;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 @Configuration
 @Import(HibernateConfig.class)
@@ -25,7 +25,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:page.properties")
 
 public class DAOConfigSpring {
-
+    @Autowired
+    private SessionFactory session;
     @Autowired
     private AuthUserJpaRepository authUserJpaRepository;
     @Autowired
@@ -39,13 +40,15 @@ public class DAOConfigSpring {
 
     @Bean
     public AutoDAO getDefaultAutoDAO() {
-        return new DefaultAutoDAO(autoJpaRepository);
+        return new DefaultAutoDAO(autoJpaRepository, session);
+
     }
 
     @Bean
     public AuthUserDAO getDefaultAuthUserDAO() {
         return new DefaultAuthUserDAO(authUserJpaRepository, userJpaRepository);
     }
+
 
     @Bean
     public AutoServicesDAO getDefaultAutoServicesDAO() {
@@ -58,6 +61,7 @@ public class DAOConfigSpring {
     }
 
     @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public PageAuto pageAuto() {
         return new PageAuto();
     }

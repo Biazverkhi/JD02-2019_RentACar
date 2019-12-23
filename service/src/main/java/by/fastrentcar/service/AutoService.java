@@ -3,8 +3,10 @@ package by.fastrentcar.service;
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
 import by.fastrentcar.model.page.PageAuto;
+import by.fastrentcar.service.DTO.ChekBoxColumnAutoMenu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AutoService {
     Long addAuto(Auto auto);
@@ -23,9 +25,10 @@ public interface AutoService {
 
     long getCountAuto();
 
-    List<String> getListBrendAuto();
+    ChekBoxColumnAutoMenu getCheckBoxColumnAuto();
 
-    List<String> getListModelAuto();
+    PageAuto getListAutoFiltr(PageAuto page, Map<String, List<String>> auto);
+
 
 
 }

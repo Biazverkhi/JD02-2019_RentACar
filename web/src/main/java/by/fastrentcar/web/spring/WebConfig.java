@@ -1,6 +1,7 @@
 package by.fastrentcar.web.spring;
 
 import by.fastrentcar.service.config.ServiceConfigSpring;
+import by.fastrentcar.springdata.config.DAOConfigSpring;
 import by.fastrentcar.web.controller.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,14 +16,17 @@ public class WebConfig {
 
     private ServiceConfigSpring serviceConfig;
 
-    public WebConfig(ServiceConfigSpring serviceConfig) {
+    private DAOConfigSpring daoConfigSpring;
+
+    public WebConfig(ServiceConfigSpring serviceConfig, DAOConfigSpring daoConfigSpring) {
         this.serviceConfig = serviceConfig;
+        this.daoConfigSpring = daoConfigSpring;
     }
 
 
     @Bean
     public IndexPageController indexPageController() {
-        return new IndexPageController(serviceConfig.getDefaultAutoService());
+        return new IndexPageController(serviceConfig.getDefaultAutoService(), daoConfigSpring.pageAuto());
     }
 
     @Bean

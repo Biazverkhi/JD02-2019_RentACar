@@ -2,12 +2,14 @@ package by.fastrentcar.service.impl;
 
 import by.fastrentcar.model.auto.Auto;
 import by.fastrentcar.model.auto.AutoServices;
+import by.fastrentcar.model.page.PageAuto;
 import by.fastrentcar.service.AutoService;
+import by.fastrentcar.service.DTO.ChekBoxColumnAutoMenu;
 import by.fastrentcar.springdata.AutoDAO;
-import by.fastrentcar.web.page.page.PageAuto;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 public class DefaultAutoService implements AutoService {
@@ -40,23 +42,30 @@ public class DefaultAutoService implements AutoService {
     }
 
     @Override
-    public List<String> getListBrendAuto() {
-        return autoJpaRepository.getDistinctBrendAuto();
-    }
-
-    @Override
-    public List<String> getListModelAuto() {
-        return autoJpaRepository.getDistinctModelAuto();
-    }
-
-    @Override
-    public PageAuto getListAuto(PageAuto page) {
-        return page.getColumnName() == null ? autoJpaRepository.getListAutoT(page) : autoJpaRepository.getListAutoSortT(page);
-    }
-    @Override
     public Auto getAuto(Long id) {
         return autoJpaRepository.getAutoByIdT(id);
     }
+    @Override
+
+
+    public PageAuto getListAuto(PageAuto page) {
+        return page.getColumnName() == null ? autoJpaRepository.getListAutoT(page) : autoJpaRepository.getListAutoSortT(page);
+    }
+
+
+    @Override
+    public ChekBoxColumnAutoMenu getCheckBoxColumnAuto() {
+        ChekBoxColumnAutoMenu ch = new ChekBoxColumnAutoMenu();
+        ch.setBrend(autoJpaRepository.getDistinctBrendAuto());
+        ch.setModel(autoJpaRepository.getDistinctModelAuto());
+        return ch;
+    }
+
+    @Override
+    public PageAuto getListAutoFiltr(PageAuto page, Map<String, List<String>> auto) {
+        return autoJpaRepository.getListAutoFiltr(page, auto);
+    }
+
 
     @Override
     public List<AutoServices> getAutoServicesByAutoIdT(Long id) {
