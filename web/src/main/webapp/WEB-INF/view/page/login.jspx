@@ -1,30 +1,29 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
-          xmlns:c="http://java.sun.com/jsp/jstl/core"
-          version="2.0">
+          version="2.0" xmlns:sec="http://www.springframework.org/security/tags">
     <h3>Страница LOGIN</h3>
-    <c:choose>
-        <c:when test="${authuser == null}">
-            <form>
+
+    <sec:authorize access="isAnonymous()">
+
+        <form>
                 <input name="login" type="text" required="" placeholder="login"/><i> Логин </i><br/>
                 <input name="password" type="password" placeholder="password" required=""/><i> Пароль </i><br/>
                 <input formaction="${pageContext.request.contextPath}/login" formmethod="post" type="submit"
                        value="Войти"/><br/>
-                <a href="${pageContext.request.contextPath}/registration">Регистрация</a>
             </form>
-        </c:when>
-        <c:otherwise>
-            <h5>Привет! ${authuser.login}</h5>
-            <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
-            <a href="${pageContext.request.contextPath}/logout">Выход</a>
-        </c:otherwise>
-    </c:choose>
-    <c:choose>
+        <a href="${pageContext.request.contextPath}/registration">Регистрация</a>
+    </sec:authorize>
 
-        <c:when test="${authuser == null}">
+    <sec:authorize access="isAuthenticated()">
+        <h5>Привет! <sec:authentication property="principal.login"/></h5>
 
+        <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
+        <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
+    </sec:authorize>
+
+    <sec:authorize access="isAnonymous()">
             <p style="color: #ff003b">${error}</p>
-        </c:when>
-    </c:choose>
+    </sec:authorize>
+
 </jsp:root>
 

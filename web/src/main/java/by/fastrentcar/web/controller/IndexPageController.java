@@ -36,7 +36,6 @@ public class IndexPageController {
 
     @GetMapping()
     public String getIndexPage(HttpServletRequest req, ModelMap model, HttpSession session, @RequestParam(value = "sort", required = false) String sort) {
-        log.info("ufdyj");
         PageAuto p;
         p = (session.getAttribute("page") == null) ? new PageAuto(prop.getSize()) : (PageAuto) session.getAttribute("page");
         sort(p, sort);

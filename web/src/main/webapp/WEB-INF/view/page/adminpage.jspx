@@ -1,11 +1,11 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
-          version="2.0"
+          version="2.0" xmlns:sec="http://www.springframework.org/security/tags"
 >
 <head>
     <title>Admin Page</title>
 </head>
-<h2>Привет! ${authuser.login}</h2>
+    <h2>Привет! <sec:authentication property="principal.login"/></h2>
     <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
     <hr/>
     <a href="${pageContext.request.contextPath}/useradmin">Администрирование пользователей</a>

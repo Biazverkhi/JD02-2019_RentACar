@@ -14,7 +14,7 @@
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">
-        <h5>Привет!<sec:authentication property="principal.login"/></h5>
+        <h5>Привет! <sec:authentication property="principal.login"/></h5>
 
         <a href="${pageContext.request.contextPath}/userpage">Личный кабинет</a>
         <a href="${pageContext.request.contextPath}/logoutUser">Выход</a>
