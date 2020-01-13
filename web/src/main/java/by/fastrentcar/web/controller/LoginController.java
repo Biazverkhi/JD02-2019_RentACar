@@ -3,6 +3,7 @@ package by.fastrentcar.web.controller;
 import by.fastrentcar.model.user.AuthUserDTO;
 import by.fastrentcar.model.user.Role;
 import by.fastrentcar.service.SecurityService;
+import by.fastrentcar.web.controller.rq.LoginRq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,8 +36,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(HttpServletRequest rq) {
+    public String login(HttpServletRequest rq, LoginRq req) {
         String login = rq.getParameter("login");
+        String logins = req.getLogin();
+        log.info(logins);
         String password = rq.getParameter("password");
         AuthUserDTO user = securityService.login(login, password);
         if (user == null) {
