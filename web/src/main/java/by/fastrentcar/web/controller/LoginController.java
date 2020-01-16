@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,10 +29,10 @@ public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
-    @GetMapping
-    public String doGet() {
-        return "index";
-    }
+//    @GetMapping
+//    public String doGet() {
+//        return "index";
+//    }
 
     @PostMapping
     public String login(HttpServletRequest rq, LoginRq req) {
@@ -50,15 +49,15 @@ public class LoginController {
 
         // rq.getSession().setAttribute("authuser", user);
 
-        Authentication authuser = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+        Authentication authuser = new UsernamePasswordAuthenticationToken(user, null, getAuthorities(user));
         SecurityContextHolder.getContext().setAuthentication(authuser);
 
         return user.getRole().equals(Role.USER) ? "redirect:index" : "adminpage";
     }
 
 
-    private List<GrantedAuthority> getAuthorities() {
-        return Arrays.asList((GrantedAuthority) () -> "ROLE_USER");
+    private List<GrantedAuthority> getAuthorities(AuthUserDTO user) {
+        return Arrays.asList((GrantedAuthority) () -> "ROLE_" + user.getRole().name());
     }
 
 }
